@@ -9,6 +9,7 @@ class Settings(BaseSettings):
     expiration_minutes: int = 7200
     team1_hash: str = ""
     team2_hash: str = ""
+    dbname: str = "main.db"
 
 
 settings = Settings()
