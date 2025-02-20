@@ -1,11 +1,10 @@
-from typing import Annotated
+from typing import Annotated, Sequence
 from fastapi import APIRouter, Depends
 from sqlmodel import select
 
 from backend.database.database import SessionDep
 
-from ..database.models import Canton, Team, User as DbUser
-from .models import User
+from ..database.models import Canton, Team, User, UserPublic
 from ..auth import auth
 
 router = APIRouter()
@@ -35,6 +34,6 @@ async def read_teams(db: SessionDep):
     return db.exec(select(Team)).all()
 
 
-@router.get("/users/")
+@router.get("/users/", response_model=Sequence[UserPublic])
 async def read_users(db: SessionDep):
-    return db.exec(select(DbUser)).all()
+    return db.exec(select(User)).all()
