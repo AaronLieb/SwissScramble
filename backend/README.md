@@ -21,3 +21,8 @@ SECRET_KEY=
 TEAM1_HASH=
 TEAM2_HASH=
 ```
+
+### Helpful docs
+
+[FastAPI docs](https://fastapi.tiangolo.com/)
+[SQLModel docs](https://sqlmodel.tiangolo.com/)
