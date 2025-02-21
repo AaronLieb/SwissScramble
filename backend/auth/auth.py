@@ -21,11 +21,13 @@ logging.getLogger("passlib").setLevel(logging.ERROR)
 
 logger = logging.getLogger(__name__)
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/token")
 
 
 def get_user(db: SessionDep, username: str):
-    return db.get(User, username)
+    user = db.get(User, username)
+    logger.info("username: %s", user)
+    return user
 
 
 def authenticate_user(db, username: str, password: str):

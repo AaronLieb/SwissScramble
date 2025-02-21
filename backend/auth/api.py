@@ -9,7 +9,7 @@ from .auth import authenticate_user
 from .crypto import create_access_token
 from .models import Token
 
-router = APIRouter()
+router = APIRouter(prefix="/auth")
 
 
 @router.post("/token")
