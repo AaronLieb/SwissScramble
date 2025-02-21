@@ -4,6 +4,8 @@
 
 ### Setup
 
+Use Python 3.12.x
+
 ```
 python -m venv venv
 source venv/bin/activate
