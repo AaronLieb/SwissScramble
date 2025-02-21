@@ -2,6 +2,18 @@
 
 ## Development
 
+### Setup
+
+```
+python -m venv venv
+source venv/bin/activate
+python -m pip install -r requirements.txt
+```
+
+```
+
+```
+
 ### Running the dev server
 
 ```bash
