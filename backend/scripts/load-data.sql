@@ -8,7 +8,7 @@ INSERT INTO canton ('name', 'value', 'level') VALUES
     ('Fribourg', 1, 0),
     ('Geneva', 1, 0),
     ('Glarus', 1, 0),
-    ('Grisons', 1, 0),
+    ('Graubünden', 1, 0),
     ('Jura', 1, 0),
     ('Lucerne', 1, 0),
     ('Neuchâtel', 1, 0),
@@ -24,7 +24,7 @@ INSERT INTO canton ('name', 'value', 'level') VALUES
     ('Valais', 1, 0),
     ('Vaud', 1, 0),
     ('Zug', 1, 0),
-    ('Zurich', 1, 0);
+    ('Zürich', 1, 0);
 
 INSERT INTO user ('username', 'firstname', 'lastname', 'team_id') VALUES
    ('icf', 'Isaac', 'Feldman', '0'),

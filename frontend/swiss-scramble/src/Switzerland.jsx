@@ -158,7 +158,7 @@ function Switzerland() {
                 <Container>
                     <Row className='mb-2 w-100'>
                         <Col xs={4}>
-                            <h1 className='display-3 mb-0'>Switzerland</h1>
+                            <h1 className='display-3 mb-0'>Swiss Scramble 🇨🇭</h1>
                         </Col>
                         <Col className='h-100' xs={{ offset: 0, span: 12 }} md={{ offset: 4, span: 4 }}>
                             <Form.Label className='d-flex flex-row-reverse'>let me be franc</Form.Label>
