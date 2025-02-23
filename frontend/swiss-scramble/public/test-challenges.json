@@ -1,0 +1,10 @@
+{
+    "Challenges": [
+    { "Name": "Chal1", "Levels": 1, "Money": 0, "Description": "Go to a museum" },
+    { "Name": "Chal2", "Levels": 1, "Money": 0, "Description": "Find the oldest thing / thing older than a certain year" },
+    { "Name": "Chal3", "Levels": 1, "Money": 0, "Description": "Swiss cheese challenge" },
+    { "Name": "Chal4", "Levels": 1, "Money": 0, "Description": "Go ice skating" },
+    { "Name": "Chal5", "Levels": 1, "Money": 0, "Description": "Find and use a bidet (are they even common?)" },
+    { "Name": "Chal6", "Levels": 1, "Money": 0, "Description": "Find an embassy" }
+    ]
+}

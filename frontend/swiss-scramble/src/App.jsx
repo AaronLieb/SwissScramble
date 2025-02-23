@@ -1,45 +1,39 @@
 import { useState } from 'react'
 import Switzerland from './Switzerland.jsx'
-import { Col, Row, Container } from 'react-bootstrap'
+import {
+  Grid2
+} from "@mui/material";
 import './App.css'
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { lime, purple } from '@mui/material/colors';
+
+
+const theme = createTheme({
+  palette: {
+    primary: lime,
+    secondary: purple,
+  },
+});
 
 function App() {
 
 
   return (
-    <div style={{ position: "relative", overflow: "hidden" }}>
+    <div>
 
-      <Container
+      <Grid2 container
         id="home"
-        className="mx-auto justify-content-center d-flex align-items-center content align-self-center"
-        fluid
       >
-      </Container>
-      <Container
-        id="aboutme"
-        className="d-flex justify-content-center align-items-center mt-5 content"
-        fluid
-      >
-        <Col lg={3}></Col>
-        <Col lg={6}>
-          <Switzerland />
-        </Col>
-        <Col lg={3}></Col>
-      </Container>
-
-      
-      <Container
-        id="portfolio"
-        className="d-flex justify-content-center mt-5 content"
-        fluid
-      >
-        <Col lg={3}></Col>
-        <Col lg={6}>
-         
-        </Col>
-        <Col lg={3}></Col>
-      </Container>
-
+      </Grid2>
+      <Grid2 container>
+        <Grid2 item xs={0} lg={3}></Grid2>
+        <Grid2 item xs={12}>
+          <ThemeProvider theme={theme}>
+            <Switzerland />
+          </ThemeProvider>
+        </Grid2>
+        <Grid2 item xs={0} lg={3}></Grid2>
+      </Grid2>
     </div>
   )
 }
