@@ -85,6 +85,8 @@ function Switzerland() {
 
     const [gameState, setGameState] = useState({})
 
+    const [cantons, setCantons] = useState([])
+
 
     // Challenge form related info
     const [challenges, setChallenges] = useState([])
@@ -132,8 +134,8 @@ function Switzerland() {
                     return response.json()
                 })
                 .then((data) => {
-                    console.log(data)
                     setGameState(data)
+                    setCantons(data.Cantons)
                     updateColors(data)
                 })
                 .catch((err) => {
@@ -328,14 +330,15 @@ function Switzerland() {
                 />
 
                 <Paper elevation={elevation}>
-                    <Grid2 item className='h-100' xs={12} lg={12}>
+                    <Grid2 item className='h-100' size={12}>
                         <svg id="travelmap"></svg>
                     </Grid2>
                 </Paper>
 
-                <Paper sx={{ p: 2, height: "100%" }} elevation={elevation}>
-                    <Grid2 item xs={12} lg={6}>
-                        <FormControl aria-label="Challenge selection" sx={{ width: '100%' }}>
+                <Paper sx={{padding: "2%"}} elevation={elevation}>
+                <Grid2 spacing={2} container>
+                    <Grid2 item size={{ xs: 12, lg: 12 }}>
+                        <FormControl aria-label="Challenge selection"  sx={{width: "100%"}}>
                             <Autocomplete
                                 disablePortal
                                 id="challenge-select"
@@ -363,11 +366,29 @@ function Switzerland() {
                         </Form.Group>
                     </Form.Group> */}
                     </Grid2>
-                    <Grid2 item xs={12} lg={6}>
-                    <div>
-                        <Button variant="dark" className="m-1" onClick={console.log} type="submit">Log In</Button>
-                        <Button variant="dark" className="m-1" onClick={console.log} type="submit">Submit</Button>
-                    </div>
+                    <Grid2 item  size={{ xs: 12, lg: 6 }}>
+                    <FormControl sx={{width: "100%"}} aria-label="Canton selection">
+                            <Autocomplete
+                                disablePortal
+                                id="challenge-select"
+                                aria-labelledby="challenge-select"
+                                options={cantons.map(e => e.name)}
+                                value={canton}
+                                onChange={(d, e) => {
+                                    if (e !== null) setCanton(e);
+                                }}
+                                renderInput={(params) => (
+                                    <TextField {...params} label="Canton" />
+                                )}
+                            />
+                        </FormControl>
+                    </Grid2>
+                    <Grid2 item  size={{ xs: 12, lg: 6 }}>
+                        <div>
+                            <Button variant="dark" className="m-1" onClick={console.log} type="submit">Log In</Button>
+                            <Button variant="dark" className="m-1" onClick={console.log} type="submit">Submit</Button>
+                        </div>
+                    </Grid2>
                 </Grid2>
                 </Paper>
 
