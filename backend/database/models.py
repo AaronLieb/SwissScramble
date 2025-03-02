@@ -2,11 +2,24 @@ from datetime import datetime
 from sqlmodel import Relationship, SQLModel, Field
 
 
-class Game(SQLModel, table=True):
-    id: int | None = Field(default=None, primary_key=True)
+class GameBase(SQLModel):
     active: bool
     start_time: datetime
     end_time: datetime
+
+
+class Game(GameBase, table=True):
+    id: int | None = Field(default=None, primary_key=True)
+
+
+class GameCreate(GameBase):
+    pass
+
+
+class GameUpdate:
+    active: bool | None
+    start_time: datetime | None
+    end_time: datetime | None
 
 
 class Team(SQLModel, table=True):
@@ -20,12 +33,13 @@ class Team(SQLModel, table=True):
 
 
 class UserBase(SQLModel):
-    username: str = Field(default=None, primary_key=True)
+    username: str = Field(index=True)
     firstname: str | None
     lastname: str | None
 
 
 class User(UserBase, table=True):
+    id: int | None = Field(default=None, primary_key=True)
     hashed_password: str | None = Field(default=None)
     team_id: int | None = Field(default=None, foreign_key="team.id")
 
@@ -33,7 +47,19 @@ class User(UserBase, table=True):
 
 
 class UserPublic(UserBase):
+    id: int
     team_id: int | None
+
+
+class UserCreate(UserBase):
+    password: str
+
+
+class UserUpdate(UserBase):
+    username: str
+    firstname: str | None = None
+    lastname: str | None = None
+    password: str | None = None
 
 
 class Canton(SQLModel, table=True):
@@ -50,12 +76,19 @@ class Canton(SQLModel, table=True):
 # class Ping
 
 
-class Event(SQLModel, table=True):
-    id: int | None = Field(default=None, primary_key=True)
+class EventBase(SQLModel):
     source: str | None
     text: str
     time: datetime
-    # Location
+    # location: Location | None
+
+
+class Event(EventBase, table=True):
+    id: int | None = Field(default=None, primary_key=True)
+
+
+class EventPost(EventBase):
+    pass
 
 
 class ChallengeBase(SQLModel):

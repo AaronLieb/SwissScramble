@@ -3,6 +3,8 @@ from typing import Annotated, Sequence
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlmodel import select
 
+from .helpers import new_event
+
 from ..database.database import SessionDep
 from ..database.models import (
     BuyCursePost,
@@ -12,12 +14,15 @@ from ..database.models import (
     ChallengePost,
     Curse,
     Event,
+    EventPost,
     PowerUp,
     Team,
     User,
     UserPublic,
 )
 from ..auth import auth
+
+TOLL_COST = 100
 
 router = APIRouter()
 
@@ -179,6 +184,9 @@ async def buy_curse(
 
     team.money -= curse_db.cost
 
+    text = "Team '{0}' purchased curse '{1}'".format(team.name, curse_db.name)
+    new_event(db, text, team.name)
+
     db.add(team)
     db.commit()
     db.refresh(team)
@@ -186,7 +194,7 @@ async def buy_curse(
 
 @router.post("/powerup/")
 async def buy_powerup(
-    curse: BuyPowerUpPost,
+    powerup: BuyPowerUpPost,
     db: SessionDep,
     current_user: Annotated[User, Depends(auth.get_current_user)],
 ):
@@ -198,7 +206,7 @@ async def buy_powerup(
             detail="Invalid Team",
         )
 
-    powerup_db = db.get(PowerUp, curse.id)
+    powerup_db = db.get(PowerUp, powerup.id)
 
     if powerup_db is None:
         raise HTTPException(
@@ -214,6 +222,9 @@ async def buy_powerup(
 
     team.money -= powerup_db.cost
 
+    text = "Team '{0}' purchased power up '{1}'".format(team.name, powerup_db.name)
+    new_event(db, text, team.name)
+
     db.add(team)
     db.commit()
     db.refresh(team)
@@ -227,9 +238,60 @@ async def get_powerups(
 
 
 @router.post("/enter_canton")
-async def post_enter_canton(canton_id: int):
-    print(canton_id)
-    # edit number of cards in hand
+async def post_enter_canton(
+    canton_id: int,
+    db: SessionDep,
+    current_user: Annotated[User, Depends(auth.get_current_user)],
+):
+    canton = db.get(Canton, canton_id)
 
-    # pay tolls
-    pass
+    if canton is None:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid Canton ID"
+        )
+
+    team = current_user.team
+
+    if team is None:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid team"
+        )
+
+    text = "Team '{0}' entered '{1}'".format(team.name, canton.name)
+
+    new_event(db, text, team.name)
+
+    if canton.level == 3 and canton.team != current_user.team:
+        other_team_id = 1 if team.id == 2 else 2
+        other_team = db.get(Team, other_team_id)
+
+        team.money -= TOLL_COST
+
+        db.add(team)
+        db.commit()
+        db.refresh(team)
+
+        if other_team is None:
+            return
+        other_team.money += TOLL_COST
+
+        db.add(team)
+        db.commit()
+        db.refresh(team)
+
+        text = "Team '{0}' payed a toll to Team '{1}'".format(
+            team.name, other_team.name
+        )
+        new_event(db, text, team.name)
+
+    return {"draw_card": True}
+
+
+@router.post("/event/")
+async def send_event(event: EventPost, db: SessionDep):
+    event_db = Event.model_validate(event)
+
+    db.add(event_db)
+    db.commit()
+    db.refresh(event_db)
+    return event_db
