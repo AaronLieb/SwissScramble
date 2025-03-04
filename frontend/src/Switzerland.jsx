@@ -8,7 +8,7 @@ import {
     TextField,
 } from "@mui/material";
 import * as d3 from 'd3';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import './App.css';
 import * as topojson from 'topojson-client'
 
@@ -157,9 +157,7 @@ function Switzerland() {
             //     });
 
             // Get Location
-            navigator.geolocation.getCurrentPosition((position) => {
-                console.log(position)
-            });
+
 
 
             fetch("./test-data.json")
@@ -175,8 +173,37 @@ function Switzerland() {
                 .catch((err) => {
                     console.log("Error fetching user data " + err);
                 });
+
+
         }
     }, []);
+
+    // Print this user's location every 5 seconds.
+    useInterval(function() {
+        navigator.geolocation.getCurrentPosition((position) => {
+            console.log(position)
+        });
+    }, 5000)
+
+    function useInterval(callback, delay) {
+        const savedCallback = useRef();
+       
+        // Remember the latest callback.
+        useEffect(() => {
+          savedCallback.current = callback;
+        }, [callback]);
+       
+        // Set up the interval.
+        useEffect(() => {
+          function tick() {
+            savedCallback.current();
+          }
+          if (delay !== null) {
+            let id = setInterval(tick, delay);
+            return () => clearInterval(id);
+          }
+        }, [delay]);
+    }
 
     // drawMap renders on the svg an interactive map.
     // It sets the projection, zoom functionality and coloring.
@@ -415,7 +442,7 @@ function Switzerland() {
                 <Paper sx={{ padding: "2%" }} elevation={elevation}>
                     <Grid2 spacing={2} container>
                         <Grid2 item size={{ xs: 12, lg: 6 }}>
-                            <FormControl sx={{ width: "50%" }} aria-label="Powerups">
+                            <FormControl sx={{ width: "100%" }} aria-label="Powerups">
                                 <Autocomplete
                                     disablePortal
                                     id="powerup-select"
@@ -434,8 +461,6 @@ function Switzerland() {
                         </Grid2>
                         <Grid2 item size={{ xs: 12, lg: 6 }}>
                             <Button variant="outlined" sx={{ m: 1 }} onClick={purchasePowerup} type="submit">Purchase Power-Up</Button>
-                        </Grid2>
-                        <Grid2 item size={{ xs: 12, lg: 6 }}>
                             <Button variant="outlined" sx={{ m: 1 }} onClick={purchaseCurse} type="submit">Purchase Curse</Button>
                         </Grid2>
                     </Grid2>
