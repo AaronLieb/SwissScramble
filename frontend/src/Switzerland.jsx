@@ -34,60 +34,35 @@ function Switzerland() {
     const teamColorRange = (hue) => {
         return ["#e8e8e8", `oklch(75% 0.1 ${hue})`, `oklch(55% 0.1 ${hue})`, `oklch(45% 0.1 ${hue})`]
     }
-
-
-    // const teamColorRange = (level) => {
-    //     return ["#e8e8e8", `oklch(${light} 0.1 300)`, `oklch(${light} 0.1 300)`, `oklch(${light} 0.1 300)`] 
-    // }
-
-
-    //const teamColors = ["#e8e8e8", "#8ebdd4", "#5abdc8", "#5a92c1"]
     const teamColorsFaded = ["#e8e8e8", "oklch(75% 0.03 300)", "oklch(55% 0.03 300)", "oklch(45% 0.03 300)"]
 
-    //const enemyColors = ["#e8e8e8", "#CAB4E4", "#C58BD2", "#8e64ac"]
 
-    //const enemyColors = ["#e8e8e8", "#56b9a0", "#2f9780", "#006752"]
-    // const enemyColorRange = (light) => {
-    //     return ["#e8e8e8", `oklch(${light} 0.1 300)`, `oklch(${light} 0.1 300)`, `oklch(${light} 0.1 300)`] 
-    // }
-    const enemyColors = ["#e8e8e8", "oklch(75% 0.1 175)", "oklch(55% 0.1 175)", "oklch(45% 0.1 175)"]
-
-    //const enemyColors = ["#e8e8e8", "#DAE5A9", "#97CC80", "#6ABA6B"];
-    const enemyColorsFaded = ["#e8e8e8", "oklch(75% 0.03 175)", "oklch(55% 0.03 175)", "oklch(45% 0.03 175)"]
+    const enemyColors = ["oklch(75% 0.1801 216.4)", "oklch(75% 0.1 175)", "oklch(55% 0.1 175)", "oklch(45% 0.1 175)"]
+    const enemyColorsFaded = ["oklch(75% 0.1801 216.4)", "oklch(75% 0.03 175)", "oklch(55% 0.03 175)", "oklch(45% 0.03 175)"]
 
 
     const [team, setTeam] = useState("myid")
 
-    // const colors2d = [
-    //   ["#e8e8e8", "#ace4e4", "#5ac8c8"],
-    //   ["#dfb0d6", "#a5add3", "#5698b9"],
-    //   ["#be64ac", "#8c62aa", "#3b4994"]
-    //   ];
-
     const [mapLoaded, setMapLoaded] = useState(false)
-
-    const highlightColor = 'oklch(75% 0.1801 216.4)'
     const neutral = "oklch(90% 0 360)"
+    const highlightColor = 'oklch(75% 0.1801 216.4)'
 
     const width = 900, height = 500;
 
-    // Zoom slider value
-    const [slider, setSlider] = useState(1);
 
     const [canton, setCanton] = useState("");
-
-    const [selection, setSelection] = useState(null)
-
-    const [gameState, setGameState] = useState({})
-
     const [cantons, setCantons] = useState([])
-
+    const [selection, setSelection] = useState(null)
+    
+    // gameState holds the controlled cantons with their levels.
+    const [gameState, setGameState] = useState({})
+    
 
     // Challenge form related info
     const [challenges, setChallenges] = useState([])
     const [selectedChallenge, setSelectedChallenge] = useState("")
 
-    // Shop values
+    // Shop values with selection.
     const [powerups, setPowerups] = useState(["A", "B"])
     const [powerup, setPowerup] = useState("")
 
@@ -272,7 +247,6 @@ function Switzerland() {
             .translateExtent([[0, 0], [width, height]])
             .on("zoom", (d) => {
                 cantons.attr("transform", d.transform);
-                setSlider(parseFloat(d.transform.k));
             });
 
         d3.select("#slider")
@@ -463,13 +437,12 @@ function Switzerland() {
                             <Button variant="outlined" sx={{ m: 1 }} onClick={purchasePowerup} type="submit">Purchase Power-Up</Button>
                             <Button variant="outlined" sx={{ m: 1 }} onClick={purchaseCurse} type="submit">Purchase Curse</Button>
                         </Grid2>
+                        <Grid2 item size={{ xs: 12, lg: 6 }}>
+                            <h4>Curses</h4>
+                        </Grid2>
                     </Grid2>
                 </Paper>
             </Grid2>
-
-            <p className='text-center'>✈️ {countries.length} Cantons | Continents | 🌎 Progress {(countries.length / 26).toFixed(1)}%</p>
-
-
         </>
     );
 }
