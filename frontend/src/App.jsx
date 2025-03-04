@@ -5,12 +5,12 @@ import {
 } from "@mui/material";
 import './App.css'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { lime, purple } from '@mui/material/colors';
+import { red, purple } from '@mui/material/colors';
 
 
 const theme = createTheme({
   palette: {
-    primary: lime,
+    primary: red,
     secondary: purple,
   },
 });

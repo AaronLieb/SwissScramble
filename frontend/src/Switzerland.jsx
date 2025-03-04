@@ -1,16 +1,11 @@
 import {
-    Select,
     Grid2,
-    InputLabel,
     FormControl,
     Chip,
     Paper,
     Button,
     Autocomplete,
-    Stack,
-    OutlinedInput,
     TextField,
-    MenuItem,
 } from "@mui/material";
 import * as d3 from 'd3';
 import { useEffect, useState } from 'react';
@@ -71,8 +66,8 @@ function Switzerland() {
 
     const [mapLoaded, setMapLoaded] = useState(false)
 
-    const highlightColor = 'oklch(86.67% 0 360)'
-    const neutral = "#e8e8e8"
+    const highlightColor = 'oklch(75% 0.1801 216.4)'
+    const neutral = "oklch(90% 0 360)"
 
     const width = 900, height = 500;
 
@@ -90,7 +85,30 @@ function Switzerland() {
 
     // Challenge form related info
     const [challenges, setChallenges] = useState([])
-    const [selectedChallenge, setSelectedChallenge] = useState("Go to a museum")
+    const [selectedChallenge, setSelectedChallenge] = useState("")
+
+    // Shop values
+    const [powerups, setPowerups] = useState(["A", "B"])
+    const [powerup, setPowerup] = useState("")
+
+    const [money, setMoney] = useState(0)
+
+    // purchasePowerup purchases a powerup.
+    function purchasePowerup() {
+        let text = `Are you sure you want to purchase "${powerup}"?`
+        if (!window.confirm(text)) {
+            return
+        }
+        console.log(powerup)
+    }
+
+    // purchaseCurse purchases a curse.
+    function purchaseCurse() {
+        let text = `Are you sure you want to a random curse for 100₣?`
+        if (!window.confirm(text)) {
+            return
+        }
+    }
 
     useEffect(() => {
         setTeam("myid")
@@ -121,6 +139,22 @@ function Switzerland() {
                 .catch((err) => {
                     console.log("Error fetching challanges " + err);
                 });
+
+            // fetch("http://localhost:8000/challenges/", {
+            //     method: 'GET', // or POST, PUT, DELETE, etc.
+            //     mode: 'no-cors', // set to 'no-cors' to disable CORS
+            //     })
+            //     .then((response) => {
+            //         console.log(response)
+            //         return response.json()
+            //     })
+            //     .then((data) => {
+            //         console.log(data)
+            //         setChallenges(data.Challenges)
+            //     })
+            //     .catch((err) => {
+            //         console.log("Error unmarshaling " + err);
+            //     });
 
             // Get Location
             navigator.geolocation.getCurrentPosition((position) => {
@@ -312,101 +346,102 @@ function Switzerland() {
 
     return (
         <>
-
-
             <Grid2 spacing={2} container direction="column">
                 <Paper elevation={elevation}>
                     <h1 className='display-3 mb-0'>Swiss Scramble 🇨🇭</h1>
                 </Paper>
-
-                <input
-                    type="range"
-                    disabled
-                    value={slider}
-                    min={1}
-                    max={8}
-                    orient="vertical"
-                    id="slider"
-                />
-
                 <Paper elevation={elevation}>
                     <Grid2 item className='h-100' size={12}>
                         <svg id="travelmap"></svg>
                     </Grid2>
                 </Paper>
-
-                <Paper sx={{padding: "2%"}} elevation={elevation}>
-                <Grid2 spacing={2} container>
-                    <Grid2 item size={{ xs: 12, lg: 12 }}>
-                        <FormControl aria-label="Challenge selection"  sx={{width: "100%"}}>
-                            <Autocomplete
-                                disablePortal
-                                id="challenge-select"
-                                aria-labelledby="challenge-select"
-                                options={challenges.map(c => c.Description)}
-                                value={selectedChallenge}
-                                onChange={(d, e) => {
-                                    if (e !== null) setSelectedChallenge(e);
-                                }}
-                                renderInput={(params) => (
-                                    <TextField {...params} label="Challenge" />
-                                )}
-                            />
-                        </FormControl>
-
-                        {/* <Form.Group as={Col} xs="6" controlId="validationCustomUsername">
-                        <Form.Group>
-                        <Form.Label className="mx-2">Phone Number</Form.Label>
-                        <Form.Control
-                            required
-                            inputMode="numeric" 
-                            type="text"
-                            placeholder="1234567890"
-                        />
-                        </Form.Group>
-                    </Form.Group> */}
-                    </Grid2>
-                    <Grid2 item  size={{ xs: 12, lg: 6 }}>
-                    <FormControl sx={{width: "100%"}} aria-label="Canton selection">
-                            <Autocomplete
-                                disablePortal
-                                id="challenge-select"
-                                aria-labelledby="challenge-select"
-                                options={cantons.map(e => e.name)}
-                                value={canton}
-                                onChange={(d, e) => {
-                                    if (e !== null) setCanton(e);
-                                }}
-                                renderInput={(params) => (
-                                    <TextField {...params} label="Canton" />
-                                )}
-                            />
-                        </FormControl>
-                    </Grid2>
-                    <Grid2 item  size={{ xs: 12, lg: 6 }}>
-                        <div>
-                            <Button variant="dark" className="m-1" onClick={console.log} type="submit">Log In</Button>
-                            <Button variant="dark" className="m-1" onClick={console.log} type="submit">Submit</Button>
-                        </div>
-                    </Grid2>
-                </Grid2>
+                <Paper sx={{ padding: "2%" }} elevation={elevation}>
+                    <h2>Money: {money}₣</h2>
+                    {selection ?
+                        (<>
+                            <h2>Canton: {selection.name} Team: {selection.team_id} Level: {selection.level}</h2>
+                        </>)
+                        : (
+                            <>
+                                <h2>Canton: Team: Level: </h2>
+                            </>
+                        )
+                    }
                 </Paper>
-
+                <Paper sx={{ padding: "2%" }} elevation={elevation}>
+                    <Grid2 spacing={2} container>
+                        <Grid2 item size={{ xs: 12, lg: 12 }}>
+                            <FormControl aria-label="Challenge selection" sx={{ width: "100%" }}>
+                                <Autocomplete
+                                    disablePortal
+                                    id="challenge-select"
+                                    aria-labelledby="challenge-select"
+                                    options={challenges.map(c => c.Description)}
+                                    value={selectedChallenge}
+                                    onChange={(d, e) => {
+                                        if (e !== null) setSelectedChallenge(e);
+                                        else setSelectedChallenge("");
+                                    }}
+                                    renderInput={(params) => (
+                                        <TextField {...params} label="Challenge" />
+                                    )}
+                                />
+                            </FormControl>
+                        </Grid2>
+                        <Grid2 item size={{ xs: 12, lg: 6 }}>
+                            <FormControl sx={{ width: "100%" }} aria-label="Canton selection">
+                                <Autocomplete
+                                    disablePortal
+                                    id="challenge-select"
+                                    aria-labelledby="challenge-select"
+                                    options={cantons.map(e => e.name)}
+                                    value={canton}
+                                    onChange={(d, e) => {
+                                        if (e !== null) setCanton(e);
+                                        else setCanton("");
+                                    }}
+                                    renderInput={(params) => (
+                                        <TextField {...params} label="Canton" />
+                                    )}
+                                />
+                            </FormControl>
+                        </Grid2>
+                        <Grid2 item size={{ xs: 12, lg: 6 }}>
+                            <Button variant="outlined" sx={{ m: 1 }} onClick={console.log} type="submit">Enter Canton</Button>
+                            <Button variant="outlined" sx={{ m: 1 }} onClick={console.log} type="submit">Submit Challenge</Button>
+                        </Grid2>
+                    </Grid2>
+                </Paper>
+                <Paper sx={{ padding: "2%" }} elevation={elevation}>
+                    <Grid2 spacing={2} container>
+                        <Grid2 item size={{ xs: 12, lg: 6 }}>
+                            <FormControl sx={{ width: "50%" }} aria-label="Powerups">
+                                <Autocomplete
+                                    disablePortal
+                                    id="powerup-select"
+                                    aria-labelledby="powerup-select"
+                                    options={powerups.map(e => e)}
+                                    value={powerup}
+                                    onChange={(d, e) => {
+                                        if (e !== null) setPowerup(e)
+                                        else setPowerup("");
+                                    }}
+                                    renderInput={(params) => (
+                                        <TextField {...params} label="Powerups" />
+                                    )}
+                                />
+                            </FormControl>
+                        </Grid2>
+                        <Grid2 item size={{ xs: 12, lg: 6 }}>
+                            <Button variant="outlined" sx={{ m: 1 }} onClick={purchasePowerup} type="submit">Purchase Power-Up</Button>
+                        </Grid2>
+                        <Grid2 item size={{ xs: 12, lg: 6 }}>
+                            <Button variant="outlined" sx={{ m: 1 }} onClick={purchaseCurse} type="submit">Purchase Curse</Button>
+                        </Grid2>
+                    </Grid2>
+                </Paper>
             </Grid2>
-            {selection ?
-                (<>
-                    <h2>Canton: {selection.name}</h2>
-                    <h2>Team: {selection.team_id}</h2>
-                    <h2>Level: {selection.level}</h2>
-                </>)
-                : (
-                    <>
-                        <h2>Canton: </h2>
-                        <h2>Team: </h2>
-                        <h2>Level: </h2>
-                    </>
-                )
-            }
+
             <p className='text-center'>✈️ {countries.length} Cantons | Continents | 🌎 Progress {(countries.length / 26).toFixed(1)}%</p>
 
 
