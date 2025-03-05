@@ -12,11 +12,8 @@ import { useEffect, useState, useRef } from 'react';
 import './App.css';
 import * as topojson from 'topojson-client'
 
-
-
 function Switzerland() {
-
-
+    const backend = import.meta.env.VITE_BACKEND_URL
     const elevation = 3
 
     const countries = []
@@ -104,12 +101,12 @@ function Switzerland() {
                 console.log(position)
             });
 
-            fetch("./test-challenges.json")
+            fetch(backend + "/challenges/")
                 .then((response) => {
                     return response.json()
                 })
                 .then((data) => {
-                    setChallenges(data.Challenges)
+                    setChallenges(data)
                 })
                 .catch((err) => {
                     console.log("Error fetching challanges " + err);
@@ -135,18 +132,20 @@ function Switzerland() {
 
 
 
-            fetch("./test-data.json")
-                //fetch("0.0.0.0:8000/cantons/")
+            fetch(backend + "/cantons")
                 .then((response) => {
                     return response.json()
                 })
                 .then((data) => {
-                    setGameState(data)
-                    setCantons(data.Cantons)
-                    updateColors(data)
+                    let game = {
+                        cantons: data
+                    }
+                    setGameState(game)
+                    setCantons(game.cantons)
+                    updateColors(game)
                 })
                 .catch((err) => {
-                    console.log("Error fetching user data " + err);
+                    console.log("Error fetching canton data " + err);
                 });
 
 
@@ -287,7 +286,7 @@ function Switzerland() {
 
 
         if (Object.keys(gameState).length > 0) {
-            let item = gameState["Cantons"].find(e => e.name === selected)
+            let item = gameState["cantons"].find(e => e.name === selected)
             if (item) {
                 setSelection(item)
             } else {
@@ -308,7 +307,7 @@ function Switzerland() {
 
 
     function getColorFromGameState(state, value) {
-        let item = state["Cantons"].find(e => e.name === value)
+        let item = state["cantons"].find(e => e.name === value)
         if (item) {
             if (item["team_id"] === team) {
                 return teamColorRange(teamHue)[item.level]
@@ -322,23 +321,27 @@ function Switzerland() {
     function getColorForCanton(value, faded) {
         if (Object.keys(gameState) == 0) return neutral
 
-        let item = gameState["Cantons"].find(e => e.name === value)
+        let item = gameState["cantons"].find(e => e.name === value)
 
         if (item) {
             console.log(faded)
             if (faded) {
                 if (item.team_id === team) {
                     return teamColorsFaded[item.level]
-                } else {
+                } else if (item.team_id) {
                     return enemyColorsFaded[item.level]
+                } else {
+                    return neutral
                 }
 
             } else {
                 console.log("not faded")
                 if (item.team_id === team) {
                     return teamColors[item.level]
-                } else {
+                } else if (item.team_id) {
                     return enemyColors[item.level]
+                } else {
+                    return neutral
                 }
             }
         }
@@ -377,7 +380,7 @@ function Switzerland() {
                                     disablePortal
                                     id="challenge-select"
                                     aria-labelledby="challenge-select"
-                                    options={challenges.map(c => c.Description)}
+                                    options={challenges ? challenges.map(c => c.description) : ["Challanges not found."]}
                                     value={selectedChallenge}
                                     onChange={(d, e) => {
                                         if (e !== null) setSelectedChallenge(e);
