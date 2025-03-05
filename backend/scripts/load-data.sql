@@ -1,39 +1,39 @@
-INSERT INTO canton (name, value, level) VALUES
-    ('Aargau', 1, 0),
-    ('Appenzell Ausserrhoden', 1, 0),
-    ('Appenzell Innerrhoden', 1, 0),
-    ('Basel-Landschaft', 1, 0),
-    ('Basel-Stadt', 1, 0),
-    ('Bern', 1, 0),
-    ('Fribourg', 1, 0),
-    ('Geneva', 1, 0),
-    ('Glarus', 1, 0),
-    ('Graubünden', 1, 0),
-    ('Jura', 1, 0),
-    ('Lucerne', 1, 0),
-    ('Neuchâtel', 1, 0),
-    ('Nidwalden', 1, 0),
-    ('Obwalden', 1, 0),
-    ('Schaffhausen', 1, 0),
-    ('Schwyz', 1, 0),
-    ('Solothurn', 1, 0),
-    ('St. Gallen', 1, 0),
-    ('Thurgau', 1, 0),
-    ('Ticino', 1, 0),
-    ('Uri', 1, 0),
-    ('Valais', 1, 0),
-    ('Vaud', 1, 0),
-    ('Zug', 1, 0),
-    ('Zürich', 1, 0);
+INSERT INTO canton (name, value, level, destroyed) VALUES
+    ('Aargau', 1, 0, false),
+    ('Appenzell Ausserrhoden', 1, 0, false),
+    ('Appenzell Innerrhoden', 1, 0, false),
+    ('Basel-Landschaft', 1, 0, false),
+    ('Basel-Stadt', 1, 0, false),
+    ('Bern', 1, 0, false),
+    ('Fribourg', 1, 0, false),
+    ('Geneva', 1, 0, false),
+    ('Glarus', 1, 0, false),
+    ('Graubünden', 1, 0, false),
+    ('Jura', 1, 0, false),
+    ('Lucerne', 1, 0, false),
+    ('Neuchâtel', 1, 0, false),
+    ('Nidwalden', 1, 0, false),
+    ('Obwalden', 1, 0, false),
+    ('Schaffhausen', 1, 0, false),
+    ('Schwyz', 1, 0, false),
+    ('Solothurn', 1, 0, false),
+    ('St. Gallen', 1, 0, false),
+    ('Thurgau', 1, 0, false),
+    ('Ticino', 1, 0, false),
+    ('Uri', 1, 0, false),
+    ('Valais', 1, 0, false),
+    ('Vaud', 1, 0, false),
+    ('Zug', 1, 0, false),
+    ('Zürich', 1, 0, false);
 
-INSERT INTO powerup (name, description, cost) VALUES
-    ('location', 'See the other teams’ location for some time', 100),
-    ('double up ', 'double payment for traffifs', 100),
-    ('Upper hand', 'Increase your hand size by one temporarily', 100),
-    ('Trade deal', "Trade one card in your hand with one in the opponent's hand.", 100);
+-- INSERT INTO powerup (name, description, cost) VALUES
+--     ('location', 'See the other teams’ location for some time', 100),
+--     ('double up ', 'double payment for traffifs', 100),
+--     ('Upper hand', 'Increase your hand size by one temporarily', 100),
+--     ('Trade deal', "Trade one card in your hand with one in the opponent's hand.", 100);
 
-INSERT INTO curse (name, description, cost) VALUES
-    ('freeze', 'Freeze the other team in place for some time', 1);
+-- INSERT INTO curse (name, description, cost) VALUES
+--     ('freeze', 'Freeze the other team in place for some time', 1);
 
 INSERT INTO challenge (name, description, levels, money) VALUES
     ('easy', 'baby shit', 1, 0),
