@@ -130,7 +130,19 @@ function Switzerland() {
                     return response.json()
                 })
                 .then((data) => {
+                    console.log(data)
                     setChallenges(data)
+                })
+                .catch((err) => {
+                    console.log("Error fetching challanges " + err);
+                });
+
+            fetch(backend + "/powerups/")
+                .then((response) => {
+                    return response.json()
+                })
+                .then((data) => {
+                    setPowerups(data.sort((a,b) => a.cost-b.cost))
                 })
                 .catch((err) => {
                     console.log("Error fetching challanges " + err);
@@ -463,7 +475,7 @@ function Switzerland() {
                                     disablePortal
                                     id="challenge-select"
                                     aria-labelledby="challenge-select"
-                                    options={challenges ? challenges.map(c => c.description) : ["Challanges not found."]}
+                                    options={challenges ? challenges.map(c => (`${c.description} | ${c.levels} Level | ${c.money}₣`)) : ["Challanges not found."]}
                                     value={selectedChallenge}
                                     onChange={(d, e) => {
                                         if (e !== null) setSelectedChallenge(e);
@@ -485,7 +497,7 @@ function Switzerland() {
                                     disablePortal
                                     id="powerup-select"
                                     aria-labelledby="powerup-select"
-                                    options={powerups.map(e => e)}
+                                    options={powerups.map(e => (`${e.description} | ${e.cost}₣`))}
                                     value={powerup}
                                     onChange={(d, e) => {
                                         if (e !== null) setPowerup(e)
@@ -502,7 +514,7 @@ function Switzerland() {
                             <Button variant="outlined" sx={{ m: 1 }} onClick={usePowerup} type="submit">Use Powerup</Button>
                         </Grid2>
                         <Grid2 item size={{ xs: 12, lg: 6 }}>
-                            <FormControl sx={{ width: "100%" }} aria-label="Powerups">
+                            <FormControl sx={{ width: "100%" }} aria-label="Curses">
                                 <Autocomplete
                                     disablePortal
                                     id="curse-select"

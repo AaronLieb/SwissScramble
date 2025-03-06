@@ -5,13 +5,14 @@ import sqlite3
 import csv
 
 from ..config import settings
-from .models import Challenge, Curse
+from .models import Challenge, Curse, PowerUp
 
 def create_db_and_tables():
     SQLModel.metadata.create_all(engine)
     load_default_data()
     load_challenges(engine)
     load_curses(engine)
+    load_powerups(engine)
 
 def load_default_data():
     with open('scripts/load-data.sql', 'r') as sql_file:
@@ -49,6 +50,19 @@ def load_curses(engine):
     with Session(engine) as session:
         for c in curses:
             session.add(c)
+            session.commit()
+
+def load_powerups(engine):
+    powerups = []
+    with open('database/powerups.tsv', newline='') as csvfile:
+        reader = csv.reader(csvfile, delimiter='\t', quotechar='"')
+        next(reader) # Discard the header line.
+        for row in reader:
+            powerups.append(PowerUp(name="powerup", description=row[0], cost=row[1])) # Curses all cost 100 money.
+
+    with Session(engine) as session:
+        for p in powerups:
+            session.add(p)
             session.commit()
 
 def get_session():
