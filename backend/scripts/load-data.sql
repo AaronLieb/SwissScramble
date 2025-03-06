@@ -32,15 +32,6 @@ INSERT INTO canton (name, value, level, destroyed, team_id) VALUES
 --     ('Upper hand', 'Increase your hand size by one temporarily', 100),
 --     ('Trade deal', "Trade one card in your hand with one in the opponent's hand.", 100);
 
--- INSERT INTO curse (name, description, cost) VALUES
---     ('freeze', 'Freeze the other team in place for some time', 1);
-
-INSERT INTO challenge (name, description, levels, money) VALUES
-    ('easy', 'baby shit', 1, 0),
-    ('medium', 'based', 2, 2),
-    ('hard', 'eat nails', 3, 5);
-
-
 INSERT INTO team (name, money, score) VALUES ('A team', 0, 0);
 INSERT INTO team (name, money, score) VALUES ('Timsaac', 0, 0);
 
