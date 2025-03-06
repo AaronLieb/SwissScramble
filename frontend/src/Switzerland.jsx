@@ -7,6 +7,7 @@ import {
     Button,
     Autocomplete,
     TextField,
+    Typography,
     Alert,
     Stack,
 } from "@mui/material";
@@ -81,7 +82,7 @@ function Switzerland() {
             enqueueSnackbar("No powerup selected", {variant: "error", autoHideDuration: 6000})
             return
         }
-        let text = `Are you sure you want to purchase "${powerup}"?`
+        let text = `Are you sure you want to use "${powerup}"?`
         if (!window.confirm(text)) {
             return
         }
@@ -122,11 +123,6 @@ function Switzerland() {
                 .catch((err) => {
                     console.log("Error rendering map data " + err);
                 });
-
-            // Get Location
-            navigator.geolocation.getCurrentPosition((position) => {
-                console.log(position)
-            });
 
             fetch(backend + "/challenges/")
                 .then((response) => {
@@ -251,9 +247,6 @@ function Switzerland() {
             .attr("class", "canton")
             .attr("d", path)
             .attr("id", d => d.properties.name)
-            //.attr("fill", neutral)
-            //.attr("fill", d => d.properties.fill)
-            //.attr("stroke", d => d.properties.stroke)
             .attr("stroke", "black")
             .attr("stroke-width", "0.1px")
         // .on('mouseover', function () {
@@ -396,9 +389,9 @@ function Switzerland() {
                 </Paper>
                     <Grid2 item direction={"column"}>
                     <Stack spacing={2}>
-                    <h2>💰 {money}₣</h2>
+                    <Typography variant="h4" align="left">💰 {money}₣</Typography>
                     <Stack spacing={2} direction={"row"}>
-                    <h2>💪 </h2>
+                    <Typography variant="h4" align="left">💪 </Typography>
                     {curses.map(e => (
                         <Paper elevation={elevation} sx={{ maxWidth: "4%" }} key={e} variant="outlined">
                         <img width={"100%"} height={"100%"} src={card} />
@@ -406,7 +399,7 @@ function Switzerland() {
                     ))}
                     </Stack>
                     <Stack spacing={2} direction={"row"}>
-                    <h2>👺 </h2>
+                    <Typography variant="h4" align="left">👺 </Typography>
                     {curses.map(e => (
                         <Paper elevation={elevation} sx={{ maxWidth: "4%" }} key={e} variant="outlined">
                         <img width={"100%"} height={"100%"} src={cursecard} />
@@ -425,11 +418,11 @@ function Switzerland() {
                         >
                     {selection ?
                         (<>
-                            <h2>{selection.name}</h2><h2>Team {selection.team_id}</h2><h2>Level {selection.level}</h2>
+                            <Typography variant="h4" align="left">{selection.name}</Typography><Typography variant="h4" align="left">Team {selection.team_id}</Typography><Typography variant="h4" align="left">Level {selection.level}</Typography>
                         </>)
                         : (
                             <>
-                                <h2>Select a Canton</h2>
+                                <Typography variant="h4" align="left">Select a Canton</Typography>
                             </>
                         )
                     }
@@ -440,24 +433,6 @@ function Switzerland() {
                 </Paper>
                 <Paper sx={{ padding: "2%" }} elevation={elevation}>
                     <Grid2 spacing={2} container>
-                        <Grid2 item size={{ xs: 12, lg: 12 }}>
-                            <FormControl aria-label="Challenge selection" sx={{ width: "100%" }}>
-                                <Autocomplete
-                                    disablePortal
-                                    id="challenge-select"
-                                    aria-labelledby="challenge-select"
-                                    options={challenges ? challenges.map(c => c.description) : ["Challanges not found."]}
-                                    value={selectedChallenge}
-                                    onChange={(d, e) => {
-                                        if (e !== null) setSelectedChallenge(e);
-                                        else setSelectedChallenge("");
-                                    }}
-                                    renderInput={(params) => (
-                                        <TextField {...params} label="Challenge" />
-                                    )}
-                                />
-                            </FormControl>
-                        </Grid2>
                         <Grid2 item size={{ xs: 12, lg: 6 }}>
                             <FormControl sx={{ width: "100%" }} aria-label="Canton selection">
                                 <Autocomplete
@@ -479,6 +454,24 @@ function Switzerland() {
                         <Grid2 item size={{ xs: 12, lg: 6 }}>
                             <Button variant="outlined" sx={{ m: 1 }} onClick={console.log} type="submit">Enter Canton</Button>
                             <Button variant="outlined" sx={{ m: 1 }} onClick={console.log} type="submit">Submit Challenge</Button>
+                        </Grid2>
+                        <Grid2 item size={{ xs: 12, lg: 12 }}>
+                            <FormControl aria-label="Challenge selection" sx={{ width: "100%" }}>
+                                <Autocomplete
+                                    disablePortal
+                                    id="challenge-select"
+                                    aria-labelledby="challenge-select"
+                                    options={challenges ? challenges.map(c => c.description) : ["Challanges not found."]}
+                                    value={selectedChallenge}
+                                    onChange={(d, e) => {
+                                        if (e !== null) setSelectedChallenge(e);
+                                        else setSelectedChallenge("");
+                                    }}
+                                    renderInput={(params) => (
+                                        <TextField {...params} label="Challenge" />
+                                    )}
+                                />
+                            </FormControl>
                         </Grid2>
                     </Grid2>
                 </Paper>
