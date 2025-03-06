@@ -3,9 +3,11 @@ import {
     FormControl,
     Chip,
     Paper,
+    Snackbar,
     Button,
     Autocomplete,
     TextField,
+    Alert,
     Stack,
 } from "@mui/material";
 import * as d3 from 'd3';
@@ -71,6 +73,19 @@ function Switzerland() {
 
     const [money, setMoney] = useState(0)
 
+    // Snackbar for alerts
+    const [open, setOpen] = useState(false)
+    const [message, setMessage] = useState("")
+    const [severity, setSeverity] = useState("info")
+    function closeSnackbar() {
+        setOpen(false)
+    }
+    function openSnackbar(msg, sev) {
+        setOpen(true)
+        setMessage(msg)
+        setSeverity(sev)
+    }
+
     // purchasePowerup purchases a powerup.
     function purchasePowerup() {
         let text = `Are you sure you want to purchase "${powerup}"?`
@@ -82,6 +97,10 @@ function Switzerland() {
 
     // usePowerup purchases a powerup.
     function usePowerup() {
+        if(powerup === "") {
+            openSnackbar("No curse selected", "error")
+            return
+        }
         let text = `Are you sure you want to purchase "${powerup}"?`
         if (!window.confirm(text)) {
             return
@@ -92,7 +111,7 @@ function Switzerland() {
 
     // purchaseCurse purchases a curse.
     function purchaseCurse() {
-        let text = `Are you sure you want to a random curse for 100₣?`
+        let text = `Are you sure you want to purchase a random curse for 100₣?`
         if (!window.confirm(text)) {
             return
         }
@@ -100,7 +119,11 @@ function Switzerland() {
 
     // useCurse purchases a curse.
     function useCurse() {
-        let text = `Are you sure you want to a random curse for 100₣?`
+        if(curse === "") {
+            openSnackbar("No curse selected", "error")
+            return
+        }
+        let text = `Are you sure you want to use ${curse}?`
         if (!window.confirm(text)) {
             return
         }
@@ -372,6 +395,16 @@ function Switzerland() {
 
     return (
         <>
+            <Snackbar open={open} autoHideDuration={6000} onClose={closeSnackbar}>
+            <Alert
+                onClose={closeSnackbar}
+                severity={severity}
+                variant="filled"
+                sx={{ width: '100%' }}
+            >
+                {message}
+            </Alert>
+            </Snackbar>
             <Grid2 spacing={2} container direction="column">
                 <Paper elevation={elevation}>
                     <h1 className='display-3 mb-0'>Swiss Scramble 🇨🇭</h1>
