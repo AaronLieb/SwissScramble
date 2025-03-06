@@ -67,8 +67,8 @@ class Canton(SQLModel, table=True):
     name: str
     value: int = Field(default=1)
     level: int = Field(default=0)
-    team_id: int | None = Field(default=None, foreign_key="team.id")
     destroyed: bool = Field(default=False)
+    team_id: int | None = Field(default=None, foreign_key="team.id")
 
     team: Team | None = Relationship(back_populates="cantons")
 

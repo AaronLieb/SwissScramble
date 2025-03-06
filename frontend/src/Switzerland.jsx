@@ -6,15 +6,18 @@ import {
     Button,
     Autocomplete,
     TextField,
+    Stack,
 } from "@mui/material";
 import * as d3 from 'd3';
 import { useEffect, useState, useRef } from 'react';
 import './App.css';
 import * as topojson from 'topojson-client'
+import card from './assets/card.jpg'
+import cursecard from './assets/curse.jpeg'
 
 function Switzerland() {
     const backend = import.meta.env.VITE_BACKEND_URL
-    const elevation = 3
+    const elevation = 5
 
     const countries = []
 
@@ -25,20 +28,20 @@ function Switzerland() {
     const bombed = "black";
 
     //const teamColors = ["#e8e8e8", "#CAB4E4", "#C58BD2", "#8e64ac"]
-    const teamColors = ["#e8e8e8", "oklch(75% 0.1 300)", "oklch(55% 0.1 300)", "oklch(45% 0.1 300)"]
+    const teamColors = ["oklch(75% 0.1801 216.4)", "oklch(75% 0.1 300)", "oklch(55% 0.1 300)", "oklch(45% 0.1 300)"]
     const teamHue = "300"
     const enemyHue = "175"
     const teamColorRange = (hue) => {
         return ["#e8e8e8", `oklch(75% 0.1 ${hue})`, `oklch(55% 0.1 ${hue})`, `oklch(45% 0.1 ${hue})`]
     }
-    const teamColorsFaded = ["#e8e8e8", "oklch(75% 0.03 300)", "oklch(55% 0.03 300)", "oklch(45% 0.03 300)"]
+    const teamColorsFaded = ["oklch(75% 0.1801 216.4)", "oklch(75% 0.03 300)", "oklch(55% 0.03 300)", "oklch(45% 0.03 300)"]
 
 
     const enemyColors = ["oklch(75% 0.1801 216.4)", "oklch(75% 0.1 175)", "oklch(55% 0.1 175)", "oklch(45% 0.1 175)"]
     const enemyColorsFaded = ["oklch(75% 0.1801 216.4)", "oklch(75% 0.03 175)", "oklch(55% 0.03 175)", "oklch(45% 0.03 175)"]
 
 
-    const [team, setTeam] = useState("myid")
+    const [team, setTeam] = useState(1)
 
     const [mapLoaded, setMapLoaded] = useState(false)
     const neutral = "oklch(90% 0 360)"
@@ -62,6 +65,9 @@ function Switzerland() {
     // Shop values with selection.
     const [powerups, setPowerups] = useState(["A", "B"])
     const [powerup, setPowerup] = useState("")
+    
+    const [curses, setCurses] = useState(["poop", "curse curse curse", "aaaaaahhhhh"])
+    const [curse, setCurse] = useState("")
 
     const [money, setMoney] = useState(0)
 
@@ -74,6 +80,16 @@ function Switzerland() {
         console.log(powerup)
     }
 
+    // usePowerup purchases a powerup.
+    function usePowerup() {
+        let text = `Are you sure you want to purchase "${powerup}"?`
+        if (!window.confirm(text)) {
+            return
+        }
+        console.log(powerup)
+    }
+
+
     // purchaseCurse purchases a curse.
     function purchaseCurse() {
         let text = `Are you sure you want to a random curse for 100₣?`
@@ -81,6 +97,16 @@ function Switzerland() {
             return
         }
     }
+
+    // useCurse purchases a curse.
+    function useCurse() {
+        let text = `Are you sure you want to a random curse for 100₣?`
+        if (!window.confirm(text)) {
+            return
+        }
+    }
+
+
 
     useEffect(() => {
         setTeam("myid")
@@ -132,7 +158,7 @@ function Switzerland() {
 
 
 
-            fetch(backend + "/cantons")
+            fetch(backend + "/cantons/")
                 .then((response) => {
                     return response.json()
                 })
@@ -153,31 +179,31 @@ function Switzerland() {
     }, []);
 
     // Print this user's location every 5 seconds.
-    useInterval(function() {
-        navigator.geolocation.getCurrentPosition((position) => {
-            console.log(position)
-        });
-    }, 5000)
+    // useInterval(function() {
+    //     navigator.geolocation.getCurrentPosition((position) => {
+    //         console.log(position)
+    //     });
+    // }, 5000)
 
-    function useInterval(callback, delay) {
-        const savedCallback = useRef();
+    // function useInterval(callback, delay) {
+    //     const savedCallback = useRef();
        
-        // Remember the latest callback.
-        useEffect(() => {
-          savedCallback.current = callback;
-        }, [callback]);
+    //     // Remember the latest callback.
+    //     useEffect(() => {
+    //       savedCallback.current = callback;
+    //     }, [callback]);
        
-        // Set up the interval.
-        useEffect(() => {
-          function tick() {
-            savedCallback.current();
-          }
-          if (delay !== null) {
-            let id = setInterval(tick, delay);
-            return () => clearInterval(id);
-          }
-        }, [delay]);
-    }
+    //     // Set up the interval.
+    //     useEffect(() => {
+    //       function tick() {
+    //         savedCallback.current();
+    //       }
+    //       if (delay !== null) {
+    //         let id = setInterval(tick, delay);
+    //         return () => clearInterval(id);
+    //       }
+    //     }, [delay]);
+    // }
 
     // drawMap renders on the svg an interactive map.
     // It sets the projection, zoom functionality and coloring.
@@ -224,7 +250,7 @@ function Switzerland() {
             .attr("class", "canton")
             .attr("d", path)
             .attr("id", d => d.properties.name)
-            .attr("fill", neutral)
+            //.attr("fill", neutral)
             //.attr("fill", d => d.properties.fill)
             //.attr("stroke", d => d.properties.stroke)
             .attr("stroke", "black")
@@ -307,9 +333,9 @@ function Switzerland() {
 
 
     function getColorFromGameState(state, value) {
-        let item = state["cantons"].find(e => e.name === value)
+        let item = state.cantons.find(e => e.name === value)
         if (item) {
-            if (item["team_id"] === team) {
+            if (item.team_id === team) {
                 return teamColorRange(teamHue)[item.level]
             } else {
                 return teamColorRange(enemyHue)[item.level]
@@ -320,25 +346,21 @@ function Switzerland() {
 
     function getColorForCanton(value, faded) {
         if (Object.keys(gameState) == 0) return neutral
-
         let item = gameState["cantons"].find(e => e.name === value)
-
         if (item) {
-            console.log(faded)
             if (faded) {
-                if (item.team_id === team) {
+                if (item.team_id === 1) {
                     return teamColorsFaded[item.level]
-                } else if (item.team_id) {
+                } else if (item.team_id === 2) {
                     return enemyColorsFaded[item.level]
                 } else {
                     return neutral
                 }
 
             } else {
-                console.log("not faded")
-                if (item.team_id === team) {
+                if (item.team_id === 1) {
                     return teamColors[item.level]
-                } else if (item.team_id) {
+                } else if (item.team_id === 2) {
                     return enemyColors[item.level]
                 } else {
                     return neutral
@@ -354,23 +376,49 @@ function Switzerland() {
                 <Paper elevation={elevation}>
                     <h1 className='display-3 mb-0'>Swiss Scramble 🇨🇭</h1>
                 </Paper>
-                <Paper elevation={elevation}>
-                    <Grid2 item className='h-100' size={12}>
-                        <svg id="travelmap"></svg>
+                    <Grid2 item direction={"column"}>
+                    <Stack spacing={2}>
+                    <h2>💰 {money}₣</h2>
+                    <Stack spacing={2} direction={"row"}>
+                    <h2>💪 </h2>
+                    {curses.map(e => (
+                        <Paper elevation={elevation} sx={{ maxWidth: "4%" }} key={e} variant="outlined">
+                        <img width={"100%"} height={"100%"} src={card} />
+                        </Paper>
+                    ))}
+                    </Stack>
+                    <Stack spacing={2} direction={"row"}>
+                    <h2>👺 </h2>
+                    {curses.map(e => (
+                        <Paper elevation={elevation} sx={{ maxWidth: "4%" }} key={e} variant="outlined">
+                        <img width={"100%"} height={"100%"} src={cursecard} />
+                        </Paper>
+                    ))}
+                    </Stack>
+                    </Stack>
                     </Grid2>
-                </Paper>
-                <Paper sx={{ padding: "2%" }} elevation={elevation}>
-                    <h2>Money: {money}₣</h2>
+                    <Paper elevation={elevation}>
+                    <Grid2
+                        container
+                        direction={"row"}
+                        spacing={2}
+                        alignItems="center"
+                        justifyContent={"space-around"}
+                        >
                     {selection ?
                         (<>
-                            <h2>Canton: {selection.name} Team: {selection.team_id} Level: {selection.level}</h2>
+                            <h2>{selection.name}</h2><h2>Team {selection.team_id}</h2><h2>Level {selection.level}</h2>
                         </>)
                         : (
                             <>
-                                <h2>Canton: Team: Level: </h2>
+                                <h2>Select a Canton</h2>
                             </>
                         )
                     }
+                    </Grid2>
+                    <Grid2 item className='h-100' size={12}>
+                        <svg id="travelmap"></svg>
+                    </Grid2>
                 </Paper>
                 <Paper sx={{ padding: "2%" }} elevation={elevation}>
                     <Grid2 spacing={2} container>
@@ -438,10 +486,29 @@ function Switzerland() {
                         </Grid2>
                         <Grid2 item size={{ xs: 12, lg: 6 }}>
                             <Button variant="outlined" sx={{ m: 1 }} onClick={purchasePowerup} type="submit">Purchase Power-Up</Button>
-                            <Button variant="outlined" sx={{ m: 1 }} onClick={purchaseCurse} type="submit">Purchase Curse</Button>
+                            <Button variant="outlined" sx={{ m: 1 }} onClick={usePowerup} type="submit">Use Powerup</Button>
                         </Grid2>
                         <Grid2 item size={{ xs: 12, lg: 6 }}>
-                            <h4>Curses</h4>
+                            <FormControl sx={{ width: "100%" }} aria-label="Powerups">
+                                <Autocomplete
+                                    disablePortal
+                                    id="curse-select"
+                                    aria-labelledby="curse-select"
+                                    options={curses.map(e => e)}
+                                    value={curse}
+                                    onChange={(d, e) => {
+                                        if (e !== null) setCurse(e)
+                                        else setCurse("");
+                                    }}
+                                    renderInput={(params) => (
+                                        <TextField {...params} label="Curses" />
+                                    )}
+                                />
+                            </FormControl>
+                        </Grid2>
+                        <Grid2 item size={{ xs: 12, lg: 6 }}>
+                            <Button variant="outlined" sx={{ m: 1 }} onClick={purchaseCurse} type="submit">Purchase Curse</Button>
+                            <Button variant="outlined" sx={{ m: 1 }} onClick={useCurse} type="submit">Use Curse</Button>
                         </Grid2>
                     </Grid2>
                 </Paper>

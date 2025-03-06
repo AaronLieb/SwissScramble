@@ -5,6 +5,7 @@ import time
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from .database.database import create_db_and_tables
 from .auth.api import router as auth_router
@@ -37,6 +38,15 @@ app = FastAPI(lifespan=lifespan)
 app.include_router(auth_router)
 app.include_router(game_router)
 
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 def start_schedule_thread(interval=1):
     stop = threading.Event()
