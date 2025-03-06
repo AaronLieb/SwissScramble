@@ -111,7 +111,7 @@ class CurseBase(SQLModel):
     id: int | None = Field(default=None, primary_key=True)
 
 
-class Curse(CurseBase):
+class Curse(CurseBase, table=True):
     id: int | None = Field(default=None, primary_key=True)
     name: str
     description: str
@@ -121,12 +121,11 @@ class Curse(CurseBase):
 class BuyCursePost(CurseBase):
     pass
 
-
 class PowerUpBase(SQLModel):
     id: int | None = Field(default=None, primary_key=True)
 
 
-class PowerUp(PowerUpBase):
+class PowerUp(PowerUpBase, table=True):
     id: int | None = Field(default=None, primary_key=True)
     name: str
     description: str
