@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import * as d3 from 'd3';
 import { useEffect, useState, useRef } from 'react';
+import { NavLink } from 'react-router';
 import './App.css';
 import * as topojson from 'topojson-client'
 import card from './assets/card.jpg'
@@ -386,6 +387,7 @@ function Switzerland() {
             <Grid2 spacing={2} container direction="column">
                 <Paper elevation={elevation}>
                     <h1 className='display-3 mb-0'>Swiss Scramble 🇨🇭</h1>
+                    <NavLink to='/login'>Log in</NavLink>
                 </Paper>
                     <Grid2 item direction={"column"}>
                     <Stack spacing={2}>
