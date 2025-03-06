@@ -16,20 +16,16 @@ import './App.css';
 import * as topojson from 'topojson-client'
 import card from './assets/card.jpg'
 import cursecard from './assets/curse.jpeg'
+import { SnackbarProvider, enqueueSnackbar } from 'notistack';
 
 function Switzerland() {
     const backend = import.meta.env.VITE_BACKEND_URL
     const elevation = 5
 
-    const countries = []
-
-    // https://hihayk.github.io/scale/#0/4/50/73/-51/75/67/14/be64ac/190/100/172/white
-    // https://oklch.com/#71.81,0.1,175,100 change lightness value
-    //const colors = ["#e8e8e8", "#ace4e4", "#5ac8c8", "#dfb0d6", "#a5add3", "#5698b9", "#be64ac", "#8c62aa", "#3b4994"];
-
     const bombed = "black";
 
-    //const teamColors = ["#e8e8e8", "#CAB4E4", "#C58BD2", "#8e64ac"]
+    // Coloring for map.
+    const highlightColor = 'oklch(75% 0.1801 216.4)'
     const teamColors = ["oklch(75% 0.1801 216.4)", "oklch(75% 0.1 300)", "oklch(55% 0.1 300)", "oklch(45% 0.1 300)"]
     const teamHue = "300"
     const enemyHue = "175"
@@ -38,24 +34,21 @@ function Switzerland() {
     }
     const teamColorsFaded = ["oklch(75% 0.1801 216.4)", "oklch(75% 0.03 300)", "oklch(55% 0.03 300)", "oklch(45% 0.03 300)"]
 
-
     const enemyColors = ["oklch(75% 0.1801 216.4)", "oklch(75% 0.1 175)", "oklch(55% 0.1 175)", "oklch(45% 0.1 175)"]
     const enemyColorsFaded = ["oklch(75% 0.1801 216.4)", "oklch(75% 0.03 175)", "oklch(55% 0.03 175)", "oklch(45% 0.03 175)"]
 
-
-    const [team, setTeam] = useState(1)
-
+    // Interactivity for map.
+    const width = 900, height = 500;
     const [mapLoaded, setMapLoaded] = useState(false)
     const neutral = "oklch(90% 0 360)"
-    const highlightColor = 'oklch(75% 0.1801 216.4)'
-
-    const width = 900, height = 500;
 
 
     const [canton, setCanton] = useState("");
     const [cantons, setCantons] = useState([])
     const [selection, setSelection] = useState(null)
-    
+
+    const [team, setTeam] = useState(1)
+
     // gameState holds the controlled cantons with their levels.
     const [gameState, setGameState] = useState({})
     
@@ -73,19 +66,6 @@ function Switzerland() {
 
     const [money, setMoney] = useState(0)
 
-    // Snackbar for alerts
-    const [open, setOpen] = useState(false)
-    const [message, setMessage] = useState("")
-    const [severity, setSeverity] = useState("info")
-    function closeSnackbar() {
-        setOpen(false)
-    }
-    function openSnackbar(msg, sev) {
-        setOpen(true)
-        setMessage(msg)
-        setSeverity(sev)
-    }
-
     // purchasePowerup purchases a powerup.
     function purchasePowerup() {
         let text = `Are you sure you want to purchase "${powerup}"?`
@@ -98,7 +78,7 @@ function Switzerland() {
     // usePowerup purchases a powerup.
     function usePowerup() {
         if(powerup === "") {
-            openSnackbar("No curse selected", "error")
+            enqueueSnackbar("No powerup selected", {variant: "error", autoHideDuration: 6000})
             return
         }
         let text = `Are you sure you want to purchase "${powerup}"?`
@@ -120,7 +100,7 @@ function Switzerland() {
     // useCurse purchases a curse.
     function useCurse() {
         if(curse === "") {
-            openSnackbar("No curse selected", "error")
+            enqueueSnackbar("No curse selected", {variant: "error", autoHideDuration: 6000})
             return
         }
         let text = `Are you sure you want to use ${curse}?`
@@ -128,8 +108,6 @@ function Switzerland() {
             return
         }
     }
-
-
 
     useEffect(() => {
         setTeam("myid")
@@ -395,16 +373,23 @@ function Switzerland() {
 
     return (
         <>
-            <Snackbar open={open} autoHideDuration={6000} onClose={closeSnackbar}>
-            <Alert
-                onClose={closeSnackbar}
-                severity={severity}
-                variant="filled"
-                sx={{ width: '100%' }}
-            >
-                {message}
-            </Alert>
-            </Snackbar>
+            {/* {events.map((e,idx) => (
+                <Snackbar open={true} key={e+idx} autoHideDuration={6000} onClose={closeSnackbar}>
+                <Alert
+                    onClose={closeSnackbar}
+                    severity={e.severity}
+                    variant="filled"
+                    sx={{ width: '100%' }}
+                >
+                    {e.message}
+                </Alert>
+                </Snackbar>
+                
+            ))} */}
+            <SnackbarProvider maxSnack={3} />
+
+
+
             <Grid2 spacing={2} container direction="column">
                 <Paper elevation={elevation}>
                     <h1 className='display-3 mb-0'>Swiss Scramble 🇨🇭</h1>

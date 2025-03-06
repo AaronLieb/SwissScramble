@@ -17,6 +17,7 @@
     "@mui/styled-engine-sc": "^6.4.3",
     "d3": "^7.9.0",
     "mate": "^0.21.0",
+    "notistack": "^3.0.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "styled-components": "^6.1.15",
