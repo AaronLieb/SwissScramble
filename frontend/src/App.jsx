@@ -9,6 +9,9 @@ import { red, purple } from '@mui/material/colors';
 import { BrowserRouter as Router, Routes, Route } from "react-router";
 
 const theme = createTheme({
+  typography: {
+    fontFamily: "Helvetica"
+  },
   palette: {
     primary: red,
     secondary: purple,
@@ -16,8 +19,6 @@ const theme = createTheme({
 });
 
 function App() {
-
-
     return (
         <Router>
             <Routes>
