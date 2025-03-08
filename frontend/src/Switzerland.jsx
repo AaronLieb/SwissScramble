@@ -12,6 +12,9 @@ import {
     Stack,
 } from "@mui/material";
 import * as d3 from 'd3';
+import { grey } from '@mui/material/colors';
+import { styled } from '@mui/material/styles';
+import Drawer from './Drawer.jsx'
 import { useEffect, useState, useRef } from 'react';
 import { NavLink } from 'react-router';
 import './App.css';
@@ -67,6 +70,7 @@ function Switzerland() {
     const [curse, setCurse] = useState("")
 
     const [money, setMoney] = useState(0)
+
 
     // purchasePowerup purchases a powerup.
     function purchasePowerup() {
@@ -126,6 +130,7 @@ function Switzerland() {
         }
     }
 
+    // Fetch all data on map load.
     useEffect(() => {
         setTeam("myid")
         if (!mapLoaded) {
@@ -555,6 +560,7 @@ function Switzerland() {
                     </Grid2>
                 </Paper>
             </Grid2>
+            <Drawer elevation={elevation} curses={curses} money={money}  />
         </>
     );
 }
