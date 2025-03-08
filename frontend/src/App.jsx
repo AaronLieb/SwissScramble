@@ -26,60 +26,66 @@ const theme = createTheme({
 });
 
 function App() {
-
+  const backend = import.meta.env.VITE_BACKEND_URL
 
   const toggleDrawer = (newOpen) => () => {
     setDrawerOpen(newOpen);
   };
   const [drawerOpen, setDrawerOpen] = useState(false)
 
+  const [auth, setAuth] = useState(null)
+
   return (
     <Router>
       <Routes>
         <Route path='/' element={
           <ThemeProvider theme={theme}>
-          <div>
-            <AppBar  position="fixed">
-              <Toolbar>
-                <IconButton
-                  size="large"
-                  edge="start"
-                  color="grey"
-                  aria-label="menu"
-                  onClick={toggleDrawer(!drawerOpen)}
-                  sx={{ mr: 2 }}
-                >
-                  <MenuIcon />
-                </IconButton>
-                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                  Swiss Scramble 🇨🇭
-                </Typography>
-                <Button color="inherit"><NavLink   style={{color: "white"}} to='/login'>Log in</NavLink></Button>
-              </Toolbar>
-            </AppBar>
-            <Grid2 container
-              id="home"
-            >
-            </Grid2>
-            <Grid2 container>
-              <Grid2 item xs={0} lg={3}></Grid2>
-              <Grid2 item xs={12}>
-                <ThemeProvider theme={theme}>
-                  <Switzerland
-                    toggleDrawer={toggleDrawer}
-                    drawerOpen={drawerOpen}
-                    setDrawerOpen={setDrawerOpen}
-                  />
-                </ThemeProvider>
+            <div>
+              <AppBar position="fixed">
+                <Toolbar>
+                  {auth && (
+                    <IconButton
+                      size="large"
+                      edge="start"
+                      color="grey"
+                      aria-label="menu"
+                      onClick={toggleDrawer(!drawerOpen)}
+                      sx={{ mr: 2 }}
+                    >
+                      <MenuIcon />
+                    </IconButton>
+                  )}
+                  <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                    Swiss Scramble 🇨🇭
+                  </Typography>
+                  <Button color="inherit"><NavLink style={{ color: "white" }} to='/login'>Log in</NavLink></Button>
+                </Toolbar>
+              </AppBar>
+              <Grid2 container
+                id="home"
+              >
               </Grid2>
-              <Grid2 item xs={0} lg={3}></Grid2>
-            </Grid2>
-          </div>
+              <Grid2 container>
+                <Grid2 item xs={0} lg={3}></Grid2>
+                <Grid2 item xs={12}>
+                  <ThemeProvider theme={theme}>
+                    <Switzerland
+                      auth={auth}
+                      backend={backend}
+                      toggleDrawer={toggleDrawer}
+                      drawerOpen={drawerOpen}
+                      setDrawerOpen={setDrawerOpen}
+                    />
+                  </ThemeProvider>
+                </Grid2>
+                <Grid2 item xs={0} lg={3}></Grid2>
+              </Grid2>
+            </div>
           </ThemeProvider>
         } />
         <Route path='/login' element={
           <ThemeProvider theme={theme}>
-            <Login />
+            <Login backend={backend} />
           </ThemeProvider>
         } />
       </Routes>

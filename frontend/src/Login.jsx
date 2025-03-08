@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -76,7 +77,9 @@ export default function Login(props) {
     const data = new FormData(event.currentTarget);
   };
 
-  const validateInputs = () => {
+  const validateInputs = (event) => {
+    event.preventDefault()
+
     const username = document.getElementById('username');
     const password = document.getElementById('password');
 
@@ -91,7 +94,7 @@ export default function Login(props) {
       setUsernameErrorMessage('');
     }
 
-    if (!password.value || password.value.length < 6) {
+    if (!password.value || password.value.length < 4) {
       setPasswordError(true);
       setPasswordErrorMessage('Password must be at least 6 characters long.');
       isValid = false;
@@ -99,9 +102,26 @@ export default function Login(props) {
       setPasswordError(false);
       setPasswordErrorMessage('');
     }
+    tryLogin(username,password)
 
     return isValid;
   };
+
+  function tryLogin(username, password) {
+    fetch(props.backend + "/auth/token",{
+      method: 'POST',
+      body: JSON.stringify({
+          username: 'timjhh',
+          password: 'hello',
+      }),
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      }
+  }).then((response) => {
+    console.log(response)
+    return response.json()
+  })
+  }
 
   return (
       <SignInContainer direction="column" justifyContent="space-between">

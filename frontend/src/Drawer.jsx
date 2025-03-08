@@ -45,9 +45,6 @@ function Drawer(props) {
                     },
                 }}
             />
-            <Grid2 sx={{ textAlign: 'center', pt: 1 }}>
-                <Button onClick={props.toggleDrawer(true)}>Open</Button>
-            </Grid2>
             <SwipeableDrawer
                 anchor="bottom"
                 container={container}

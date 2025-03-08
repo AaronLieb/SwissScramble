@@ -1,10 +1,10 @@
+/* eslint-disable react/prop-types */
 import {
     Grid2,
-    FormControl,
+    LinearProgress,
     Paper,
-    Button,
-    Autocomplete,
-    TextField,
+    Typography,
+    Box,
 } from "@mui/material";
 import * as d3 from 'd3';
 import { grey } from '@mui/material/colors';
@@ -14,10 +14,10 @@ import { useEffect, useState, useRef } from 'react';
 import './App.css';
 import * as topojson from 'topojson-client'
 import { SnackbarProvider, enqueueSnackbar } from 'notistack';
-import Hud from "./Hud";
+import AuthDisplay from "./AuthDisplay.jsx";
+import Score from "./Score.jsx";
 
 function Switzerland(props) {
-    const backend = import.meta.env.VITE_BACKEND_URL
     const elevation = 5
 
     const bombed = "black";
@@ -49,83 +49,13 @@ function Switzerland(props) {
 
     // gameState holds the controlled cantons with their levels.
     const [gameState, setGameState] = useState({})
-    
 
-    // Challenge form related info
-    const [challenges, setChallenges] = useState([])
-    const [selectedChallenge, setSelectedChallenge] = useState("")
-
-    // Shop values with selection.
-    const [powerups, setPowerups] = useState(["A", "B"])
-    const [powerup, setPowerup] = useState("")
-    
-    const [curses, setCurses] = useState(["poop", "curse curse curse", "aaaaaahhhhh"])
-    const [curse, setCurse] = useState("")
-
+    // Player state.
     const [money, setMoney] = useState(0)
+    const [myPowerups, setMyPowerups] = useState([])
+    const [curses, setCurses] = useState(["poop", "curse curse curse", "aaaaaahhhhh"])
 
-
-    // purchasePowerup purchases a powerup.
-    function purchasePowerup() {
-        if(powerup === "") {
-            enqueueSnackbar("No powerup selected", {variant: "error", autoHideDuration: 3000})
-            return
-        }
-        let text = `Are you sure you want to purchase "${powerup}"?`
-        if (!window.confirm(text)) {
-            return
-        }
-        console.log(powerup)
-    }
-
-    // usePowerup purchases a powerup.
-    function usePowerup() {
-        if(powerup === "") {
-            enqueueSnackbar("No powerup selected", {variant: "error", autoHideDuration: 3000})
-            return
-        }
-        let text = `Are you sure you want to use "${powerup}"?`
-        if (!window.confirm(text)) {
-            return
-        }
-        console.log(powerup)
-    }
-
-
-    // purchaseCurse purchases a random curse.
-    async function purchaseCurse() {
-        let text = `Are you sure you want to purchase a random curse for 100₣?`
-        if (window.confirm(text)) {
-            const allCursesResponse = await fetch(backend + "/curses/")
-            if (allCursesResponse.ok) {
-                let curses = await allCursesResponse.json()
-                const curseCount = curses ? curses.length : 0
-                if (!curseCount) {
-                    throw "Failed to fetch curses."
-                }
-                let pick = Math.floor(Math.random() * curseCount)
-                console.log(`Picked curse number ${pick} out of ${curseCount} curses.`)
-                await fetch(backend + "/curse/",{
-                    method: 'POST',
-                    body: JSON.stringify({
-                        id: pick,
-                    }),
-                });
-            }
-        }
-    }
-
-    // useCurse purchases a curse.
-    function useCurse() {
-        if(curse === "") {
-            enqueueSnackbar("No curse selected", {variant: "error", autoHideDuration: 3000})
-            return
-        }
-        let text = `Are you sure you want to use ${curse}?`
-        if (!window.confirm(text)) {
-            return
-        }
-    }
+    const [teamState, setTeamState] = useState([])
 
     // Fetch all data on map load.
     useEffect(() => {
@@ -142,31 +72,8 @@ function Switzerland(props) {
                     console.log("Error rendering map data " + err);
                 });
 
-            fetch(backend + "/challenges/")
-                .then((response) => {
-                    return response.json()
-                })
-                .then((data) => {
-                    console.log(data)
-                    setChallenges(data)
-                })
-                .catch((err) => {
-                    console.log("Error fetching challanges " + err);
-                });
-
-            fetch(backend + "/powerups/")
-                .then((response) => {
-                    return response.json()
-                })
-                .then((data) => {
-                    setPowerups(data.sort((a,b) => a.cost-b.cost))
-                })
-                .catch((err) => {
-                    console.log("Error fetching challanges " + err);
-                });
-
             // Get Location
-            fetch(backend + "/cantons/")
+            fetch(props.backend + "/cantons/")
                 .then((response) => {
                     return response.json()
                 })
@@ -174,9 +81,12 @@ function Switzerland(props) {
                     let game = {
                         cantons: data
                     }
+                    console.log(game)
                     setGameState(game)
                     setCantons(game.cantons)
                     updateColors(game)
+
+                    setTeamState(groupBy(game.cantons, 'team_id'))
                 })
                 .catch((err) => {
                     console.log("Error fetching canton data " + err);
@@ -185,6 +95,16 @@ function Switzerland(props) {
 
         }
     }, []);
+
+
+
+
+    var groupBy = function (xs, key) {
+        return xs.reduce(function (rv, x) {
+            (rv[x[key]] ??= []).push(x);
+            return rv;
+        }, {});
+    };
 
     // Print this user's location every 5 seconds.
     // useInterval(function() {
@@ -195,12 +115,12 @@ function Switzerland(props) {
 
     // function useInterval(callback, delay) {
     //     const savedCallback = useRef();
-       
+
     //     // Remember the latest callback.
     //     useEffect(() => {
     //       savedCallback.current = callback;
     //     }, [callback]);
-       
+
     //     // Set up the interval.
     //     useEffect(() => {
     //       function tick() {
@@ -365,140 +285,40 @@ function Switzerland(props) {
         return neutral
     }
 
-    function handleSubmitChallenge() {
-        const selectedCanton = cantons.find((e) => e.name == canton) || null
-        if (selectedCanton && selectedChallenge) {
-            const response = {
-                id: selectedChallenge.id,
-                canton: selectedCanton.id,
-            }
-            fetch(backend + "/challenge/",
-                  {
-                      method: 'POST',
-                      body: JSON.stringify(response)
-                  }
-                 );
-        } else {
-            console.log("canton:", selectedCanton, "\nchallenge:", selectedChallenge)
-            enqueueSnackbar("No Challenge or Canton specified", {variant: "error", autoHideDuration: 3000})
-            throw "Challenge or canton not specified.";
-        }
-    }
+
 
     return (
         <>
             <SnackbarProvider maxSnack={3} />
             <Drawer elevation={elevation} curses={curses} money={money} drawerOpen={props.drawerOpen} toggleDrawer={props.toggleDrawer} />
             <Grid2 spacing={2} container direction="column">
-                    <Paper elevation={elevation}>
+                <Paper elevation={elevation}>
                     <Grid2
                         container
                         direction={"row"}
                         spacing={2}
                         alignItems="center"
                         justifyContent={"space-around"}
-                        >
+                    >
                     </Grid2>
                     <Grid2 item className='h-100' size={12}>
                         <svg id="travelmap"></svg>
                     </Grid2>
                 </Paper>
-                <Paper sx={{ padding: "2%" }} elevation={elevation}>
-                    <Grid2 spacing={2} container>
-                        <Grid2 item size={{ xs: 12, lg: 6 }}>
-                            <FormControl sx={{ width: "100%" }} aria-label="Canton selection">
-                                <Autocomplete
-                                    disablePortal
-                                    id="challenge-select"
-                                    aria-labelledby="challenge-select"
-                                    options={cantons.map(e => e.name)}
-                                    value={canton}
-                                    onChange={(d, e) => {
-                                        if (e !== null) setCanton(e);
-                                        else setCanton("");
-                                    }}
-                                    renderInput={(params) => (
-                                        <TextField {...params} label="Canton" />
-                                    )}
-                                />
-                            </FormControl>
-                        </Grid2>
-                        <Grid2 item size={{ xs: 12, lg: 6 }}>
-                            <Button variant="outlined" sx={{ m: 1 }} onClick={console.log} type="submit">Enter Canton</Button>
-                            <Button variant="outlined" sx={{ m: 1 }} onClick={handleSubmitChallenge} type="submit">Submit Challenge</Button>
-                        </Grid2>
-                        <Grid2 item size={{ xs: 12, lg: 12 }}>
-                            <FormControl aria-label="Challenge selection" sx={{ width: "100%" }}>
-                                <Autocomplete
-                                    disablePortal
-                                    id="challenge-select"
-                                    aria-labelledby="challenge-select"
-                                    options={challenges || null }
-                                    value={selectedChallenge}
-                                    getOptionLabel={(option) => 
-                                        option ? `${option.description} | ${option.levels} Level | ${option.money}₣` : ''
-                                    }
-                                    onChange={(_, newValue) => {
-                                        setSelectedChallenge(newValue || null)
-                                    }}
-                                    renderInput={(params) => (
-                                        <TextField {...params} label="Challenge" />
-                                    )}
-                                />
-                            </FormControl>
-                        </Grid2>
-                    </Grid2>
-                </Paper>
-                <Paper sx={{ padding: "2%" }} elevation={elevation}>
-                    <Grid2 spacing={2} container>
-                        <Grid2 item size={{ xs: 12, lg: 6 }}>
-                            <FormControl sx={{ width: "100%" }} aria-label="Powerups">
-                                <Autocomplete
-                                    disablePortal
-                                    id="powerup-select"
-                                    aria-labelledby="powerup-select"
-                                    options={powerups.map(e => (`${e.description} | ${e.cost}₣`))}
-                                    value={powerup}
-                                    onChange={(d, e) => {
-                                        if (e !== null) setPowerup(e)
-                                        else setPowerup("");
-                                    }}
-                                    renderInput={(params) => (
-                                        <TextField {...params} label="Powerups" />
-                                    )}
-                                />
-                            </FormControl>
-                        </Grid2>
-                        <Grid2 item size={{ xs: 12, lg: 6 }}>
-                            <Button variant="outlined" sx={{ m: 1 }} onClick={purchasePowerup} type="submit">Purchase Power-Up</Button>
-                            <Button variant="outlined" sx={{ m: 1 }} onClick={usePowerup} type="submit">Use Powerup</Button>
-                        </Grid2>
-                        <Grid2 item size={{ xs: 12, lg: 6 }}>
-                            <FormControl sx={{ width: "100%" }} aria-label="Curses">
-                                <Autocomplete
-                                    disablePortal
-                                    id="curse-select"
-                                    aria-labelledby="curse-select"
-                                    options={curses.map(e => e)}
-                                    value={curse}
-                                    onChange={(d, e) => {
-                                        if (e !== null) setCurse(e)
-                                        else setCurse("");
-                                    }}
-                                    renderInput={(params) => (
-                                        <TextField {...params} label="Curses" />
-                                    )}
-                                />
-                            </FormControl>
-                        </Grid2>
-                        <Grid2 item size={{ xs: 12, lg: 6 }}>
-                            <Button variant="outlined" sx={{ m: 1 }} onClick={purchaseCurse} type="submit">Purchase Curse</Button>
-                            <Button variant="outlined" sx={{ m: 1 }} onClick={useCurse} type="submit">Use Curse</Button>
-                        </Grid2>
-                    </Grid2>
-                </Paper>
+                {props.auth !== null ? (
+                    <AuthDisplay
+                        canton={canton}
+                        setCanton={setCanton}
+                        cantons={cantons}
+                        curses={curses}
+                    />
+                ) : (
+                    <Score teamState={teamState} />
+                )
+                }
+
             </Grid2>
-            
+
         </>
     );
 }
