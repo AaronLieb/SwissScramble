@@ -65,7 +65,7 @@ function App() {
                 id="home"
               >
               </Grid2>
-              <Grid2 container>
+              <Grid2 sx={{ mt: 5 }} container>
                 <Grid2 item xs={0} lg={3}></Grid2>
                 <Grid2 item xs={12}>
                   <ThemeProvider theme={theme}>

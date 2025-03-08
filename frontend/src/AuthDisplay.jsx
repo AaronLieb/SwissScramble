@@ -107,18 +107,19 @@ function AuthDisplay(props) {
         }
     }
 
+    function handleEnterCanton() {
+
+    }
+
 
 
     // Fetch all data on map load.
     useEffect(() => {
-
-
         fetch(props.backend + "/challenges/")
             .then((response) => {
                 return response.json()
             })
             .then((data) => {
-                console.log(data)
                 setChallenges(data)
             })
             .catch((err) => {
@@ -161,8 +162,8 @@ function AuthDisplay(props) {
                         </FormControl>
                     </Grid2>
                     <Grid2 item size={{ xs: 12, lg: 6 }}>
-                        <Button variant="outlined" sx={{ m: 1 }} onClick={console.log} type="submit">Enter Canton</Button>
-                        <Button variant="outlined" sx={{ m: 1 }} onClick={props.handleSubmitChallenge} type="submit">Submit Challenge</Button>
+                        <Button variant="outlined" sx={{ m: 1 }} onClick={handleEnterCanton} type="submit">Enter Canton</Button>
+                        <Button variant="outlined" sx={{ m: 1 }} onClick={handleSubmitChallenge} type="submit">Submit Challenge</Button>
                     </Grid2>
                     <Grid2 item size={{ xs: 12, lg: 12 }}>
                         <FormControl aria-label="Challenge selection" sx={{ width: "100%" }}>

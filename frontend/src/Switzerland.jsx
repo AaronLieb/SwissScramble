@@ -16,6 +16,7 @@ import * as topojson from 'topojson-client'
 import { SnackbarProvider, enqueueSnackbar } from 'notistack';
 import AuthDisplay from "./AuthDisplay.jsx";
 import Score from "./Score.jsx";
+import Events from "./Events.jsx"
 
 function Switzerland(props) {
     const elevation = 5
@@ -41,7 +42,7 @@ function Switzerland(props) {
     const neutral = "oklch(90% 0 360)"
 
 
-    const [canton, setCanton] = useState("");
+    const [canton, setSelectedCanton] = useState("");
     const [cantons, setCantons] = useState([])
     const [selection, setSelection] = useState(null)
 
@@ -56,6 +57,11 @@ function Switzerland(props) {
     const [curses, setCurses] = useState(["poop", "curse curse curse", "aaaaaahhhhh"])
 
     const [teamState, setTeamState] = useState([])
+
+    function setCanton(c) {
+        if(c == "travelmap") setSelectedCanton("")
+        else setSelectedCanton(c)
+    }
 
     // Fetch all data on map load.
     useEffect(() => {
@@ -81,7 +87,6 @@ function Switzerland(props) {
                     let game = {
                         cantons: data
                     }
-                    console.log(game)
                     setGameState(game)
                     setCantons(game.cantons)
                     updateColors(game)
@@ -161,8 +166,19 @@ function Switzerland(props) {
             .attr("height", height)
             .on('click', d => setCanton(d.target.id))
             .attr("style", "max-width: 100%; height: auto; height: intrinsic;")
+        
+        // Experimental feature to add label for selected canton
+        // svg.append("text")
+        //     .text(canton)
+        //     .attr("id", "cantonlabel")
+        //     .attr("z-index", 999)
+        //     .style("color", "rgba(0, 0, 0, 0.6)")
+        //     .attr("font-weight", "light")
+        //     .attr("font-size", "2em")
+        //     .attr("x", 10)
+        //     .attr("y", height-10)
 
-        let g = svg
+            let g = svg
             .append("g")
             .attr("id", "pathsG")
 
@@ -202,11 +218,9 @@ function Switzerland(props) {
     }
 
     useEffect(() => {
-        if (canton == "travelmap") {
-            updateSelected("");
-            setCanton("")
-        }
-        else updateSelected(canton);
+        updateSelected(canton);
+        // Experimental feature to add label for selected canton
+        // d3.select("#cantonlabel").text(canton)
     }, [canton]);
 
     function updateSelected(selected) {
@@ -307,18 +321,18 @@ function Switzerland(props) {
                 </Paper>
                 {props.auth !== null ? (
                     <AuthDisplay
+                        backend={props.backend}
                         canton={canton}
                         setCanton={setCanton}
                         cantons={cantons}
                         curses={curses}
                     />
                 ) : (
-                    <Score teamState={teamState} />
-                )
-                }
+                    <Score canton={canton} elevation={elevation} teamState={teamState} />
+                )}
+                <Events backend={props.backend} elevation={elevation} />
 
             </Grid2>
-
         </>
     );
 }
