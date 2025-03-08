@@ -1,23 +1,15 @@
 /* eslint-disable react/prop-types */
 import {
     Grid2,
-    FormControl,
-    Chip,
-    Paper,
-    Snackbar,
     Button,
-    Autocomplete,
-    Stack,
-    TextField,
     SwipeableDrawer,
     Typography,
-
 } from "@mui/material";
 import { Global } from '@emotion/react';
 import CssBaseline from '@mui/material/CssBaseline';
 import { grey } from '@mui/material/colors';
 import { styled } from '@mui/material/styles';
-import { useEffect, useState, useRef } from 'react';
+
 import challenge from './assets/challengesmall.png'
 import curse from './assets/cursesmall.png'
 
@@ -36,10 +28,7 @@ function Drawer(props) {
         }),
     }));
     const drawerBleeding = 56;
-    const toggleDrawer = (newOpen) => () => {
-        setDrawerOpen(newOpen);
-    };
-    const [drawerOpen, setDrawerOpen] = useState(true)
+
 
     // This is used only for the example
     const container = window !== undefined ? () => window.document.body : undefined;
@@ -51,27 +40,30 @@ function Drawer(props) {
             <Global
                 styles={{
                     '.MuiDrawer-root > .MuiPaper-root': {
-                        height: `calc(50% - ${drawerBleeding}px)`,
+                        height: `calc(25% - ${drawerBleeding}px)`,
                         overflow: 'visible',
                     },
                 }}
             />
             <Grid2 sx={{ textAlign: 'center', pt: 1 }}>
-                <Button onClick={toggleDrawer(true)}>Open</Button>
+                <Button onClick={props.toggleDrawer(true)}>Open</Button>
             </Grid2>
             <SwipeableDrawer
                 anchor="bottom"
                 container={container}
-                open={drawerOpen}
-                onClose={toggleDrawer(false)}
-                onOpen={toggleDrawer(true)}
+                open={props.drawerOpen}
+                onClose={props.toggleDrawer(false)}
+                onOpen={props.toggleDrawer(true)}
                 swipeAreaWidth={drawerBleeding}
                 disableSwipeToOpen={false}
                 keepMounted
             >
                 <Grid2 container
+                    justifyContent={"space-evenly"}
+                    direction={"row"}
+                    wrap='nowrap'
                     sx={{
-                        p: 3,
+                        p: 2,
                         top: -drawerBleeding,
                         borderTopLeftRadius: 8,
                         borderTopRightRadius: 8,
@@ -80,27 +72,20 @@ function Drawer(props) {
                         left: 0,
                     }}
                 >
-                    <Grid2 item size={{ xs: 12, md: 3 }}>
+                    <Grid2 item>
                         <Puller />
                     </Grid2>
-                    <Grid2 item size={{ xs: 12, md: 3 }}>
+                    <Grid2 item sx={{ display: 'inline-flex', alignItems: 'baseline' }} size={{ xs: 3, md: 3 }}>
                         <Typography variant="h3">💰 {props.money}₣</Typography>
                     </Grid2>
-                    <Grid2 item size={{ xs: 12, md: 3 }} spacing={2}>
-                        <Typography variant="h3">💪 </Typography>
-                        {props.curses.map(e => (
-                            <>
-                                <img key={e} height={"25%"} src={challenge} />
-                            </>
-                        ))}
+                    <Grid2 item sx={{ display: 'inline-flex', alignItems: 'baseline' }} size={{ xs: 3, md: 3 }} spacing={2}>
+                        <img height={"25%"} src={challenge} />
+                        <Typography variant="h3"> {props.curses.length} </Typography>
                     </Grid2>
-                    <Grid2 item size={{ xs: 12, md: 3 }} spacing={2}>
-                        <Typography variant="h3">👺 </Typography>
-                        {props.curses.map(e => (
-                            <>
-                                <img key={e} height={"25%"} src={curse} />
-                            </>
-                        ))}
+                    <Grid2 item sx={{ display: 'inline-flex', alignItems: 'baseline' }} size={{ xs: 3, md: 3 }} spacing={2}>
+                        <img height={"25%"} src={curse} />
+                        <Typography variant="h3"> {props.curses.length}</Typography>
+
                     </Grid2>
 
 

@@ -39,5 +39,5 @@ INSERT INTO user (username, firstname, lastname, team_id, hashed_password) VALUE
    ('aaronlieb', 'Aaron', 'Lieberman', 1, '$2b$12$D.Sp6Eavi4YrE0gZ8fC.n.LEkxkvDRosaWSZYlDXQgw9vuzVLN1ne'),
    ('antonio', 'Antonio', 'Alonso', 1, null),
    ('icf', 'Isaac', 'Feldman', 2, null),
-   ('timjh', 'Tim', 'Harrold', 2, null);
+   ('timjhh', 'Tim', 'Harrold', 2, 'hello');
 

@@ -1,28 +1,22 @@
 import {
     Grid2,
     FormControl,
-    Chip,
     Paper,
-    Snackbar,
     Button,
     Autocomplete,
     TextField,
-    Typography,
-    Alert,
-    Stack,
 } from "@mui/material";
 import * as d3 from 'd3';
 import { grey } from '@mui/material/colors';
 import { styled } from '@mui/material/styles';
 import Drawer from './Drawer.jsx'
 import { useEffect, useState, useRef } from 'react';
-import { NavLink } from 'react-router';
 import './App.css';
 import * as topojson from 'topojson-client'
 import { SnackbarProvider, enqueueSnackbar } from 'notistack';
 import Hud from "./Hud";
 
-function Switzerland() {
+function Switzerland(props) {
     const backend = import.meta.env.VITE_BACKEND_URL
     const elevation = 5
 
@@ -73,6 +67,10 @@ function Switzerland() {
 
     // purchasePowerup purchases a powerup.
     function purchasePowerup() {
+        if(powerup === "") {
+            enqueueSnackbar("No powerup selected", {variant: "error", autoHideDuration: 3000})
+            return
+        }
         let text = `Are you sure you want to purchase "${powerup}"?`
         if (!window.confirm(text)) {
             return
@@ -83,7 +81,7 @@ function Switzerland() {
     // usePowerup purchases a powerup.
     function usePowerup() {
         if(powerup === "") {
-            enqueueSnackbar("No powerup selected", {variant: "error", autoHideDuration: 6000})
+            enqueueSnackbar("No powerup selected", {variant: "error", autoHideDuration: 3000})
             return
         }
         let text = `Are you sure you want to use "${powerup}"?`
@@ -120,7 +118,7 @@ function Switzerland() {
     // useCurse purchases a curse.
     function useCurse() {
         if(curse === "") {
-            enqueueSnackbar("No curse selected", {variant: "error", autoHideDuration: 6000})
+            enqueueSnackbar("No curse selected", {variant: "error", autoHideDuration: 3000})
             return
         }
         let text = `Are you sure you want to use ${curse}?`
@@ -262,20 +260,10 @@ function Switzerland() {
             .attr("id", d => d.properties.name)
             .attr("stroke", "black")
             .attr("stroke-width", "0.1px")
-        // .on('mouseover', function () {
-        //     d3.select(this).transition()
-        //         .duration(50)
-        //         .style('fill', "rgba(70, 130, 180, 0.8)")
-        // })
-        // .on('mouseout', function () {
-        //     d3.select(this).transition()
-        //         .duration(50)
-        //         .style('fill', "rgba(211,211,211, 1)")
-        // })
 
         const zoom = d3
             .zoom()
-            .scaleExtent([1, 4])
+            .scaleExtent([1, 6])
             .translateExtent([[0, 0], [width, height]])
             .on("zoom", (d) => {
                 cantons.attr("transform", d.transform);
@@ -392,35 +380,16 @@ function Switzerland() {
                  );
         } else {
             console.log("canton:", selectedCanton, "\nchallenge:", selectedChallenge)
+            enqueueSnackbar("No Challenge or Canton specified", {variant: "error", autoHideDuration: 3000})
             throw "Challenge or canton not specified.";
         }
     }
 
     return (
         <>
-            {/* {events.map((e,idx) => (
-                <Snackbar open={true} key={e+idx} autoHideDuration={6000} onClose={closeSnackbar}>
-                <Alert
-                    onClose={closeSnackbar}
-                    severity={e.severity}
-                    variant="filled"
-                    sx={{ width: '100%' }}
-                >
-                    {e.message}
-                </Alert>
-                </Snackbar>
-                
-            ))} */}
             <SnackbarProvider maxSnack={3} />
-
-            
-
+            <Drawer elevation={elevation} curses={curses} money={money} drawerOpen={props.drawerOpen} toggleDrawer={props.toggleDrawer} />
             <Grid2 spacing={2} container direction="column">
-                <Paper elevation={elevation}>
-                    <h1 className='display-3 mb-0'>Swiss Scramble 🇨🇭</h1>
-                    <NavLink to='/login'>Log in</NavLink>
-                </Paper>
-                <Hud money={money} baseElevation={elevation} curses={curses} />
                     <Paper elevation={elevation}>
                     <Grid2
                         container
@@ -429,16 +398,6 @@ function Switzerland() {
                         alignItems="center"
                         justifyContent={"space-around"}
                         >
-                    {selection ?
-                        (<>
-                            <Typography variant="h4" align="left">{selection.name}</Typography><Typography variant="h4" align="left">Team {selection.team_id}</Typography><Typography variant="h4" align="left">Level {selection.level}</Typography>
-                        </>)
-                        : (
-                            <>
-                                <Typography variant="h4" align="left">Select a Canton</Typography>
-                            </>
-                        )
-                    }
                     </Grid2>
                     <Grid2 item className='h-100' size={12}>
                         <svg id="travelmap"></svg>
@@ -539,7 +498,7 @@ function Switzerland() {
                     </Grid2>
                 </Paper>
             </Grid2>
-            <Drawer elevation={elevation} curses={curses} money={money}  />
+            
         </>
     );
 }
