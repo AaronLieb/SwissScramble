@@ -19,9 +19,8 @@ import { useEffect, useState, useRef } from 'react';
 import { NavLink } from 'react-router';
 import './App.css';
 import * as topojson from 'topojson-client'
-import card from './assets/card.jpg'
-import cursecard from './assets/curse.jpeg'
 import { SnackbarProvider, enqueueSnackbar } from 'notistack';
+import Hud from "./Hud";
 
 function Switzerland() {
     const backend = import.meta.env.VITE_BACKEND_URL
@@ -414,34 +413,14 @@ function Switzerland() {
             ))} */}
             <SnackbarProvider maxSnack={3} />
 
-
+            
 
             <Grid2 spacing={2} container direction="column">
                 <Paper elevation={elevation}>
                     <h1 className='display-3 mb-0'>Swiss Scramble 🇨🇭</h1>
                     <NavLink to='/login'>Log in</NavLink>
                 </Paper>
-                    <Grid2 item direction={"column"}>
-                    <Stack spacing={2}>
-                    <Typography variant="h4" align="left">💰 {money}₣</Typography>
-                    <Stack spacing={2} direction={"row"}>
-                    <Typography variant="h4" align="left">💪 </Typography>
-                    {curses.map(e => (
-                        <Paper elevation={elevation} sx={{ maxWidth: "4%" }} key={e} variant="outlined">
-                        <img width={"100%"} height={"100%"} src={card} />
-                        </Paper>
-                    ))}
-                    </Stack>
-                    <Stack spacing={2} direction={"row"}>
-                    <Typography variant="h4" align="left">👺 </Typography>
-                    {curses.map(e => (
-                        <Paper elevation={elevation} sx={{ maxWidth: "4%" }} key={e} variant="outlined">
-                        <img width={"100%"} height={"100%"} src={cursecard} />
-                        </Paper>
-                    ))}
-                    </Stack>
-                    </Stack>
-                    </Grid2>
+                <Hud money={money} baseElevation={elevation} curses={curses} />
                     <Paper elevation={elevation}>
                     <Grid2
                         container
