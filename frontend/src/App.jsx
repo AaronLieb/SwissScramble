@@ -19,33 +19,33 @@ const theme = createTheme({
 });
 
 function App() {
-    return (
-        <Router>
-            <Routes>
-                <Route path='/' element={
-                           <div>
-                               <Grid2 container
-                                      id="home"
-                               >
-                               </Grid2>
-                               <Grid2 container>
-                                   <Grid2 item xs={0} lg={3}></Grid2>
-                                   <Grid2 item xs={12}>
-                                       <ThemeProvider theme={theme}>
-                                           <Switzerland/>
-                                       </ThemeProvider>
-                                   </Grid2>
-                                   <Grid2 item xs={0} lg={3}></Grid2>
-                               </Grid2>
-                           </div>
-                       }/>
-                <Route path='/login' element={
-                           <ThemeProvider theme={theme}>
-                               <Login/>
-                           </ThemeProvider>
-                                             }/>
-            </Routes>
-        </Router>
+  return (
+    <Router>
+      <Routes>
+        <Route path='/' element={
+          <div>
+            <Grid2 container
+              id="home"
+            >
+            </Grid2>
+            <Grid2 container>
+              <Grid2 item xs={0} lg={3}></Grid2>
+              <Grid2 item xs={12}>
+                <ThemeProvider theme={theme}>
+                  <Switzerland />
+                </ThemeProvider>
+              </Grid2>
+              <Grid2 item xs={0} lg={3}></Grid2>
+            </Grid2>
+          </div>
+        } />
+        <Route path='/login' element={
+          <ThemeProvider theme={theme}>
+            <Login />
+          </ThemeProvider>
+        } />
+      </Routes>
+    </Router>
 
   )
 }

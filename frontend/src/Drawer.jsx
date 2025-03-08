@@ -13,11 +13,13 @@ import {
     Typography,
 
 } from "@mui/material";
+import { Global } from '@emotion/react';
+import CssBaseline from '@mui/material/CssBaseline';
 import { grey } from '@mui/material/colors';
 import { styled } from '@mui/material/styles';
 import { useEffect, useState, useRef } from 'react';
-import card from './assets/card.jpg'
-import cursecard from './assets/curse.jpeg'
+import challenge from './assets/challengesmall.png'
+import curse from './assets/cursesmall.png'
 
 function Drawer(props) {
 
@@ -30,7 +32,7 @@ function Drawer(props) {
         top: 8,
         left: 'calc(50% - 15px)',
         ...theme.applyStyles('dark', {
-            backgroundColor: grey[900],
+            //backgroundColor: grey[900],
         }),
     }));
     const drawerBleeding = 56;
@@ -39,13 +41,27 @@ function Drawer(props) {
     };
     const [drawerOpen, setDrawerOpen] = useState(true)
 
+    // This is used only for the example
+    const container = window !== undefined ? () => window.document.body : undefined;
+
     return (
         <>
+
+            <CssBaseline />
+            <Global
+                styles={{
+                    '.MuiDrawer-root > .MuiPaper-root': {
+                        height: `calc(50% - ${drawerBleeding}px)`,
+                        overflow: 'visible',
+                    },
+                }}
+            />
             <Grid2 sx={{ textAlign: 'center', pt: 1 }}>
                 <Button onClick={toggleDrawer(true)}>Open</Button>
             </Grid2>
             <SwipeableDrawer
                 anchor="bottom"
+                container={container}
                 open={drawerOpen}
                 onClose={toggleDrawer(false)}
                 onOpen={toggleDrawer(true)}
@@ -53,9 +69,9 @@ function Drawer(props) {
                 disableSwipeToOpen={false}
                 keepMounted
             >
-                <Grid2
+                <Grid2 container
                     sx={{
-                        position: 'absolute',
+                        p: 3,
                         top: -drawerBleeding,
                         borderTopLeftRadius: 8,
                         borderTopRightRadius: 8,
@@ -64,29 +80,29 @@ function Drawer(props) {
                         left: 0,
                     }}
                 >
-                    <Puller />
-                    <Typography sx={{ p: 2, color: 'text.secondary' }}>51 results</Typography>
-                    <Grid2 item direction={"column"}>
-                    <Stack spacing={2}>
-                    <Typography variant="h4" align="left">💰 {props.money}₣</Typography>
-                    <Stack spacing={2} direction={"row"}>
-                    <Typography variant="h4" align="left">💪 </Typography>
-                    {props.curses.map(e => (
-                        <Paper elevation={props.elevation} sx={{ maxWidth: "4%" }} key={e} variant="outlined">
-                        <img width={"100%"} height={"100%"} src={card} />
-                        </Paper>
-                    ))}
-                    </Stack>
-                    <Stack spacing={2} direction={"row"}>
-                    <Typography variant="h4" align="left">👺 </Typography>
-                    {props.curses.map(e => (
-                        <Paper elevation={props.elevation} sx={{ maxWidth: "4%" }} key={e} variant="outlined">
-                        <img width={"100%"} height={"100%"} src={cursecard} />
-                        </Paper>
-                    ))}
-                    </Stack>
-                    </Stack>
+                    <Grid2 item size={{ xs: 12, md: 3 }}>
+                        <Puller />
                     </Grid2>
+                    <Grid2 item size={{ xs: 12, md: 3 }}>
+                        <Typography variant="h3">💰 {props.money}₣</Typography>
+                    </Grid2>
+                    <Grid2 item size={{ xs: 12, md: 3 }} spacing={2}>
+                        <Typography variant="h3">💪 </Typography>
+                        {props.curses.map(e => (
+                            <>
+                                <img key={e} height={"25%"} src={challenge} />
+                            </>
+                        ))}
+                    </Grid2>
+                    <Grid2 item size={{ xs: 12, md: 3 }} spacing={2}>
+                        <Typography variant="h3">👺 </Typography>
+                        {props.curses.map(e => (
+                            <>
+                                <img key={e} height={"25%"} src={curse} />
+                            </>
+                        ))}
+                    </Grid2>
+
 
                 </Grid2>
             </SwipeableDrawer>
