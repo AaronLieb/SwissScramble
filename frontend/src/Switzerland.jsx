@@ -91,11 +91,26 @@ function Switzerland() {
     }
 
 
-    // purchaseCurse purchases a curse.
-    function purchaseCurse() {
+    // purchaseCurse purchases a random curse.
+    async function purchaseCurse() {
         let text = `Are you sure you want to purchase a random curse for 100₣?`
-        if (!window.confirm(text)) {
-            return
+        if (window.confirm(text)) {
+            const allCursesResponse = await fetch(backend + "/curses/")
+            if (allCursesResponse.ok) {
+                let curses = await allCursesResponse.json()
+                const curseCount = curses ? curses.length : 0
+                if (!curseCount) {
+                    throw "Failed to fetch curses."
+                }
+                let pick = Math.floor(Math.random() * curseCount)
+                console.log(`Picked curse number ${pick} out of ${curseCount} curses.`)
+                await fetch(backend + "/curse/",{
+                    method: 'POST',
+                    body: JSON.stringify({
+                        id: pick,
+                    }),
+                });
+            }
         }
     }
 
