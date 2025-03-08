@@ -148,26 +148,7 @@ function Switzerland() {
                     console.log("Error fetching challanges " + err);
                 });
 
-            // fetch("http://localhost:8000/challenges/", {
-            //     method: 'GET', // or POST, PUT, DELETE, etc.
-            //     mode: 'no-cors', // set to 'no-cors' to disable CORS
-            //     })
-            //     .then((response) => {
-            //         console.log(response)
-            //         return response.json()
-            //     })
-            //     .then((data) => {
-            //         console.log(data)
-            //         setChallenges(data.Challenges)
-            //     })
-            //     .catch((err) => {
-            //         console.log("Error unmarshaling " + err);
-            //     });
-
             // Get Location
-
-
-
             fetch(backend + "/cantons/")
                 .then((response) => {
                     return response.json()
@@ -377,6 +358,25 @@ function Switzerland() {
         return neutral
     }
 
+    function handleSubmitChallenge() {
+        const selectedCanton = cantons.find((e) => e.name == canton) || null
+        if (selectedCanton && selectedChallenge) {
+            const response = {
+                id: selectedChallenge.id,
+                canton: selectedCanton.id,
+            }
+            fetch(backend + "/challenge/",
+                  {
+                      method: 'POST',
+                      body: JSON.stringify(response)
+                  }
+                 );
+        } else {
+            console.log("canton:", selectedCanton, "\nchallenge:", selectedChallenge)
+            throw "Challenge or canton not specified.";
+        }
+    }
+
     return (
         <>
             {/* {events.map((e,idx) => (
@@ -467,7 +467,7 @@ function Switzerland() {
                         </Grid2>
                         <Grid2 item size={{ xs: 12, lg: 6 }}>
                             <Button variant="outlined" sx={{ m: 1 }} onClick={console.log} type="submit">Enter Canton</Button>
-                            <Button variant="outlined" sx={{ m: 1 }} onClick={console.log} type="submit">Submit Challenge</Button>
+                            <Button variant="outlined" sx={{ m: 1 }} onClick={handleSubmitChallenge} type="submit">Submit Challenge</Button>
                         </Grid2>
                         <Grid2 item size={{ xs: 12, lg: 12 }}>
                             <FormControl aria-label="Challenge selection" sx={{ width: "100%" }}>
@@ -475,11 +475,13 @@ function Switzerland() {
                                     disablePortal
                                     id="challenge-select"
                                     aria-labelledby="challenge-select"
-                                    options={challenges ? challenges.map(c => (`${c.description} | ${c.levels} Level | ${c.money}₣`)) : ["Challanges not found."]}
+                                    options={challenges || null }
                                     value={selectedChallenge}
-                                    onChange={(d, e) => {
-                                        if (e !== null) setSelectedChallenge(e);
-                                        else setSelectedChallenge("");
+                                    getOptionLabel={(option) => 
+                                        option ? `${option.description} | ${option.levels} Level | ${option.money}₣` : ''
+                                    }
+                                    onChange={(_, newValue) => {
+                                        setSelectedChallenge(newValue || null)
                                     }}
                                     renderInput={(params) => (
                                         <TextField {...params} label="Challenge" />
