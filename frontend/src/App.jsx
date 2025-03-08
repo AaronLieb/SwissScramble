@@ -58,7 +58,7 @@ function App() {
                   <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                     Swiss Scramble 🇨🇭
                   </Typography>
-                  <Button color="inherit"><NavLink style={{ color: "white" }} to='/login'>Log in</NavLink></Button>
+                  <NavLink style={{ color: "white" }} to='/login'><Button color="inherit">Log in</Button></NavLink>
                 </Toolbar>
               </AppBar>
               <Grid2 container

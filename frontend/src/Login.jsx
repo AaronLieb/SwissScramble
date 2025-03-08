@@ -11,6 +11,8 @@ import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import MuiCard from '@mui/material/Card';
 import { styled } from '@mui/material/styles';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import { NavLink } from "react-router";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -59,15 +61,6 @@ export default function Login(props) {
   const [usernameErrorMessage, setUsernameErrorMessage] = React.useState('');
   const [passwordError, setPasswordError] = React.useState(false);
   const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
-  const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   const handleSubmit = (event) => {
     if (usernameError || passwordError) {
@@ -131,6 +124,7 @@ export default function Login(props) {
             variant="h4"
             sx={{ width: '100%', fontSize: 'clamp(2rem, 10vw, 2.15rem)' }}
           >
+            <NavLink style={{ color: "black" }} to='/'><ArrowBackIosIcon  sx={{display: 'flex', justifyContent: 'flex-start'}} /></NavLink>
             Sign in
           </Typography>
           <Box
