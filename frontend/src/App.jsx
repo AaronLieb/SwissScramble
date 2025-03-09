@@ -10,7 +10,7 @@ import {
 import './App.css'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
-import { useEffect, useState, useRef } from 'react';
+import { useState } from 'react';
 import MenuIcon from '@mui/icons-material/Menu';
 import { red, purple } from '@mui/material/colors';
 import { BrowserRouter as Router, Routes, Route, NavLink } from "react-router";
@@ -33,7 +33,12 @@ function App() {
   };
   const [drawerOpen, setDrawerOpen] = useState(false)
 
-  const [auth, setAuth] = useState(null)
+  const [auth, setAuth] = useState("hi")
+
+  function updateAuth() {
+    if(auth !== null) setAuth(null);
+    else setAuth("hi")
+  }
 
   return (
     <Router>
@@ -59,6 +64,7 @@ function App() {
                     Swiss Scramble 🇨🇭
                   </Typography>
                   <NavLink style={{ color: "white" }} to='/login'><Button color="inherit">Log in</Button></NavLink>
+                  <Button  style={{ color: "white" }} onClick={updateAuth} >{auth === null ? "Log in(cheat)" : "Log out(cheat)"}</Button>
                 </Toolbar>
               </AppBar>
               <Grid2 container
@@ -85,7 +91,7 @@ function App() {
         } />
         <Route path='/login' element={
           <ThemeProvider theme={theme}>
-            <Login backend={backend} />
+            <Login setAuth={setAuth} backend={backend} />
           </ThemeProvider>
         } />
       </Routes>

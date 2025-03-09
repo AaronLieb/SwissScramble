@@ -1,19 +1,14 @@
 /* eslint-disable react/prop-types */
 import {
     Grid2,
-    LinearProgress,
     Paper,
-    Typography,
-    Box,
 } from "@mui/material";
 import * as d3 from 'd3';
-import { grey } from '@mui/material/colors';
-import { styled } from '@mui/material/styles';
 import Drawer from './Drawer.jsx'
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import * as topojson from 'topojson-client'
-import { SnackbarProvider, enqueueSnackbar } from 'notistack';
+import { SnackbarProvider } from 'notistack';
 import AuthDisplay from "./AuthDisplay.jsx";
 import Score from "./Score.jsx";
 import Events from "./Events.jsx"
@@ -322,6 +317,7 @@ function Switzerland(props) {
                 {props.auth !== null ? (
                     <AuthDisplay
                         backend={props.backend}
+                        elevation={elevation}
                         canton={canton}
                         setCanton={setCanton}
                         cantons={cantons}

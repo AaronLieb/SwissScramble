@@ -141,7 +141,7 @@ function AuthDisplay(props) {
 
     return (
         <>
-            <Paper sx={{ padding: "2%" }} elevation={props.elevation}>
+            <Paper sx={{ p:2 }} elevation={props.elevation}>
                 <Grid2 spacing={2} container>
                     <Grid2 item size={{ xs: 12, lg: 6 }}>
                         <FormControl sx={{ width: "100%" }} aria-label="Canton selection">

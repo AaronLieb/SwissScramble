@@ -1,15 +1,12 @@
 /* eslint-disable react/prop-types */
 import {
-    Grid2,
     Paper,
-    Typography,
-    Box,
     List,
     ListItem,
     ListItemText,
     ListSubheader
 } from "@mui/material";
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 
 function Events(props) {
 
@@ -24,6 +21,7 @@ function Events(props) {
             })
             .then((data) => {
                 console.log(data)
+                setEvents([])
             })
             .catch((err) => {
                 console.log("Error fetching events " + err);
