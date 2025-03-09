@@ -14,6 +14,7 @@ import { useState } from 'react';
 import MenuIcon from '@mui/icons-material/Menu';
 import { red, purple } from '@mui/material/colors';
 import { BrowserRouter as Router, Routes, Route, NavLink } from "react-router";
+import About from './About.jsx';
 
 const theme = createTheme({
   typography: {
@@ -82,6 +83,7 @@ function App() {
                       drawerOpen={drawerOpen}
                       setDrawerOpen={setDrawerOpen}
                     />
+                    <About elevation={3} />
                   </ThemeProvider>
                 </Grid2>
                 <Grid2 item xs={0} lg={3}></Grid2>
