@@ -313,6 +313,7 @@ function Switzerland(props) {
                             setCanton={setCanton}
                             cantons={cantons}
                             curses={curses}
+                            setCurses={setCurses}
                         />
                     </Grid2>
                 ) : (

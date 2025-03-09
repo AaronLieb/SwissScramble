@@ -6,10 +6,9 @@ import {
     Button,
     Autocomplete,
     TextField,
-    Typography,
 } from "@mui/material";
-import { SnackbarProvider, enqueueSnackbar } from 'notistack';
-import { useEffect, useState, useRef } from 'react';
+import { enqueueSnackbar } from 'notistack';
+import { useEffect, useState } from 'react';
 
 function AuthDisplay(props) {
 
@@ -47,16 +46,22 @@ function AuthDisplay(props) {
 
 
     // purchasePowerup purchases a powerup.
-    function purchasePowerup() {
+    async function purchasePowerup() {
         if (powerup === "") {
             enqueueSnackbar("No powerup selected", { variant: "error", autoHideDuration: 3000 })
             return
         }
-        let text = `Are you sure you want to purchase "${powerup}"?`
+        let text = `Are you sure you want to purchase "${powerup.description}"?`
         if (!window.confirm(text)) {
             return
         }
         console.log(powerup)
+        await postEndpoint("/powerup/", JSON.stringify({
+            id: "a",
+            //current_user: user 
+        }))
+        await fetchEndpoint("/powerups/")
+
     }
 
     // usePowerup purchases a powerup.
@@ -74,6 +79,7 @@ function AuthDisplay(props) {
 
 
     // purchaseCurse purchases a random curse.
+    // We do not actually need to select a random curse here, just post an event and subtract some money.
     async function purchaseCurse() {
         let text = `Are you sure you want to purchase a random curse for 100₣?`
         if (window.confirm(text)) {
@@ -86,12 +92,10 @@ function AuthDisplay(props) {
                 }
                 let pick = Math.floor(Math.random() * curseCount)
                 console.log(`Picked curse number ${pick} out of ${curseCount} curses.`)
-                await fetch(props.backend + "/curse/", {
-                    method: 'POST',
-                    body: JSON.stringify({
-                        id: pick,
-                    }),
-                });
+                await postEndpoint("/curse/", JSON.stringify({
+                    id: pick,
+                }))
+                await fetchEndpoint("/curses/")
             }
         }
     }
@@ -108,35 +112,99 @@ function AuthDisplay(props) {
         }
     }
 
-    function handleEnterCanton() {
+    async function handleEnterCanton() {
+        console.log(props.canton)
+        console.log(props.cantons)
+        getCantonFromName(props.canton)
 
+        await postEndpoint("/enter_canton/", JSON.stringify({
+            canton_id: "Grisons",
+        }))
+    }
+
+    function getCantonFromName(name) {
+        return props.cantons.find(e => e.name === name)
     }
 
     // Fetch all data on map load.
     useEffect(() => {
-        fetch(props.backend + "/challenges/")
-            .then((response) => {
-                return response.json()
-            })
-            .then((data) => {
-                setChallenges(data)
-            })
-            .catch((err) => {
-                console.log("Error fetching challanges " + err);
-            });
-
-        fetch(props.backend + "/powerups/")
-            .then((response) => {
-                return response.json()
-            })
-            .then((data) => {
-                setPowerups(data.sort((a, b) => a.cost - b.cost))
-            })
-            .catch((err) => {
-                console.log("Error fetching challanges " + err);
-            });
-
+        fetchEndpoint("/powerups/")
+        fetchEndpoint("/challenges/")
     }, []);
+
+
+    // fetchEndpoint grabs data from and endpoint and handles its result by
+    // storing it in specific frontend state.
+    async function fetchEndpoint(endpoint) {
+        return new Promise((resolve) => {
+                fetch(props.backend + endpoint)
+                .then((response) => {
+                    return response.json()
+                })
+                .then((data) => {
+                    switch(endpoint) {
+                        case "/powerups/":
+                            setPowerups(data.sort((a, b) => a.cost - b.cost))
+                            resolve();
+                            break;
+                        case "/challenges/":
+                            setChallenges(data)
+                            resolve();
+                            break;
+                        case "/curses/":
+                            props.setCurses(data)
+                            resolve();
+                            break;
+                        default:
+                            console.log(`warning: no endpoint handler available for ${endpoint}`)
+                            resolve();
+                    }
+                })
+                .catch((err) => {
+                    resolve(err) // This application is not robust enough to handle rejection.
+                });
+          })
+    }
+
+    async function postEndpoint(endpoint, body) {
+        let op = endpoint.replaceAll("/","")
+        return new Promise((resolve) => {
+            fetch(props.backend + endpoint, {
+                method: 'POST',
+                body: body
+            })
+            .then((response) => {
+
+                console.log(response)
+                switch(response.status) {
+                    case 401:
+                        enqueueSnackbar(`Failed to submit ${op}: ${response.statusText}`, { variant: "error", autoHideDuration: 3000 })
+                        break;
+                    case 200:
+                        enqueueSnackbar(`Successfully submitted ${op} 🎉`, { variant: "success", autoHideDuration: 3000 })
+                        break;
+                    default:
+                        enqueueSnackbar(`Unknown submit operation ${op}`, { variant: "warning", autoHideDuration: 3000 })
+                }
+                // switch(endpoint) {
+                //     case "/powerups/":
+                //         setPowerups(data.sort((a, b) => a.cost - b.cost))
+                //         resolve();
+                //         break;
+                //     case "/challenges/":
+                //         setChallenges(data)
+                //         resolve();
+                //         break;
+                //     default:
+                //         resolve();
+                // }
+            })
+            .catch((err) => {
+                enqueueSnackbar(`failed to submit ${op}: ${err}`, { variant: "error", autoHideDuration: 3000 })
+                resolve(err) // This application is not robust enough to handle rejection.
+            });
+      })
+    }
 
     return (
         <>
@@ -194,8 +262,11 @@ function AuthDisplay(props) {
                                 disablePortal
                                 id="powerup-select"
                                 aria-labelledby="powerup-select"
-                                options={powerups.map(e => (`${e.description} | ${e.cost}₣`))}
+                                options={powerups || null}
                                 value={powerup}
+                                getOptionLabel={(option) =>
+                                    option ? `${option.description} | ${option.cost}₣` : ''
+                                }
                                 sx={{ textAlign: "left", align: "justify", color: "red" }}
                                 onChange={(d, e) => {
                                     if (e !== null) setPowerup(e)
@@ -217,8 +288,11 @@ function AuthDisplay(props) {
                                 disablePortal
                                 id="curse-select"
                                 aria-labelledby="curse-select"
-                                options={props.curses.map(e => e)}
+                                options={props.curses || null}
                                 value={curse}
+                                getOptionLabel={(option) =>
+                                    option ? `${option}` : ''
+                                }
                                 onChange={(d, e) => {
                                     if (e !== null) setCurse(e)
                                     else setCurse("");
