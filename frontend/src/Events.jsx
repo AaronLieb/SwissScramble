@@ -30,7 +30,7 @@ function Events(props) {
     }, [])
 
     return (
-        <Paper sx={{ p: 2 }} elevation={props.elevation}>
+        <Paper elevation={props.elevation}>
             <List
                 sx={{
                     width: '100%',

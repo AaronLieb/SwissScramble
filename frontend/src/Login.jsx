@@ -104,6 +104,7 @@ export default function Login(props) {
     fetch(props.backend + "/auth/token",{
       method: 'POST',
       body: JSON.stringify({
+          grant_type: 'password',
           username: 'timjhh',
           password: 'hello',
       }),

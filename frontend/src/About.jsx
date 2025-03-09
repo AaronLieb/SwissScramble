@@ -1,25 +1,19 @@
 /* eslint-disable react/prop-types */
 import {
-    Grid2,
     Paper,
     Typography,
 } from "@mui/material";
-import * as d3 from 'd3';
-import Drawer from './Drawer.jsx'
-import { useEffect, useState } from 'react';
 import './App.css';
 
 
 
 function About(props) {
-    
-
     return (
         <>
             <Paper align="left" sx={{mt: 2, p: 3}} elevation={props.elevation}>
                 <Typography variant="h2">Swiss Scramble</Typography>
                 <Typography variant="body1">Race to own the most cantons by the end of three days! Teams will utilize any and all forms of public transit to visit and control the most.
-                    Teams will begin each day in the same place they ended the last, each day running from 8am - 7pm. <a href="https://www.openstreetmap.org/#map=19/47.380725/8.539381">Players will start here.</a>
+                    Teams will begin each day in the same place they ended the last, each day running from 8am - 7pm. <a target="_blank" rel="noopener noreferrer" href="https://www.openstreetmap.org/#map=19/47.380725/8.539381">Players will start here.</a>
                 </Typography>
                 <hr/>
                 <Typography variant="h3">Control</Typography>

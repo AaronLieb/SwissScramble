@@ -14,7 +14,6 @@ import { useState } from 'react';
 import MenuIcon from '@mui/icons-material/Menu';
 import { red, purple } from '@mui/material/colors';
 import { BrowserRouter as Router, Routes, Route, NavLink } from "react-router";
-import About from './About.jsx';
 
 const theme = createTheme({
   typography: {
@@ -46,8 +45,7 @@ function App() {
       <Routes>
         <Route path='/' element={
           <ThemeProvider theme={theme}>
-            <div>
-              <AppBar position="fixed">
+              <AppBar position="sticky">
                 <Toolbar>
                   {auth && (
                     <IconButton
@@ -68,13 +66,6 @@ function App() {
                   <Button  style={{ color: "white" }} onClick={updateAuth} >{auth === null ? "Log in(cheat)" : "Log out(cheat)"}</Button>
                 </Toolbar>
               </AppBar>
-              <Grid2 container
-                id="home"
-              >
-              </Grid2>
-              <Grid2 sx={{ mt: 5 }} container>
-                <Grid2 item xs={0} lg={3}></Grid2>
-                <Grid2 item xs={12}>
                   <ThemeProvider theme={theme}>
                     <Switzerland
                       auth={auth}
@@ -83,12 +74,7 @@ function App() {
                       drawerOpen={drawerOpen}
                       setDrawerOpen={setDrawerOpen}
                     />
-                    <About elevation={3} />
                   </ThemeProvider>
-                </Grid2>
-                <Grid2 item xs={0} lg={3}></Grid2>
-              </Grid2>
-            </div>
           </ThemeProvider>
         } />
         <Route path='/login' element={

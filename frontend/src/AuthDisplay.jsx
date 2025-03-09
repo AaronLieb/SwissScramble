@@ -6,6 +6,7 @@ import {
     Button,
     Autocomplete,
     TextField,
+    Typography,
 } from "@mui/material";
 import { SnackbarProvider, enqueueSnackbar } from 'notistack';
 import { useEffect, useState, useRef } from 'react';
@@ -111,8 +112,6 @@ function AuthDisplay(props) {
 
     }
 
-
-
     // Fetch all data on map load.
     useEffect(() => {
         fetch(props.backend + "/challenges/")
@@ -141,9 +140,9 @@ function AuthDisplay(props) {
 
     return (
         <>
-            <Paper sx={{ p:2 }} elevation={props.elevation}>
+            <Paper sx={{ p: 2, my: 1 }} elevation={props.elevation}>
                 <Grid2 spacing={2} container>
-                    <Grid2 item size={{ xs: 12, lg: 6 }}>
+                    <Grid2 item size={{ xs: 12, lg: 12 }}>
                         <FormControl sx={{ width: "100%" }} aria-label="Canton selection">
                             <Autocomplete
                                 disablePortal
@@ -160,10 +159,6 @@ function AuthDisplay(props) {
                                 )}
                             />
                         </FormControl>
-                    </Grid2>
-                    <Grid2 item size={{ xs: 12, lg: 6 }}>
-                        <Button variant="outlined" sx={{ m: 1 }} onClick={handleEnterCanton} type="submit">Enter Canton</Button>
-                        <Button variant="outlined" sx={{ m: 1 }} onClick={handleSubmitChallenge} type="submit">Submit Challenge</Button>
                     </Grid2>
                     <Grid2 item size={{ xs: 12, lg: 12 }}>
                         <FormControl aria-label="Challenge selection" sx={{ width: "100%" }}>
@@ -185,6 +180,10 @@ function AuthDisplay(props) {
                             />
                         </FormControl>
                     </Grid2>
+                    <Grid2 item size={{ xs: 12, lg: 6 }}>
+                        <Button variant="outlined" sx={{ m: 1 }} onClick={handleEnterCanton} type="submit">Enter Canton</Button>
+                        <Button variant="outlined" sx={{ m: 1 }} onClick={handleSubmitChallenge} type="submit">Submit Challenge</Button>
+                    </Grid2>
                 </Grid2>
             </Paper>
             <Paper sx={{ padding: "2%" }} elevation={props.elevation}>
@@ -197,6 +196,7 @@ function AuthDisplay(props) {
                                 aria-labelledby="powerup-select"
                                 options={powerups.map(e => (`${e.description} | ${e.cost}₣`))}
                                 value={powerup}
+                                sx={{ textAlign: "left", align: "justify", color: "red" }}
                                 onChange={(d, e) => {
                                     if (e !== null) setPowerup(e)
                                     else setPowerup("");

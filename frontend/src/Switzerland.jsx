@@ -12,6 +12,7 @@ import { SnackbarProvider } from 'notistack';
 import AuthDisplay from "./AuthDisplay.jsx";
 import Score from "./Score.jsx";
 import Events from "./Events.jsx"
+import About from './About.jsx';
 
 function Switzerland(props) {
     const elevation = 5
@@ -54,7 +55,7 @@ function Switzerland(props) {
     const [teamState, setTeamState] = useState([])
 
     function setCanton(c) {
-        if(c == "travelmap") setSelectedCanton("")
+        if (c == "travelmap") setSelectedCanton("")
         else setSelectedCanton(c)
     }
 
@@ -91,13 +92,8 @@ function Switzerland(props) {
                 .catch((err) => {
                     console.log("Error fetching canton data " + err);
                 });
-
-
         }
     }, []);
-
-
-
 
     var groupBy = function (xs, key) {
         return xs.reduce(function (rv, x) {
@@ -148,6 +144,8 @@ function Switzerland(props) {
             .rotate([0, 0])
             .center([8.3, 46.8])
             .scale(8000)
+            //.translate([selection.node().getBoundingClientRect().width/2,selection.node().getBoundingClientRect().height/2])
+            //.translate([0,0])
             .translate([width / 2, height / 2])
             .precision(.1);
 
@@ -157,11 +155,11 @@ function Switzerland(props) {
         let svg = d3
             .select("#travelmap")
             .attr("viewBox", [0, 0, width, height])
-            .attr("width", width)
-            .attr("height", height)
+            .attr("width", "100%")
+            .attr("height", "60vh")
             .on('click', d => setCanton(d.target.id))
-            .attr("style", "max-width: 100%; height: auto; height: intrinsic;")
-        
+            .attr("style", "max-width: 100%; height: auto; height: intrinsic; text-align: center; ")
+
         // Experimental feature to add label for selected canton
         // svg.append("text")
         //     .text(canton)
@@ -173,7 +171,7 @@ function Switzerland(props) {
         //     .attr("x", 10)
         //     .attr("y", height-10)
 
-            let g = svg
+        let g = svg
             .append("g")
             .attr("id", "pathsG")
 
@@ -194,7 +192,7 @@ function Switzerland(props) {
 
         const zoom = d3
             .zoom()
-            .scaleExtent([1, 6])
+            .scaleExtent([0.5, 6])
             .translateExtent([[0, 0], [width, height]])
             .on("zoom", (d) => {
                 cantons.attr("transform", d.transform);
@@ -300,34 +298,34 @@ function Switzerland(props) {
         <>
             <SnackbarProvider maxSnack={3} />
             <Drawer elevation={elevation} curses={curses} money={money} drawerOpen={props.drawerOpen} toggleDrawer={props.toggleDrawer} />
-            <Grid2 spacing={2} container direction="column">
-                <Paper elevation={elevation}>
-                    <Grid2
-                        container
-                        direction={"row"}
-                        spacing={2}
-                        alignItems="center"
-                        justifyContent={"space-around"}
-                    >
-                    </Grid2>
-                    <Grid2 item className='h-100' size={12}>
+            <Grid2 spacing={2} container direction="column" alignItems={"center"} justifyContent={"center"}>
+                <Grid2 item className='h-100' size={{ sx: 10, md: 8 }} sx={{mt:4}}>
+                    <Paper elevation={elevation}>
                         <svg id="travelmap"></svg>
-                    </Grid2>
-                </Paper>
+                    </Paper>
+                </Grid2>
                 {props.auth !== null ? (
-                    <AuthDisplay
-                        backend={props.backend}
-                        elevation={elevation}
-                        canton={canton}
-                        setCanton={setCanton}
-                        cantons={cantons}
-                        curses={curses}
-                    />
+                    <Grid2 item className='h-100' size={{ sx: 10, md: 8 }}>
+                        <AuthDisplay
+                            backend={props.backend}
+                            elevation={elevation}
+                            canton={canton}
+                            setCanton={setCanton}
+                            cantons={cantons}
+                            curses={curses}
+                        />
+                    </Grid2>
                 ) : (
-                    <Score canton={canton} elevation={elevation} teamState={teamState} />
+                    <Grid2 item className='h-100' size={{ sx: 10, md: 8 }}>
+                        <Score canton={canton} elevation={elevation} teamState={teamState} />
+                    </Grid2>
                 )}
-                <Events backend={props.backend} elevation={elevation} />
-
+                <Grid2 item className='h-100' size={{ sx: 10, md: 8 }}>
+                    <Events backend={props.backend} elevation={elevation} />
+                </Grid2>
+                <Grid2 item className='h-100' size={{ sx: 10, md: 8 }}>
+                    <About elevation={elevation} />
+                </Grid2>
             </Grid2>
         </>
     );

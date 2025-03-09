@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 import {
     Grid2,
-    Button,
     SwipeableDrawer,
     Typography,
 } from "@mui/material";
