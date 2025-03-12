@@ -38,6 +38,6 @@ INSERT INTO team (name, money, score) VALUES ('Timsaac', 0, 0);
 INSERT INTO user (username, firstname, lastname, team_id, hashed_password) VALUES
    ('aaronlieb', 'Aaron', 'Lieberman', 1, '$2b$12$D.Sp6Eavi4YrE0gZ8fC.n.LEkxkvDRosaWSZYlDXQgw9vuzVLN1ne'),
    ('antonio', 'Antonio', 'Alonso', 1, null),
-   ('icf', 'Isaac', 'Feldman', 2, null),
+   ('icf', 'Isaac', 'Feldman', 2, '$2b$12$DGHT20nYOFSX6b396YKdEeE62fz5Anu86jYPiGNHfNPQCOFD3w/ZO'),
    ('timjhh', 'Tim', 'Harrold', 2, 'hello');
 

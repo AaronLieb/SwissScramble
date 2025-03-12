@@ -10,6 +10,7 @@ from ..database.models import User
 from ..database.database import SessionDep
 from .models import TokenData
 from .crypto import get_password_hash, verify_password
+from sqlmodel import select
 
 logging.basicConfig(
     level=logging.INFO,
@@ -25,8 +26,14 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/token")
 
 
 def get_user(db: SessionDep, username: str):
-    user = db.get(User, username)
-    logger.info("username: %s", user)
+    """
+    Get the first user who's username matched the input.
+    """
+    user = db.exec(
+        select(User)
+        .where(User.username == username)
+    ).first()
+    logger.info("user: %s", user)
     return user
 
 
@@ -35,9 +42,14 @@ def authenticate_user(db, username: str, password: str):
     if not user:
         return False
     logger.info("username: %s, hash: %s", username, get_password_hash(password))
-    if not verify_password(password, user.hashed_password):
+    try:
+        if verify_password(password, user.hashed_password):
+            return user
+        else:
+            return False
+    except:
+        logger.error("failed to verify password")
         return False
-    return user
 
 
 async def get_current_user(
