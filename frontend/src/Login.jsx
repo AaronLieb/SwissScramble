@@ -62,16 +62,8 @@ export default function Login(props) {
   const [passwordError, setPasswordError] = React.useState(false);
   const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
 
-  const handleSubmit = (event) => {
-    if (usernameError || passwordError) {
-      event.preventDefault();
-      return;
-    }
-    const data = new FormData(event.currentTarget);
-  };
-
-  const validateInputs = (event) => {
-    event.preventDefault()
+    const handleSubmit = async (event) => {
+            event.preventDefault()
 
     const username = document.getElementById('username');
     const password = document.getElementById('password');
@@ -95,27 +87,21 @@ export default function Login(props) {
       setPasswordError(false);
       setPasswordErrorMessage('');
     }
-    tryLogin(username,password)
 
-    return isValid;
-  };
-
-  function tryLogin(username, password) {
-    fetch(props.backend + "/auth/token",{
-      method: 'POST',
-      body: JSON.stringify({
-          grant_type: 'password',
-          username: 'timjhh',
-          password: 'hello',
-      }),
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      }
-  }).then((response) => {
-    console.log(response)
-    return response.json()
-  })
-  }
+        if (isValid) {
+            const data = new FormData(event.currentTarget);
+            data["grant_type"] = 'password'
+            const params = new URLSearchParams(data)
+            const response = await fetch(props.backend + "/auth/token",{
+                method: 'POST',
+                body: params,
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                }
+            });
+            console.log(response)
+        }
+    };
 
   return (
       <SignInContainer direction="column" justifyContent="space-between">
@@ -180,7 +166,6 @@ export default function Login(props) {
               type="submit"
               fullWidth
               variant="contained"
-              onClick={validateInputs}
             >
               Sign in
             </Button>
