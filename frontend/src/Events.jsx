@@ -14,20 +14,25 @@ function Events(props) {
 
     // On first load, grab the events stream.
     useEffect(() => {
-        fetch(props.backend + "/events/")
+        let authHeaders = {
+            headers: new Headers({
+            'Authorization': `Bearer ${props.auth}`, 
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        })}
+        fetch(props.backend + "/events/", authHeaders)
             .then((response) => {
-                console.log(response)
                 return response.json()
             })
             .then((data) => {
                 console.log(data)
-                setEvents([])
+                setEvents(data)
             })
             .catch((err) => {
                 console.log("Error fetching events " + err);
             });
 
-    }, [])
+    }, [props.updateEvents])
 
     return (
         <Paper elevation={props.elevation}>
@@ -48,12 +53,6 @@ function Events(props) {
                         <ListItemText primary={`Item ${item}`} />
                     </ListItem>
                 ))}
-                {[0, 1, 2, 3, 4, 5, 6, 7].map((item) => (
-                    <ListItem key={`item-${item}`}>
-                        <ListItemText primary={`Item ${item}`} />
-                    </ListItem>
-                ))}
-
             </List>
         </Paper>
     )

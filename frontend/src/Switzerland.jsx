@@ -53,6 +53,7 @@ function Switzerland(props) {
     const [curses, setCurses] = useState(["poop", "curse curse curse", "aaaaaahhhhh"])
 
     const [teamState, setTeamState] = useState([])
+    const [updateEvents, setUpdateEvents] = useState(0);
 
     function setCanton(c) {
         if (c == "travelmap") setSelectedCanton("")
@@ -307,6 +308,7 @@ function Switzerland(props) {
                 {props.auth !== null ? (
                     <Grid2 item className='h-100' size={{ sx: 10, md: 8 }}>
                         <AuthDisplay
+                            setUpdateEvents={setUpdateEvents}
                             auth={props.auth}
                             backend={props.backend}
                             elevation={elevation}
@@ -326,7 +328,7 @@ function Switzerland(props) {
                     <Score canton={canton} elevation={elevation} teamState={teamState} />
                 </Grid2>
                 <Grid2 item className='h-100' size={{ sx: 10, md: 8 }}>
-                    <Events backend={props.backend} elevation={elevation} />
+                    <Events updateEvents={props.updateEvents} backend={props.backend} elevation={elevation} />
                 </Grid2>
                 <Grid2 item className='h-100' size={{ sx: 10, md: 8 }}>
                     <About elevation={elevation} />

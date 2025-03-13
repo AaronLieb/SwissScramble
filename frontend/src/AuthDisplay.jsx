@@ -13,6 +13,10 @@ import { useEffect, useState } from 'react';
 function AuthDisplay(props) {
 
 
+    // Auth Required Fields - are these needed / wanted?
+    const [user, setUser] = useState(null)
+    const [team, setTeam] = useState(null)
+
 
     // Challenge form related info
     const [challenges, setChallenges] = useState([])
@@ -39,7 +43,6 @@ function AuthDisplay(props) {
             );
         } else {
             enqueueSnackbar("No Challenge or Canton specified", { variant: "error", autoHideDuration: 3000 })
-            throw "Challenge or canton not specified.";
         }
     }
 
@@ -131,14 +134,22 @@ function AuthDisplay(props) {
     useEffect(() => {
         fetchEndpoint("/powerups/")
         fetchEndpoint("/challenges/")
+        fetchEndpoint("/user/")
+        fetchEndpoint("/team/")
     }, []);
 
 
     // fetchEndpoint grabs data from and endpoint and handles its result by
     // storing it in specific frontend state.
     async function fetchEndpoint(endpoint) {
+        let authHeaders = {
+            headers: new Headers({
+            'Authorization': `Bearer ${props.auth}`, 
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        })}
         return new Promise((resolve) => {
-                fetch(props.backend + endpoint)
+                fetch(props.backend + endpoint, authHeaders)
                 .then((response) => {
                     return response.json()
                 })
@@ -154,6 +165,16 @@ function AuthDisplay(props) {
                             break;
                         case "/curses/":
                             props.setCurses(data)
+                            resolve();
+                            break;
+                        case "/user/":
+                            setUser(data)
+                            console.log(data)
+                            resolve();
+                            break;
+                        case "/team/":
+                            setTeam(data)
+                            console.log(data)
                             resolve();
                             break;
                         default:
@@ -180,7 +201,6 @@ function AuthDisplay(props) {
                 }), 
             })
             .then((response) => {
-
                 console.log(response)
                 switch(response.status) {
                     case 401:
@@ -191,6 +211,7 @@ function AuthDisplay(props) {
                         break;
                     case 200:
                         enqueueSnackbar(`Successfully submitted ${op} 🎉`, { variant: "success", autoHideDuration: 3000 })
+                        props.setUpdateEvents(response.status)
                         break;
                     default:
                         enqueueSnackbar(`Unknown submit operation ${op}`, { variant: "warning", autoHideDuration: 3000 })
