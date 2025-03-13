@@ -15,6 +15,8 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { NavLink } from "react-router";
 import { SnackbarProvider, enqueueSnackbar } from 'notistack';
 import { useNavigate } from "react-router";
+import Cookies from 'js-cookie'
+import { useState } from 'react';
 
 
 const Card = styled(MuiCard)(({ theme }) => ({
@@ -65,6 +67,10 @@ export default function Login(props) {
   const [passwordError, setPasswordError] = React.useState(false);
   const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
 
+  const [remember, setRemember] = useState(false)
+  const handleRemember = (event) => {
+    setRemember(event.target.checked);
+  };
 
   let navigate = useNavigate();
 
@@ -75,9 +81,6 @@ export default function Login(props) {
     const password = document.getElementById('password');
 
     let isValid = true;
-
-   
-
 
     if (!username.value) {
       setUsernameError(true);
@@ -115,8 +118,11 @@ export default function Login(props) {
         return
       }
 
+      if(Cookies.get('authCookie')) Cookies.remove('authCookie')
       enqueueSnackbar(`Success! Redirecting...`, { variant: "success", autoHideDuration: 3000 })
-      props.setAuth(resp)
+      if(remember) Cookies.set('authCookie', resp.access_token)
+      props.setAuth(resp.access_token)
+      props.setUser(resp.user)
       navigate("/")
     }
   };
@@ -179,7 +185,7 @@ export default function Login(props) {
             />
           </FormControl>
           <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
+            control={<Checkbox value={remember} onClick={handleRemember} color="primary" />}
             label="Remember me"
           />
           <Button

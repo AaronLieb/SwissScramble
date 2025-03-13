@@ -14,6 +14,7 @@ import { useEffect, useState } from 'react';
 import MenuIcon from '@mui/icons-material/Menu';
 import { red, purple } from '@mui/material/colors';
 import { BrowserRouter as Router, Routes, Route, NavLink } from "react-router";
+import Cookies from 'js-cookie'
 
 const theme = createTheme({
   typography: {
@@ -32,12 +33,18 @@ function App() {
     setDrawerOpen(newOpen);
   };
   const [drawerOpen, setDrawerOpen] = useState(false)
+  const [user, setUser] = useState('')
 
   const [auth, setAuth] = useState(null)
 
-  function updateAuth() {
-    if(auth !== null) setAuth(null);
-    else setAuth("hi")
+  useEffect(() => {
+    let cookie = Cookies.get('authCookie')
+    if(cookie) setAuth(cookie)
+  }, [])
+
+  function logout() {
+    setAuth(null)
+    Cookies.remove('authCookie')
   }
 
   return (
@@ -62,8 +69,7 @@ function App() {
                   <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                     Swiss Scramble 🇨🇭
                   </Typography>
-                  <NavLink style={{ color: "white" }} to='/login'><Button color="inherit">Log in</Button></NavLink>
-                  <Button  style={{ color: "white" }} onClick={updateAuth} >{auth === null ? "Log in(cheat)" : "Log out(cheat)"}</Button>
+                  {auth == null ? (<NavLink style={{ color: "white" }} to='/login'><Button color="inherit">Log In</Button></NavLink>) : <Button onClick={logout} color="inherit">Log Out</Button>}
                 </Toolbar>
               </AppBar>
                   <ThemeProvider theme={theme}>
@@ -79,7 +85,7 @@ function App() {
         } />
         <Route path='/login' element={
           <ThemeProvider theme={theme}>
-            <Login setAuth={setAuth} backend={backend} />
+            <Login setUser={setUser} setAuth={setAuth} backend={backend} />
           </ThemeProvider>
         } />
       </Routes>

@@ -18,6 +18,7 @@
     "@mui/material": "^6.4.7",
     "@mui/styled-engine-sc": "^6.4.3",
     "d3": "^7.9.0",
+    "js-cookie": "^3.0.5",
     "mate": "^0.21.0",
     "notistack": "^3.0.2",
     "react": "^19.0.0",

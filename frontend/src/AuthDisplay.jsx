@@ -112,8 +112,6 @@ function AuthDisplay(props) {
     }
 
     async function handleEnterCanton() {
-        console.log(props.canton)
-        console.log(props.cantons)
         getCantonFromName(props.canton)
 
         await postEndpoint("/enter_canton/", JSON.stringify({
@@ -172,7 +170,7 @@ function AuthDisplay(props) {
                 method: 'POST',
                 body: body,
                 headers: new Headers({
-                    'Authorization': `Bearer ${props.auth.access_token}`, 
+                    'Authorization': `Bearer ${props.auth}`, 
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }), 
             })
