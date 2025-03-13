@@ -307,6 +307,7 @@ function Switzerland(props) {
                 {props.auth !== null ? (
                     <Grid2 item className='h-100' size={{ sx: 10, md: 8 }}>
                         <AuthDisplay
+                            auth={props.auth}
                             backend={props.backend}
                             elevation={elevation}
                             canton={canton}
@@ -318,9 +319,12 @@ function Switzerland(props) {
                     </Grid2>
                 ) : (
                     <Grid2 item className='h-100' size={{ sx: 10, md: 8 }}>
-                        <Score canton={canton} elevation={elevation} teamState={teamState} />
+                        <h2>Hi guys :)</h2>
                     </Grid2>
                 )}
+                <Grid2 item className='h-100' size={{ sx: 10, md: 8 }}>
+                    <Score canton={canton} elevation={elevation} teamState={teamState} />
+                </Grid2>
                 <Grid2 item className='h-100' size={{ sx: 10, md: 8 }}>
                     <Events backend={props.backend} elevation={elevation} />
                 </Grid2>

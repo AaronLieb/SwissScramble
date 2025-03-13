@@ -13,6 +13,9 @@ import MuiCard from '@mui/material/Card';
 import { styled } from '@mui/material/styles';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { NavLink } from "react-router";
+import { SnackbarProvider, enqueueSnackbar } from 'notistack';
+import { useNavigate } from "react-router";
+
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -62,15 +65,21 @@ export default function Login(props) {
   const [passwordError, setPasswordError] = React.useState(false);
   const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
 
-    const handleSubmit = async (event) => {
-            event.preventDefault()
+
+  let navigate = useNavigate();
+
+  const handleSubmit = async (event) => {
+    event.preventDefault()
 
     const username = document.getElementById('username');
     const password = document.getElementById('password');
 
     let isValid = true;
 
-    if (!username.value ) {
+   
+
+
+    if (!username.value) {
       setUsernameError(true);
       setUsernameErrorMessage('Please enter a valid username.');
       isValid = false;
@@ -88,89 +97,100 @@ export default function Login(props) {
       setPasswordErrorMessage('');
     }
 
-        if (isValid) {
-            const data = new FormData(event.currentTarget);
-            data["grant_type"] = 'password'
-            const params = new URLSearchParams(data)
-            const response = await fetch(props.backend + "/auth/token",{
-                method: 'POST',
-                body: params,
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded"
-                }
-            });
-            console.log(response)
+    if (isValid) {
+      const data = new FormData(event.currentTarget);
+      data["grant_type"] = 'password'
+      const params = new URLSearchParams(data)
+      let response = await fetch(props.backend + "/auth/token", {
+        method: 'POST',
+        body: params,
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
         }
-    };
+      })
+      const resp = await response.json()
+
+      if (response.status !== 200) {
+        enqueueSnackbar(`Failed to log in: ${resp.detail}`, { variant: "error", autoHideDuration: 3000 })
+        return
+      }
+
+      enqueueSnackbar(`Success! Redirecting...`, { variant: "success", autoHideDuration: 3000 })
+      props.setAuth(resp)
+      navigate("/")
+    }
+  };
 
   return (
-      <SignInContainer direction="column" justifyContent="space-between">
-        <Card variant="outlined">
-          <Typography
-            component="h1"
-            variant="h4"
-            sx={{ width: '100%', fontSize: 'clamp(2rem, 10vw, 2.15rem)' }}
-          >
-            <NavLink style={{ color: "black" }} to='/'><ArrowBackIosIcon  sx={{display: 'flex', justifyContent: 'flex-start'}} /></NavLink>
-            Sign in
-          </Typography>
-          <Box
-            component="form"
-            onSubmit={handleSubmit}
-            noValidate
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              width: '100%',
-              gap: 2,
-            }}
-          >
-            <FormControl>
-              <FormLabel htmlFor="username">Username</FormLabel>
-              <TextField
-                error={usernameError}
-                helperText={usernameErrorMessage}
-                id="username"
-                type="username"
-                name="username"
-                placeholder="username"
-                autoFocus
-                required
-                fullWidth
-                variant="outlined"
-                color={usernameError ? 'error' : 'primary'}
-              />
-            </FormControl>
-            <FormControl>
-              <FormLabel htmlFor="password">Password</FormLabel>
-              <TextField
-                error={passwordError}
-                helperText={passwordErrorMessage}
-                name="password"
-                placeholder="••••••"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                autoFocus
-                required
-                fullWidth
-                variant="outlined"
-                color={passwordError ? 'error' : 'primary'}
-              />
-            </FormControl>
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
-            <Button
-              type="submit"
+    <SignInContainer direction="column" justifyContent="space-between">
+      <SnackbarProvider maxSnack={3} />
+      <Card variant="outlined">
+        <Typography
+          component="h1"
+          align='center'
+          variant="h4"
+          sx={{ width: '100%', fontSize: 'clamp(2rem, 10vw, 2.15rem)' }}
+        >
+          <NavLink style={{ color: "black" }} to='/'><ArrowBackIosIcon sx={{ display: 'flex', justifyContent: 'flex-start' }} /></NavLink>
+          Sign in
+        </Typography>
+        <Box
+          component="form"
+          onSubmit={handleSubmit}
+          noValidate
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            width: '100%',
+            gap: 2,
+          }}
+        >
+          <FormControl>
+            <FormLabel htmlFor="username">Username</FormLabel>
+            <TextField
+              error={usernameError}
+              helperText={usernameErrorMessage}
+              id="username"
+              type="username"
+              name="username"
+              placeholder="username"
+              autoFocus
+              required
               fullWidth
-              variant="contained"
-            >
-              Sign in
-            </Button>
-          </Box>
-        </Card>
-      </SignInContainer>
+              variant="outlined"
+              color={usernameError ? 'error' : 'primary'}
+            />
+          </FormControl>
+          <FormControl>
+            <FormLabel htmlFor="password">Password</FormLabel>
+            <TextField
+              error={passwordError}
+              helperText={passwordErrorMessage}
+              name="password"
+              placeholder="••••••"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              autoFocus
+              required
+              fullWidth
+              variant="outlined"
+              color={passwordError ? 'error' : 'primary'}
+            />
+          </FormControl>
+          <FormControlLabel
+            control={<Checkbox value="remember" color="primary" />}
+            label="Remember me"
+          />
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+          >
+            Sign in
+          </Button>
+        </Box>
+      </Card>
+    </SignInContainer>
   );
 }

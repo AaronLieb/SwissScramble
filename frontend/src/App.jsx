@@ -10,7 +10,7 @@ import {
 import './App.css'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import MenuIcon from '@mui/icons-material/Menu';
 import { red, purple } from '@mui/material/colors';
 import { BrowserRouter as Router, Routes, Route, NavLink } from "react-router";
@@ -33,7 +33,7 @@ function App() {
   };
   const [drawerOpen, setDrawerOpen] = useState(false)
 
-  const [auth, setAuth] = useState("hi")
+  const [auth, setAuth] = useState(null)
 
   function updateAuth() {
     if(auth !== null) setAuth(null);

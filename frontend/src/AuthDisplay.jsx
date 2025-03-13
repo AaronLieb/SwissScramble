@@ -38,7 +38,6 @@ function AuthDisplay(props) {
                 }
             );
         } else {
-            console.log("canton:", selectedCanton, "\nchallenge:", selectedChallenge)
             enqueueSnackbar("No Challenge or Canton specified", { variant: "error", autoHideDuration: 3000 })
             throw "Challenge or canton not specified.";
         }
@@ -171,7 +170,11 @@ function AuthDisplay(props) {
         return new Promise((resolve) => {
             fetch(props.backend + endpoint, {
                 method: 'POST',
-                body: body
+                body: body,
+                headers: new Headers({
+                    'Authorization': `Bearer ${props.auth.access_token}`, 
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }), 
             })
             .then((response) => {
 
