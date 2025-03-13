@@ -112,11 +112,15 @@ function AuthDisplay(props) {
     }
 
     async function handleEnterCanton() {
-        getCantonFromName(props.canton)
-
+        let sel = getCantonFromName(props.canton)
+        if(!sel) {
+            enqueueSnackbar("Cannot find canton to enter.", { variant: "error", autoHideDuration: 3000 })
+            return
+        }
+        console.log(sel)
         await postEndpoint("/enter_canton/", JSON.stringify({
-            canton_id: "Grisons",
-        }))
+            canton_id: sel.id,
+        })) 
     }
 
     function getCantonFromName(name) {
@@ -171,7 +175,8 @@ function AuthDisplay(props) {
                 body: body,
                 headers: new Headers({
                     'Authorization': `Bearer ${props.auth}`, 
-                    'Content-Type': 'application/x-www-form-urlencoded'
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
                 }), 
             })
             .then((response) => {
@@ -179,6 +184,9 @@ function AuthDisplay(props) {
                 console.log(response)
                 switch(response.status) {
                     case 401:
+                        enqueueSnackbar(`Failed to submit ${op}: ${response.statusText}`, { variant: "error", autoHideDuration: 3000 })
+                        break;
+                    case 422:
                         enqueueSnackbar(`Failed to submit ${op}: ${response.statusText}`, { variant: "error", autoHideDuration: 3000 })
                         break;
                     case 200:
