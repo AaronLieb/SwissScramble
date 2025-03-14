@@ -334,7 +334,7 @@ function Switzerland(props) {
         <>
             <SnackbarProvider maxSnack={3} />
             <Drawer elevation={elevation} curses={curses} money={money} drawerOpen={props.drawerOpen} toggleDrawer={props.toggleDrawer} />
-            <Grid2 spacing={2} container direction="column" alignItems={"center"} justifyContent={"center"}>
+            <Grid2 sx={{m: 2}} spacing={2} container direction="column" alignItems={"center"} justifyContent={"center"}>
                 <Grid2 item className='h-100' size={{ sx: 10, md: 8 }} sx={{mt:4}}>
                     <Paper elevation={elevation}>
                         <svg id="travelmap"></svg>

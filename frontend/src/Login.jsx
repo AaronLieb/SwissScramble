@@ -23,12 +23,15 @@ const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   alignSelf: 'center',
-  width: '100%',
-  padding: theme.spacing(4),
+  padding: theme.spacing(2),
   gap: theme.spacing(2),
   margin: 'auto',
+  
+  [theme.breakpoints.up('xs')]: {
+    minWidth: '80vw',
+  },
   [theme.breakpoints.up('sm')]: {
-    maxWidth: '450px',
+    minWidth: '20vw',
   },
   boxShadow:
     'hsla(220, 30%, 5%, 0.05) 0px 5px 15px 0px, hsla(220, 25%, 10%, 0.05) 0px 15px 35px -5px',
@@ -128,7 +131,7 @@ export default function Login(props) {
   };
 
   return (
-    <SignInContainer direction="column" justifyContent="space-between">
+    <SignInContainer direction="column" display={"flex"} justifyContent="space-between" alignContent={"center"}>
       <SnackbarProvider maxSnack={3} />
       <Card variant="outlined">
         <Typography
@@ -137,7 +140,7 @@ export default function Login(props) {
           variant="h4"
           sx={{ width: '100%', fontSize: 'clamp(2rem, 10vw, 2.15rem)' }}
         >
-          <NavLink style={{ color: "black" }} to='/'><ArrowBackIosIcon sx={{ display: 'flex', justifyContent: 'flex-start' }} /></NavLink>
+        <NavLink style={{ color: "black" }} to='/'><ArrowBackIosIcon sx={{ display: 'flex', justifyContent: 'flex-start' }} /></NavLink>
           Sign in
         </Typography>
         <Box

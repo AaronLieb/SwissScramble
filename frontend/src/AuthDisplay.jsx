@@ -244,7 +244,7 @@ function AuthDisplay(props) {
         <>
             <Paper sx={{ p: 2, my: 1 }} elevation={props.elevation}>
                 <Grid2 spacing={2} container>
-                    <Grid2 item size={{ xs: 11, lg: 11 }}>
+                    <Grid2 item size={{ xs: 9, lg: 9 }}>
                         <FormControl sx={{ width: "100%" }} aria-label="Canton selection">
                             <Autocomplete
                                 disablePortal
@@ -262,7 +262,7 @@ function AuthDisplay(props) {
                             />
                         </FormControl>
                     </Grid2>
-                    <Grid2 item size={{ xs: 1 }}>
+                    <Grid2 item size={{ xs: 3 }}>
                         <FormControl sx={{ width: "100%" }} aria-label="Canton selection">
                         <TextField id="outlined-basic" label="Level" defaultValue={selectedCanton.level} slotProps={{inputLabel: {shrink: true}, input: {readOnly: true}}} />
                         </FormControl>

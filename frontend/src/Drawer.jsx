@@ -2,6 +2,7 @@
 import {
     Grid2,
     SwipeableDrawer,
+    Stack,
     Typography,
 } from "@mui/material";
 import { Global } from '@emotion/react';
@@ -75,13 +76,16 @@ function Drawer(props) {
                         <Typography variant="h3">💰 {props.money}₣</Typography>
                     </Grid2>
                     <Grid2 item sx={{ display: 'inline-flex', alignItems: 'baseline' }} size={{ xs: 3, md: 3 }} spacing={2}>
+                    <Stack sx={{ display: 'inline-flex', alignItems: 'baseline' }}>
                         <img height={"25%"} src={challenge} />
                         <Typography variant="h3"> {props.curses.length} </Typography>
+                    </Stack>
                     </Grid2>
-                    <Grid2 item sx={{ display: 'inline-flex', alignItems: 'baseline' }} size={{ xs: 3, md: 3 }} spacing={2}>
+                    <Grid2 item size={{ xs: 3, md: 3 }} spacing={2}>
+                    <Stack sx={{ display: 'inline-block', alignItems: 'baseline' }}>
                         <img height={"25%"} src={curse} />
                         <Typography variant="h3"> {props.curses.length}</Typography>
-
+                    </Stack>
                     </Grid2>
 
 
