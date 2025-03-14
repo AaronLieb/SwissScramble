@@ -109,6 +109,20 @@ function AuthDisplay(props) {
         }
     }
 
+    function destroyCanton() {
+        let sel = getCantonFromName(props.canton)
+        if(!sel) {
+            enqueueSnackbar("Cannot find canton to destroy.", { variant: "error", autoHideDuration: 3000 })
+            return
+        }
+        let text = `Are you sure you want to DESTROY ${props.canton}?`
+        if (window.confirm(text)) {
+            postEndpoint("/destroy_canton/", JSON.stringify({
+                id: sel.id,
+            }))
+        }
+    }
+
     async function handleEnterCanton() {
         let sel = getCantonFromName(props.canton)
         if(!sel) {
@@ -333,6 +347,7 @@ function AuthDisplay(props) {
                     <Grid2 item size={{ xs: 12, lg: 12 }}>
                         <Button variant="outlined" sx={{ m: 1 }} onClick={purchaseCurse} type="submit">Purchase Curse</Button>
                         <Button variant="outlined" sx={{ m: 1 }} onClick={useCurse} type="submit">Use Curse</Button>
+                        <Button variant="outlined" sx={{ m: 1 }} onClick={destroyCanton} type="submit">☢️ DESTROY CANTON ☢️</Button>
                     </Grid2>
                 </Grid2>
             </Paper>

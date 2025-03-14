@@ -17,7 +17,7 @@ import About from './About.jsx';
 function Switzerland(props) {
     const elevation = 5
 
-    const bombed = "black";
+    const destroyed = "oklch(0% 0 300)";
 
     // Coloring for map.
     const highlightColor = 'oklch(75% 0.1801 216.4)'
@@ -78,7 +78,7 @@ function Switzerland(props) {
 
             // Get Location
             fetchCantons()
-            //fetchTeam()
+            fetchTeam()
         }
     }, []);
 
@@ -144,17 +144,6 @@ function Switzerland(props) {
             .attr("height", "60vh")
             .on('click', d => setCanton(d.target.id))
             .attr("style", "max-width: 100%; height: auto; height: intrinsic; text-align: center; ")
-
-        // Experimental feature to add label for selected canton
-        // svg.append("text")
-        //     .text(canton)
-        //     .attr("id", "cantonlabel")
-        //     .attr("z-index", 999)
-        //     .style("color", "rgba(0, 0, 0, 0.6)")
-        //     .attr("font-weight", "light")
-        //     .attr("font-size", "2em")
-        //     .attr("x", 10)
-        //     .attr("y", height-10)
 
         let g = svg
             .append("g")
@@ -242,6 +231,7 @@ function Switzerland(props) {
     function getColorFromGameState(state, value) {
         let item = state.cantons.find(e => e.name === value)
         if (item) {
+            if(item.destroyed) return destroyed
             if (item.team_id === team) {
                 return teamColorRange(teamHue)[Math.min(item.level, 3)]
             } else {
@@ -255,6 +245,7 @@ function Switzerland(props) {
         if (Object.keys(gameState) == 0) return neutral
         let item = gameState["cantons"].find(e => e.name === value)
         if (item) {
+            if(item.destroyed) return destroyed
             if (faded) {
                 if (item.team_id === 1) {
                     return teamColorsFaded[item.level]
@@ -317,25 +308,27 @@ function Switzerland(props) {
         });
     }
 
-    // async function fetchTeam() {
-    //     let authHeaders = {
-    //         headers: new Headers({
-    //         'Authorization': `Bearer ${props.auth}`, 
-    //         'Content-Type': 'application/json',
-    //         'Accept': 'application/json',
-    //     })}
-    //     fetch(props.backend + "/team/", authHeaders)
-    //     .then((response) => {
-    //         return response.json()
-    //     })
-    //     .then((data) => {
-    //         console.log(team)
-    //         setTeam(data)
-    //     })
-    //     .catch((err) => {
-    //         console.log("Error fetching canton data " + err);
-    //     });
-    // }
+    async function fetchTeam() {
+        let authHeaders = {
+            headers: new Headers({
+            'Authorization': `Bearer ${props.auth}`, 
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        })}
+        console.log(props.auth)
+        fetch(props.backend + "/team/", authHeaders)
+        .then((response) => {
+            console.log(response)
+            return response.json()
+        })
+        .then((data) => {
+            console.log(team)
+            setTeam(data)
+        })
+        .catch((err) => {
+            console.log("Error fetching canton data " + err);
+        });
+    }
 
     return (
         <>
