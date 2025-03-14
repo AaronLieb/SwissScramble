@@ -6,14 +6,10 @@
 
 Use Python 3.12.x
 
-```
+```bash
 python -m venv venv
 source venv/bin/activate
 python -m pip install -r requirements.txt
-```
-
-```
-
 ```
 
 ### Running the dev server
@@ -37,7 +33,7 @@ The api documentation can be found at the `/docs` endpoint
 
 Required values
 
-```
+```dotenv
 SECRET_KEY=
 ADMIN_USERNAME=
 ADMIN_PASS=
