@@ -115,11 +115,15 @@ function AuthDisplay(props) {
     }
 
     async function handleEnterCanton() {
-        getCantonFromName(props.canton)
-
+        let sel = getCantonFromName(props.canton)
+        if(!sel) {
+            enqueueSnackbar("Cannot find canton to enter.", { variant: "error", autoHideDuration: 3000 })
+            return
+        }
         await postEndpoint("/enter_canton/", JSON.stringify({
-            canton_id: "Grisons",
+            id: sel.id,
         }))
+        await props.setUpdateEvents(sel.id)
     }
 
     function getCantonFromName(name) {
@@ -132,7 +136,7 @@ function AuthDisplay(props) {
         fetchEndpoint("/challenges/")
         fetchEndpoint("/user/")
         fetchEndpoint("/team/")
-    }, []);
+    }, [props.updateEvents]);
 
 
     // fetchEndpoint grabs data from and endpoint and handles its result by
@@ -165,12 +169,12 @@ function AuthDisplay(props) {
                             break;
                         case "/user/":
                             setUser(data)
-                            console.log(data)
+                            //console.log(data)
                             resolve();
                             break;
                         case "/team/":
                             setTeam(data)
-                            console.log(data)
+                            //console.log(data)
                             resolve();
                             break;
                         default:
@@ -192,34 +196,29 @@ function AuthDisplay(props) {
                 body: body,
                 headers: new Headers({
                     'Authorization': `Bearer ${props.auth}`, 
-                    'Content-Type': 'application/x-www-form-urlencoded'
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
                 }), 
             })
             .then((response) => {
-                console.log(response)
                 switch(response.status) {
                     case 401:
                         enqueueSnackbar(`Failed to submit ${op}: ${response.statusText}`, { variant: "error", autoHideDuration: 3000 })
                         break;
+                    case 422:
+                        enqueueSnackbar(`Failed to submit ${op}: ${response.statusText}`, { variant: "error", autoHideDuration: 3000 })
+                        break;
                     case 200:
                         enqueueSnackbar(`Successfully submitted ${op} 🎉`, { variant: "success", autoHideDuration: 3000 })
-                        props.setUpdateEvents(response.status)
                         break;
                     default:
                         enqueueSnackbar(`Unknown submit operation ${op}`, { variant: "warning", autoHideDuration: 3000 })
                 }
-                // switch(endpoint) {
-                //     case "/powerups/":
-                //         setPowerups(data.sort((a, b) => a.cost - b.cost))
-                //         resolve();
-                //         break;
-                //     case "/challenges/":
-                //         setChallenges(data)
-                //         resolve();
-                //         break;
-                //     default:
-                //         resolve();
-                // }
+                resolve(response.status)
+                return response.status
+            })
+            .then(() => {
+                props.fetchEvents()
             })
             .catch((err) => {
                 enqueueSnackbar(`failed to submit ${op}: ${err}`, { variant: "error", autoHideDuration: 3000 })
@@ -302,7 +301,6 @@ function AuthDisplay(props) {
                     </Grid2>
                     <Grid2 item size={{ xs: 12, lg: 6 }}>
                         <Button variant="outlined" sx={{ m: 1 }} onClick={purchasePowerup} type="submit">Purchase Power-Up</Button>
-                        <Button variant="outlined" sx={{ m: 1 }} onClick={usePowerup} type="submit">Use Powerup</Button>
                     </Grid2>
                     <Grid2 item size={{ xs: 12, lg: 6 }}>
                         <FormControl sx={{ width: "100%" }} aria-label="Curses">
@@ -320,12 +318,15 @@ function AuthDisplay(props) {
                                     else setCurse("");
                                 }}
                                 renderInput={(params) => (
-                                    <TextField {...params} label="Curses" />
+                                    <TextField {...params} label="My Powerups" />
                                 )}
                             />
                         </FormControl>
                     </Grid2>
                     <Grid2 item size={{ xs: 12, lg: 6 }}>
+                        <Button variant="outlined" sx={{ m: 1 }} onClick={usePowerup} type="submit">Use Powerup</Button>
+                    </Grid2>
+                    <Grid2 item size={{ xs: 12, lg: 12 }}>
                         <Button variant="outlined" sx={{ m: 1 }} onClick={purchaseCurse} type="submit">Purchase Curse</Button>
                         <Button variant="outlined" sx={{ m: 1 }} onClick={useCurse} type="submit">Use Curse</Button>
                     </Grid2>

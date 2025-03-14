@@ -54,6 +54,7 @@ function Switzerland(props) {
 
     const [teamState, setTeamState] = useState([])
     const [updateEvents, setUpdateEvents] = useState(0);
+    const [events, setEvents] = useState([]);
 
     function setCanton(c) {
         if (c == "travelmap") setSelectedCanton("")
@@ -293,6 +294,24 @@ function Switzerland(props) {
         return neutral
     }
 
+    async function fetchEvents() {
+        let authHeaders = {
+            headers: new Headers({
+            'Authorization': `Bearer ${props.auth}`, 
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        })}
+        fetch(props.backend + "/events/", authHeaders)
+            .then((response) => {
+                return response.json()
+            })
+            .then((data) => {
+                setEvents(data)
+            })
+            .catch((err) => {
+                console.log("Error fetching events " + err);
+            });
+    }
 
 
     return (
@@ -308,6 +327,8 @@ function Switzerland(props) {
                 {props.auth !== null ? (
                     <Grid2 item className='h-100' size={{ sx: 10, md: 8 }}>
                         <AuthDisplay
+                         fetchEvents={fetchEvents}
+                            updateEvents={updateEvents}
                             setUpdateEvents={setUpdateEvents}
                             auth={props.auth}
                             backend={props.backend}
@@ -328,7 +349,7 @@ function Switzerland(props) {
                     <Score canton={canton} elevation={elevation} teamState={teamState} />
                 </Grid2>
                 <Grid2 item className='h-100' size={{ sx: 10, md: 8 }}>
-                    <Events updateEvents={props.updateEvents} backend={props.backend} elevation={elevation} />
+                    <Events events={events} fetchEvents={fetchEvents} updateEvents={props.updateEvents} backend={props.backend} elevation={elevation} />
                 </Grid2>
                 <Grid2 item className='h-100' size={{ sx: 10, md: 8 }}>
                     <About elevation={elevation} />
