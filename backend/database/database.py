@@ -68,7 +68,7 @@ def load_powerups(engine):
         next(reader)  # Discard the header line.
         for row in reader:
             powerups.append(
-                PowerUp(name="powerup", description=row[0], cost=row[1])
+                PowerUp(name="powerup", description=row[0], cost=int(row[1]))
             )  # Curses all cost 100 money.
 
     with Session(engine) as session:
