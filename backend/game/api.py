@@ -138,6 +138,8 @@ async def post_challenge(
         time=datetime.now(),
     )
 
+    team_copy = team.model_copy()
+    canton_copy = canton.model_copy()
     db.add(team)
     db.commit()
     db.refresh(team)
@@ -150,7 +152,7 @@ async def post_challenge(
     db.commit()
     db.refresh(event)
 
-    return {"team": team, "canton": canton}
+    return {"team": team_copy, "canton": canton_copy}
 
 
 @router.get("/curses/")
