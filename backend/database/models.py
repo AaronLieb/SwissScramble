@@ -73,6 +73,10 @@ class Canton(SQLModel, table=True):
     team: Team | None = Relationship(back_populates="cantons")
 
 
+class EnterCantonPost(SQLModel):
+    id: int | None = Field(default=None)
+
+
 # class Ping
 
 
@@ -120,6 +124,7 @@ class Curse(CurseBase, table=True):
 
 class BuyCursePost(CurseBase):
     pass
+
 
 class PowerUpBase(SQLModel):
     id: int | None = Field(default=None, primary_key=True)

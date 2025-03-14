@@ -13,6 +13,7 @@ from ..database.models import (
     Challenge,
     ChallengePost,
     Curse,
+    EnterCantonPost,
     Event,
     EventPost,
     PowerUp,
@@ -239,13 +240,13 @@ async def get_powerups(
 
 @router.post("/enter_canton")
 async def post_enter_canton(
-    canton_id: int,
     db: SessionDep,
     current_user: Annotated[User, Depends(auth.get_current_user)],
+    canton: EnterCantonPost,
 ):
-    canton = db.get(Canton, canton_id)
+    db_canton = db.get(Canton, canton.id)
 
-    if canton is None:
+    if db_canton is None:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid Canton ID"
         )
@@ -257,11 +258,11 @@ async def post_enter_canton(
             status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid team"
         )
 
-    text = "Team '{0}' entered '{1}'".format(team.name, canton.name)
+    text = "Team '{0}' entered '{1}'".format(team.name, db_canton.name)
 
     new_event(db, text, team.name)
 
-    if canton.level == 3 and canton.team != current_user.team:
+    if db_canton.level == 3 and db_canton.team != current_user.team:
         other_team_id = 1 if team.id == 2 else 2
         other_team = db.get(Team, other_team_id)
 
