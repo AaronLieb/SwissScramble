@@ -21,6 +21,7 @@ function AuthDisplay(props) {
     // Challenge form related info
     const [challenges, setChallenges] = useState([])
     const [selectedChallenge, setSelectedChallenge] = useState("")
+    const [selectedCanton, setSelectedCanton] = useState({})
 
     // Shop values with selection.
 
@@ -28,19 +29,13 @@ function AuthDisplay(props) {
     const [powerups, setPowerups] = useState(["A", "B"])
     const [curse, setCurse] = useState("")
 
-    function handleSubmitChallenge() {
-        const selectedCanton = props.cantons.find((e) => e.name == props.canton) || null
+    async function handleSubmitChallenge() {
         if (selectedCanton && selectedChallenge) {
-            const response = {
+            await postEndpoint("/challenge/", JSON.stringify({
                 id: selectedChallenge.id,
                 canton: selectedCanton.id,
-            }
-            fetch(props.backend + "/challenge/",
-                {
-                    method: 'POST',
-                    body: JSON.stringify(response)
-                }
-            );
+            }))
+            await props.setUpdateEvents(selectedChallenge.id)
         } else {
             enqueueSnackbar("No Challenge or Canton specified", { variant: "error", autoHideDuration: 3000 })
         }
@@ -139,6 +134,10 @@ function AuthDisplay(props) {
     }, [props.updateEvents]);
 
 
+    useEffect(() => {
+        setSelectedCanton(props.cantons.find((e) => e.name == props.canton) || {})
+    }, [props.canton]);
+
     // fetchEndpoint grabs data from and endpoint and handles its result by
     // storing it in specific frontend state.
     async function fetchEndpoint(endpoint) {
@@ -231,7 +230,7 @@ function AuthDisplay(props) {
         <>
             <Paper sx={{ p: 2, my: 1 }} elevation={props.elevation}>
                 <Grid2 spacing={2} container>
-                    <Grid2 item size={{ xs: 12, lg: 12 }}>
+                    <Grid2 item size={{ xs: 11, lg: 11 }}>
                         <FormControl sx={{ width: "100%" }} aria-label="Canton selection">
                             <Autocomplete
                                 disablePortal
@@ -247,6 +246,11 @@ function AuthDisplay(props) {
                                     <TextField {...params} label="Canton" />
                                 )}
                             />
+                        </FormControl>
+                    </Grid2>
+                    <Grid2 item size={{ xs: 1 }}>
+                        <FormControl sx={{ width: "100%" }} aria-label="Canton selection">
+                        <TextField id="outlined-basic" label="Level" defaultValue={selectedCanton.level} slotProps={{inputLabel: {shrink: true}, input: {readOnly: true}}} />
                         </FormControl>
                     </Grid2>
                     <Grid2 item size={{ xs: 12, lg: 12 }}>

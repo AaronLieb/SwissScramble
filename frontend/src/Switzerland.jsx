@@ -77,23 +77,8 @@ function Switzerland(props) {
                 });
 
             // Get Location
-            fetch(props.backend + "/cantons/")
-                .then((response) => {
-                    return response.json()
-                })
-                .then((data) => {
-                    let game = {
-                        cantons: data
-                    }
-                    setGameState(game)
-                    setCantons(game.cantons)
-                    updateColors(game)
-
-                    setTeamState(groupBy(game.cantons, 'team_id'))
-                })
-                .catch((err) => {
-                    console.log("Error fetching canton data " + err);
-                });
+            fetchCantons()
+            //fetchTeam()
         }
     }, []);
 
@@ -146,8 +131,6 @@ function Switzerland(props) {
             .rotate([0, 0])
             .center([8.3, 46.8])
             .scale(8000)
-            //.translate([selection.node().getBoundingClientRect().width/2,selection.node().getBoundingClientRect().height/2])
-            //.translate([0,0])
             .translate([width / 2, height / 2])
             .precision(.1);
 
@@ -260,9 +243,9 @@ function Switzerland(props) {
         let item = state.cantons.find(e => e.name === value)
         if (item) {
             if (item.team_id === team) {
-                return teamColorRange(teamHue)[item.level]
+                return teamColorRange(teamHue)[Math.min(item.level, 3)]
             } else {
-                return teamColorRange(enemyHue)[item.level]
+                return teamColorRange(enemyHue)[Math.min(item.level, 3)]
             }
         }
         return neutral
@@ -301,7 +284,7 @@ function Switzerland(props) {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
         })}
-        fetch(props.backend + "/events/", authHeaders)
+        await fetch(props.backend + "/events/", authHeaders)
             .then((response) => {
                 return response.json()
             })
@@ -311,8 +294,48 @@ function Switzerland(props) {
             .catch((err) => {
                 console.log("Error fetching events " + err);
             });
+
+        await fetchCantons()
     }
 
+    async function fetchCantons() {
+        fetch(props.backend + "/cantons/")
+        .then((response) => {
+            return response.json()
+        })
+        .then((data) => {
+            let game = {
+                cantons: data
+            }
+            setGameState(game)
+            setCantons(game.cantons)
+            updateColors(game)
+            setTeamState(groupBy(game.cantons, 'team_id'))
+        })
+        .catch((err) => {
+            console.log("Error fetching canton data " + err);
+        });
+    }
+
+    // async function fetchTeam() {
+    //     let authHeaders = {
+    //         headers: new Headers({
+    //         'Authorization': `Bearer ${props.auth}`, 
+    //         'Content-Type': 'application/json',
+    //         'Accept': 'application/json',
+    //     })}
+    //     fetch(props.backend + "/team/", authHeaders)
+    //     .then((response) => {
+    //         return response.json()
+    //     })
+    //     .then((data) => {
+    //         console.log(team)
+    //         setTeam(data)
+    //     })
+    //     .catch((err) => {
+    //         console.log("Error fetching canton data " + err);
+    //     });
+    // }
 
     return (
         <>
