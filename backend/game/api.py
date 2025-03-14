@@ -37,13 +37,9 @@ async def read_user(
 
 @router.get("/team/")
 async def read_team(
-    db: SessionDep,
     current_user: Annotated[User, Depends(auth.get_current_user)],
 ):
-    user = db.get(User, current_user.username)
-    if user:
-        return user.team
-    return None
+    return current_user.team
 
 
 @router.get("/cantons/")
