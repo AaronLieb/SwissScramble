@@ -7,8 +7,8 @@ class Settings(BaseSettings):
     secret_key: str = ""
     hash_algorithm: str = "HS256"
     expiration_minutes: int = 7200
-    team1_hash: str = ""
-    team2_hash: str = ""
+    admin_username: str = ""
+    admin_pass: str = ""
     dbname: str = "main.db"
 
 

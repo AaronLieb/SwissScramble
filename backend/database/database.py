@@ -4,13 +4,16 @@ from sqlmodel import Session, SQLModel, create_engine
 import sqlite3
 import csv
 
+from ..auth.crypto import get_password_hash
+
 from ..config import settings
-from .models import Challenge, Curse, PowerUp
+from .models import Challenge, Curse, PowerUp, User
 
 
 def create_db_and_tables():
     SQLModel.metadata.create_all(engine)
     load_default_data()
+    load_admin_user()
     load_challenges(engine)
     load_curses(engine)
     load_powerups(engine)
@@ -25,6 +28,21 @@ def load_default_data():
         cursor.executescript(sql_script)
         db.commit()
         db.close()
+
+
+def load_admin_user():
+    hashed_password = get_password_hash(settings.admin_pass)
+    admin_user = User(
+        username=settings.admin_username,
+        firstname="joe",
+        lastname="biden",
+        hashed_password=hashed_password,
+    )
+    db = next(get_session())
+
+    db.add(admin_user)
+    db.commit()
+    db.refresh(admin_user)
 
 
 def load_challenges(engine):

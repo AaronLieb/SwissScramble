@@ -39,8 +39,8 @@ Required values
 
 ```
 SECRET_KEY=
-TEAM1_HASH=
-TEAM2_HASH=
+ADMIN_USERNAME=
+ADMIN_PASS=
 ```
 
 ### Helpful docs
