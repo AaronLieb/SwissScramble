@@ -5,7 +5,6 @@ from sqlmodel import select
 
 from .helpers import new_event
 
-from fastapi import Body
 from ..database.database import SessionDep
 from ..database.models import (
     BuyCursePost,
@@ -238,11 +237,11 @@ async def get_powerups(
     return db.exec(select(PowerUp)).all()
 
 
-@router.post("/enter_canton/")
+@router.post("/enter_canton")
 async def post_enter_canton(
+    canton_id: int,
     db: SessionDep,
     current_user: Annotated[User, Depends(auth.get_current_user)],
-    canton_id: int = Body(),
 ):
     canton = db.get(Canton, canton_id)
 
