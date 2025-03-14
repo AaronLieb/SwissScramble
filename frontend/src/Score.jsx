@@ -5,7 +5,14 @@ import {
     Typography,
     Box,
 } from "@mui/material";
+import { useEffect, useState } from "react";
 
+var groupBy = function (xs, key) {
+    return xs.reduce(function (rv, x) {
+        (rv[x[key]] ??= []).push(x);
+        return rv;
+    }, {});
+};
 
 function LinearProgressWithLabel(props) {
     return (
@@ -22,16 +29,21 @@ function LinearProgressWithLabel(props) {
     );
 }
 
-
 function Score(props) {
+    const [score, setScore] = useState(props.cantons);
+
+    useEffect(() => {
+        setScore(groupBy(props.cantons, 'team_id'))
+    }, [props.cantons])
+
     return (
         <Paper sx={{ p: 2 }} elevation={props.elevation}>
-            {Object.keys(props.teamState).map((key,idx) => (
+            {Object.keys(score).map((key,idx) => (
                 <div key={`score${key}-${idx}`}>
                     <Typography variant="h4" component="div" align="left" sx={{ flexGrow: 1 }}>Team {key}</Typography>
-                    <LinearProgressWithLabel sx={{ height: 10, borderRadius: 5, }} key={key} variant="determinate" value={props.teamState[key].length} />
+                    <LinearProgressWithLabel sx={{ height: 10, borderRadius: 5, }} key={key} variant="determinate" value={score[key].length} />
                     <Typography variant="subtitle1" align="left" sx={{ color: 'text.secondary'}}>
-                        {props.teamState[key].map((c,idy) => 
+                        {score[key].map((c,idy) => 
                         <span style={{ color: c.name === props.canton ? 'red' : '', fontWeight: c.name === props.canton ? 'bold' : 'normal'}} key={`${c.name}-${idx}-${idy}`}> {c.name}&nbsp;
                         </span>)}
                     </Typography>

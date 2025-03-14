@@ -115,6 +115,7 @@ export default function Login(props) {
         }
       })
       const resp = await response.json()
+      console.log(resp)
 
       if (response.status !== 200) {
         enqueueSnackbar(`Failed to log in: ${resp.detail}`, { variant: "error", autoHideDuration: 3000 })

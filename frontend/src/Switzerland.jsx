@@ -8,86 +8,85 @@ import Drawer from './Drawer.jsx'
 import { useEffect, useState } from 'react';
 import './App.css';
 import * as topojson from 'topojson-client'
-import { SnackbarProvider } from 'notistack';
+import { SnackbarProvider, enqueueSnackbar } from 'notistack';
 import AuthDisplay from "./AuthDisplay.jsx";
 import Score from "./Score.jsx";
 import Events from "./Events.jsx"
 import About from './About.jsx';
 
 function Switzerland(props) {
-    const elevation = 5
-
+    const elevation = 5;
     const destroyed = "oklch(0% 0 300)";
 
     // Coloring for map.
     const highlightColor = 'oklch(75% 0.1801 216.4)'
-    const teamColors = ["oklch(75% 0.1801 216.4)", "oklch(75% 0.1 300)", "oklch(55% 0.1 300)", "oklch(45% 0.1 300)"]
+
     const teamHue = "300"
     const enemyHue = "175"
-    const teamColorRange = (hue) => {
-        return ["#e8e8e8", `oklch(75% 0.1 ${hue})`, `oklch(55% 0.1 ${hue})`, `oklch(45% 0.1 ${hue})`]
+    const neutral = "oklch(90% 0 360)"
+    const lightness = ["85%", "85%", "55%", "35%"]
+    const getColor = (item,faded) => {
+        if(!item)  return neutral
+        if(item.destroyed) return destroyed
+        if(item.level === 0)  return neutral
+        if(item.team_id === 1) return `oklch(${lightness[Math.min(item.level, 3)]} ${faded ? '0.03':'0.1'} ${teamHue})`
+        if(item.team_id === 2) return `oklch(${lightness[Math.min(item.level, 3)]} ${faded ? '0.03':'0.1'} ${enemyHue})`
+        // Base case.
+        return neutral
     }
-    const teamColorsFaded = ["oklch(75% 0.1801 216.4)", "oklch(75% 0.03 300)", "oklch(55% 0.03 300)", "oklch(45% 0.03 300)"]
-
-    const enemyColors = ["oklch(75% 0.1801 216.4)", "oklch(75% 0.1 175)", "oklch(55% 0.1 175)", "oklch(45% 0.1 175)"]
-    const enemyColorsFaded = ["oklch(75% 0.1801 216.4)", "oklch(75% 0.03 175)", "oklch(55% 0.03 175)", "oklch(45% 0.03 175)"]
 
     // Interactivity for map.
     const width = 900, height = 500;
     const [mapLoaded, setMapLoaded] = useState(false)
-    const neutral = "oklch(90% 0 360)"
-
 
     const [canton, setSelectedCanton] = useState("");
     const [cantons, setCantons] = useState([])
-    const [selection, setSelection] = useState(null)
-
-    const [team, setTeam] = useState(1)
-
-    // gameState holds the controlled cantons with their levels.
-    const [gameState, setGameState] = useState({})
 
     // Player state.
+    const [team, setTeam] = useState({})
     const [money, setMoney] = useState(0)
     const [myPowerups, setMyPowerups] = useState([])
-    const [curses, setCurses] = useState(["poop", "curse curse curse", "aaaaaahhhhh"])
+    const [curses, setCurses] = useState([])
 
-    const [teamState, setTeamState] = useState([])
-    const [updateEvents, setUpdateEvents] = useState(0);
     const [events, setEvents] = useState([]);
+
+    // updateEvents is a hook to re-fetch.
+    const [updateEvents, setUpdateEvents] = useState(0);
 
     function setCanton(c) {
         if (c == "travelmap") setSelectedCanton("")
         else setSelectedCanton(c)
     }
 
-    // Fetch all data on map load.
+    // Fetch all data on initial map load.
     useEffect(() => {
-        setTeam("myid")
         if (!mapLoaded) {
-            fetch("./swiss-maps.json")
-                .then((response) => {
-                    return response.json()
-                })
-                .then((data) => {
-                    drawMap(data)
-                })
-                .catch((err) => {
-                    console.log("Error rendering map data " + err);
-                });
-
-            // Get Location
-            fetchCantons()
-            fetchTeam()
+            makeGame()
         }
     }, []);
 
-    var groupBy = function (xs, key) {
-        return xs.reduce(function (rv, x) {
-            (rv[x[key]] ??= []).push(x);
-            return rv;
-        }, {});
-    };
+    async function makeGame() {
+        await fetch("./swiss-maps.json")
+            .then((response) => {
+                return response.json()
+            })
+            .then((data) => {
+                drawMap(data)
+            })
+            .catch((err) => {
+                console.log("Error rendering map data " + err);
+            });
+        await fetchEndpoint("/cantons/")
+        await fetchEndpoint("/team/")
+    }
+
+    useEffect(() => {
+        updateColors(cantons)
+    }, [cantons])
+    
+    useEffect(() => {
+        updateSelected(canton);
+    }, [canton]);
 
     // Print this user's location every 5 seconds.
     // useInterval(function() {
@@ -184,12 +183,6 @@ function Switzerland(props) {
         svg.call(zoom)
     }
 
-    useEffect(() => {
-        updateSelected(canton);
-        // Experimental feature to add label for selected canton
-        // d3.select("#cantonlabel").text(canton)
-    }, [canton]);
-
     function updateSelected(selected) {
         var g = d3.select("#pathsG").select(".cantons").selectAll("g");
         if (canton !== "") {
@@ -205,17 +198,6 @@ function Switzerland(props) {
                 .attr("fill", (d) => getColorForCanton(d.properties.name, false))
                 .attr("stroke-width", "0.1px");
         }
-
-
-        if (Object.keys(gameState).length > 0) {
-            let item = gameState["cantons"].find(e => e.name === selected)
-            if (item) {
-                setSelection(item)
-            } else {
-                if (selected) setSelection({ name: selected, level: 0, team: "None" })
-            }
-        }
-
     }
 
     function updateColors(state) {
@@ -223,116 +205,73 @@ function Switzerland(props) {
         g.selectAll("path")
             .transition()
             .duration(200)
-            .attr("fill", (d) => getColorFromGameState(state, d.properties.name))
+            .attr("fill", (d) => getColorForCanton(d.properties.name, false))
             .attr("stroke-width", "0.1px");
     }
 
-
-    function getColorFromGameState(state, value) {
-        let item = state.cantons.find(e => e.name === value)
-        if (item) {
-            if(item.destroyed) return destroyed
-            if (item.team_id === team) {
-                return teamColorRange(teamHue)[Math.min(item.level, 3)]
-            } else {
-                return teamColorRange(enemyHue)[Math.min(item.level, 3)]
-            }
-        }
-        return neutral
-    }
-
     function getColorForCanton(value, faded) {
-        if (Object.keys(gameState) == 0) return neutral
-        let item = gameState["cantons"].find(e => e.name === value)
-        if (item) {
-            if(item.destroyed) return destroyed
-            if (faded) {
-                if (item.team_id === 1) {
-                    return teamColorsFaded[item.level]
-                } else if (item.team_id === 2) {
-                    return enemyColorsFaded[item.level]
-                } else {
-                    return neutral
-                }
-
-            } else {
-                if (item.team_id === 1) {
-                    return teamColors[item.level]
-                } else if (item.team_id === 2) {
-                    return enemyColors[item.level]
-                } else {
-                    return neutral
-                }
-            }
-        }
-        return neutral
+        let item = cantons.find(e => e.name === value)
+        return getColor(item,faded)
     }
 
     async function fetchEvents() {
+        await fetchEndpoint("/events/")
+        await fetchEndpoint("/cantons/")
+    }
+
+    // fetchEndpoint grabs data from and endpoint and handles its result by
+    // storing it in specific frontend state.
+    async function fetchEndpoint(endpoint) {
         let authHeaders = {
             headers: new Headers({
             'Authorization': `Bearer ${props.auth}`, 
             'Content-Type': 'application/json',
             'Accept': 'application/json',
         })}
-        await fetch(props.backend + "/events/", authHeaders)
-            .then((response) => {
-                return response.json()
-            })
-            .then((data) => {
-                setEvents(data)
-            })
-            .catch((err) => {
-                console.log("Error fetching events " + err);
-            });
-
-        await fetchCantons()
-    }
-
-    async function fetchCantons() {
-        fetch(props.backend + "/cantons/")
-        .then((response) => {
-            return response.json()
-        })
-        .then((data) => {
-            let game = {
-                cantons: data
-            }
-            setGameState(game)
-            setCantons(game.cantons)
-            updateColors(game)
-            setTeamState(groupBy(game.cantons, 'team_id'))
-        })
-        .catch((err) => {
-            console.log("Error fetching canton data " + err);
-        });
-    }
-
-    async function fetchTeam() {
-        let authHeaders = {
-            headers: new Headers({
-            'Authorization': `Bearer ${props.auth}`, 
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-        })}
-        console.log(props.auth)
-        fetch(props.backend + "/team/", authHeaders)
-        .then((response) => {
-            console.log(response)
-            return response.json()
-        })
-        .then((data) => {
-            console.log(team)
-            setTeam(data)
-        })
-        .catch((err) => {
-            console.log("Error fetching canton data " + err);
-        });
+        return new Promise((resolve) => {
+                fetch(props.backend + endpoint, authHeaders)
+                .then((response) => {
+                    return response.json()
+                })
+                .then((data) => {
+                    switch(endpoint) {
+                        case "/team/":
+                            setTeam(data)
+                            console.log(data)
+                            resolve();
+                            break;
+                        case "/teams/":
+                            setTeams(data)
+                            resolve();
+                            break;
+                        case "/events/":
+                            setEvents(data)
+                            resolve();
+                            break;
+                        case "/cantons/":
+                            setCantons(data)
+                            updateColors(data)
+                            resolve();
+                            break;
+                        case "/events/":
+                            setEvents(data)
+                            resolve();
+                            break;
+                        default:
+                            console.log(`warning: no endpoint handler available for ${endpoint}`)
+                            resolve();
+                    }
+                })
+                .catch((err) => {
+                    enqueueSnackbar(`Failed to fetch data for ${endpoint}: ${err}`, { variant: "error", autoHideDuration: 3000 })
+                    resolve(err) // This application is not robust enough to handle rejection.
+                });
+          })
     }
 
     return (
         <>
-            <SnackbarProvider maxSnack={3} />
+            <SnackbarProvider maxSnack={5} />
             <Drawer elevation={elevation} curses={curses} money={money} drawerOpen={props.drawerOpen} toggleDrawer={props.toggleDrawer} />
             <Grid2 sx={{m: 2}} spacing={2} container direction="column" alignItems={"center"} justifyContent={"center"}>
                 <Grid2 item className='h-100' size={{ sx: 10, md: 8 }} sx={{mt:4}}>
@@ -362,7 +301,7 @@ function Switzerland(props) {
                     </Grid2>
                 )}
                 <Grid2 item className='h-100' size={{ sx: 10, md: 8 }}>
-                    <Score canton={canton} elevation={elevation} teamState={teamState} />
+                    <Score canton={canton} elevation={elevation} cantons={cantons} />
                 </Grid2>
                 <Grid2 item className='h-100' size={{ sx: 10, md: 8 }}>
                     <Events events={events} fetchEvents={fetchEvents} updateEvents={props.updateEvents} backend={props.backend} elevation={elevation} />
