@@ -42,6 +42,15 @@ async def read_team(
     return current_user.team
 
 
+@router.get("/team/powerups")
+async def read_team_powerups(
+    current_user: Annotated[User, Depends(auth.get_current_user)],
+):
+    if current_user.team:
+        return current_user.team.powerups
+    return None
+
+
 @router.get("/cantons/")
 async def read_cantons(db: SessionDep):
     return db.exec(select(Canton)).all()
@@ -218,6 +227,7 @@ async def buy_powerup(
         )
 
     team.money -= powerup_db.cost
+    team.powerups.append(powerup_db)
 
     text = "Team '{0}' purchased power up '{1}'".format(team.name, powerup_db.name)
     new_event(db, text, team.name)
