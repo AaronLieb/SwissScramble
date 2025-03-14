@@ -26,12 +26,6 @@ INSERT INTO canton (name, value, level, destroyed, team_id) VALUES
     ('Zug', 1, 1, false, 2),
     ('Zurich', 1, 1, false, 2);
 
--- INSERT INTO powerup (name, description, cost) VALUES
---     ('location', 'See the other teams’ location for some time', 100),
---     ('double up ', 'double payment for traffifs', 100),
---     ('Upper hand', 'Increase your hand size by one temporarily', 100),
---     ('Trade deal', "Trade one card in your hand with one in the opponent's hand.", 100);
-
 INSERT INTO team (name, money, score) VALUES ('A team', 0, 0);
 INSERT INTO team (name, money, score) VALUES ('Timsaac', 0, 0);
 
