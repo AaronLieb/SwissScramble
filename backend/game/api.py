@@ -128,7 +128,7 @@ async def post_challenge(
             other_team.score -= canton.value
         canton.level = abs(canton.level - challenge_db.levels)
 
-    canton.level = max(canton.level, 3)
+    canton.level = min(canton.level, 3)
 
     event = Event(
         text="Team '{0}' completed the challenge '{1}'".format(
