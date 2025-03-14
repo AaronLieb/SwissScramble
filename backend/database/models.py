@@ -85,6 +85,10 @@ class EnterCantonPost(SQLModel):
     id: int | None = Field(default=None)
 
 
+class DestroyCantonPost(SQLModel):
+    id: int | None = Field(default=None)
+
+
 # class Ping
 
 

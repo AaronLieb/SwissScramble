@@ -13,6 +13,7 @@ from ..database.models import (
     Challenge,
     ChallengePost,
     Curse,
+    DestroyCantonPost,
     EnterCantonPost,
     Event,
     EventPost,
@@ -48,6 +49,15 @@ async def read_team_powerups(
 ):
     if current_user.team:
         return current_user.team.powerups
+    return None
+
+
+@router.get("/team/cantons")
+async def read_team_cantons(
+    current_user: Annotated[User, Depends(auth.get_current_user)],
+):
+    if current_user.team:
+        return current_user.team.cantons
     return None
 
 
@@ -106,29 +116,30 @@ async def post_challenge(
             detail="Invalid Canton ID",
         )
 
-    team.money += challenge_db.money
+    if not canton.destroyed:
+        team.money += challenge_db.money
 
-    other_team_id = 1 if team.id == 2 else 2
-    other_team = db.get(Team, other_team_id)
+        other_team_id = 1 if team.id == 2 else 2
+        other_team = db.get(Team, other_team_id)
 
-    if canton.team == team:
-        canton.level += challenge_db.levels
-        canton.team = team
-    elif canton.team is None:
-        canton.level += challenge_db.levels
-        canton.team = team
-        team.score += canton.value
-    else:
-        if canton.level == challenge_db.levels:
-            canton.team = None
-        elif canton.level < challenge_db.levels:
+        if canton.team == team:
+            canton.level += challenge_db.levels
+            canton.team = team
+        elif canton.team is None:
+            canton.level += challenge_db.levels
             canton.team = team
             team.score += canton.value
-        if other_team is not None:
-            other_team.score -= canton.value
-        canton.level = abs(canton.level - challenge_db.levels)
+        else:
+            if canton.level == challenge_db.levels:
+                canton.team = None
+            elif canton.level < challenge_db.levels:
+                canton.team = team
+                team.score += canton.value
+            if other_team is not None:
+                other_team.score -= canton.value
+            canton.level = abs(canton.level - challenge_db.levels)
 
-    canton.level = min(canton.level, 3)
+        canton.level = min(canton.level, 3)
 
     event = Event(
         text="Team '{0}' completed the challenge '{1}'".format(
@@ -304,3 +315,42 @@ async def send_event(event: EventPost, db: SessionDep):
     db.commit()
     db.refresh(event_db)
     return event_db
+
+
+@router.post("/destroy_canton")
+async def post_destroy_canton(
+    db: SessionDep,
+    current_user: Annotated[User, Depends(auth.get_current_user)],
+    canton: DestroyCantonPost,
+):
+    db_canton = db.get(Canton, canton.id)
+
+    if db_canton is None:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid Canton ID"
+        )
+
+    team = current_user.team
+
+    if team is None:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid team"
+        )
+
+    if db_canton.team:
+        team = db_canton.team
+        team.score -= 1
+
+        db.add(team)
+        db.commit()
+        db.refresh(team)
+
+    db_canton.level = 0
+    db_canton.team = None
+    db_canton.destroyed = True
+
+    # TODO: Create event
+
+    db.add(db_canton)
+    db.commit()
+    db.refresh(db_canton)
