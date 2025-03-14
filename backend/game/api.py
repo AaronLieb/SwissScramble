@@ -125,15 +125,19 @@ async def post_challenge(
         if canton.team == team:
             canton.level += challenge_db.levels
             canton.team = team
+            canton.team_id = team.id
         elif canton.team is None:
             canton.level += challenge_db.levels
             canton.team = team
+            canton.team_id = team.id
             team.score += canton.value
         else:
             if canton.level == challenge_db.levels:
                 canton.team = None
+                canton.team_id = None
             elif canton.level < challenge_db.levels:
                 canton.team = team
+                canton.team_id = team.id
                 team.score += canton.value
             if other_team is not None:
                 other_team.score -= canton.value
@@ -347,6 +351,7 @@ async def post_destroy_canton(
 
     db_canton.level = 0
     db_canton.team = None
+    db_canton.team_id = None
     db_canton.destroyed = True
 
     # TODO: Create event
