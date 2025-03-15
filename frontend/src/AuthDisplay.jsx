@@ -47,14 +47,14 @@ function AuthDisplay(props) {
         if (!window.confirm(text)) {
             return
         }
-        if (selectedCanton && selectedChallenge) {
+        if (selectedCanton.id && selectedChallenge) {
             await postEndpoint("/challenge/", JSON.stringify({
                 id: selectedChallenge.id,
                 canton: selectedCanton.id,
             }))
             await props.setUpdateEvents(selectedChallenge.id)
         } else {
-            enqueueSnackbar("No Challenge or Canton specified", { variant: "error", autoHideDuration: 3000 })
+            enqueueSnackbar("Challenge and canton not specified", { variant: "error", autoHideDuration: 3000 })
         }
     }
 
@@ -72,9 +72,8 @@ function AuthDisplay(props) {
         console.log(powerup)
         await postEndpoint("/powerup/", JSON.stringify({
             id: powerup.id,
-            //current_user: user 
         }))
-        await fetchEndpoint("/powerups/")
+        await fetchEndpoint("/team/powerups/")
 
     }
 
@@ -84,15 +83,16 @@ function AuthDisplay(props) {
             enqueueSnackbar("No powerup selected", { variant: "error", autoHideDuration: 3000 })
             return
         }
-        let text = `Are you sure you want to use "${props.myPowerup}"?`
+        let text = `Are you sure you want to use "${props.myPowerup.description}"?`
         if (!window.confirm(text)) {
             return
         }
-        // TODO: POST POWERUP TO USE IT.
-        // await postEndpoint("/powerup/", JSON.stringify({
-        //     id: powerup.id,
-        //     //current_user: user 
-        // }))
+
+        console.log()
+        await postEndpoint("/use_powerup/", JSON.stringify({
+            id: props.myPowerup.id,
+        }))
+        props.setMyPowerup("")
         await fetchEndpoint("/team/powerups/")
     }
 
@@ -152,6 +152,7 @@ function AuthDisplay(props) {
         await postEndpoint("/enter_canton/", JSON.stringify({
             id: sel.id,
         }))
+        fetchEndpoint("/team/")
         await props.setUpdateEvents(sel.id)
     }
 
@@ -390,7 +391,7 @@ function AuthDisplay(props) {
                             </FormControl>
                         </Grid2>
                         <Grid2 item size={{ xs: 12, lg: 6 }}>
-                            <Button multiline rows={3} variant="outlined" sx={{ m: 1 }} onClick={sendMessage} type="submit">Send Message</Button>
+                            <Button variant="outlined" sx={{ m: 1 }} onClick={sendMessage} type="submit">Send Message</Button>
                         </Grid2>
                     </Grid2>
                 </Paper>

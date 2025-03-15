@@ -76,7 +76,7 @@ function Drawer(props) {
                             <Typography variant="h3" align="center">{props.team.money}₣</Typography>
                         </Stack>
                         <img height={"50%"} width={"20%"} src={challenge} />
-                        <Typography variant="h3" align="center"> {props.team.money} </Typography>
+                        <Typography variant="h3" align="center"> {props.team.challenges} </Typography>
 
 
                         <img height={"50%"} width={"20%"} src={curse} />

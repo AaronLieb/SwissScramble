@@ -3,13 +3,14 @@ from typing import Annotated, Sequence
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlmodel import select
 
-from .helpers import new_event
+from .helpers import (new_event,handle_powerup)
 
 from ..database.database import SessionDep
 from ..database.models import (
     BuyCursePost,
     BuyPowerUpPost,
     UseCursePost,
+    UsePowerUpPost,
     Canton,
     Challenge,
     ChallengePost,
@@ -275,12 +276,55 @@ async def buy_powerup(
     team.money -= powerup_db.cost
     team.powerups.append(powerup_db)
 
-    text = "Team '{0}' purchased power up '{1}'".format(team.name, powerup_db.name)
+    text = "Team '{0}' purchased power up '{1}'".format(team.name, powerup_db.description)
     new_event(db, text, team.name)
+    
+    handle_powerup(db, powerup, team)
 
     db.add(team)
     db.commit()
     db.refresh(team)
+
+@router.post("/use_powerup/")
+async def buy_powerup(
+    powerup: UsePowerUpPost,
+    db: SessionDep,
+    current_user: Annotated[User, Depends(auth.get_current_user)],
+):
+    team = current_user.team
+
+    if team is None:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid Team",
+        )
+
+    powerup_db = db.get(PowerUp, powerup.id)
+
+    if powerup_db is None:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid Power Up",
+        )
+    
+    found = False
+    for p in team.powerups:
+        if p.id == powerup.id:
+            found = True
+            team.powerups.remove(powerup_db)
+
+            text = "Team '{0}' used power up '{1}'".format(team.name, powerup_db.description)
+            new_event(db, text, team.name)
+
+            db.add(team)
+            db.commit()
+            db.refresh(team)
+
+    if not found:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid Power Up",
+        )
 
 
 @router.get("/powerups/")
@@ -290,7 +334,7 @@ async def get_powerups(
     return db.exec(select(PowerUp)).all()
 
 
-@router.post("/enter_canton")
+@router.post("/enter_canton/")
 async def post_enter_canton(
     db: SessionDep,
     current_user: Annotated[User, Depends(auth.get_current_user)],
@@ -313,6 +357,11 @@ async def post_enter_canton(
     text = "Team '{0}' entered '{1}'".format(team.name, db_canton.name)
 
     new_event(db, text, team.name)
+
+    team.challenges += 1
+    db.add(team)
+    db.commit()
+    db.refresh(team)
 
     if db_canton.level == 3 and db_canton.team != current_user.team:
         other_team_id = 1 if team.id == 2 else 2

@@ -18,6 +18,7 @@ function Events(props) {
         if(text.includes("completed the challenge")) return "🏆"
         if(text.includes(" entered ")) return "🚂"
         if(text.includes(" a curse")) return "👺"
+        if(text.includes("powerup")) return "⚡"
     }
 
     return (
