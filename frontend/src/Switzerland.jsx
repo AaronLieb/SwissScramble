@@ -13,6 +13,7 @@ import AuthDisplay from "./AuthDisplay.jsx";
 import Score from "./Score.jsx";
 import Events from "./Events.jsx"
 import About from './About.jsx';
+import Message from "./Message.jsx";
 
 function Switzerland(props) {
     const elevation = 5;
@@ -264,6 +265,51 @@ function Switzerland(props) {
           })
     }
 
+
+    async function postEndpoint(endpoint, body) {
+        let op = endpoint.replaceAll("/", "")
+        return new Promise((resolve) => {
+            fetch(props.backend + endpoint, {
+                method: 'POST',
+                body: body,
+                headers: new Headers({
+                    'Authorization': `Bearer ${props.auth}`,
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                }),
+            })
+                .then((response) => {
+                    switch (response.status) {
+                        case 401:
+                            enqueueSnackbar(`Failed to submit ${op}: ${response.statusText}`, { variant: "error", autoHideDuration: 3000 })
+                            break;
+                        case 422:
+                            enqueueSnackbar(`Failed to submit ${op}: ${response.statusText}`, { variant: "error", autoHideDuration: 3000 })
+                            break;
+                        case 200:
+                            enqueueSnackbar(`Successfully submitted ${op} 🎉`, { variant: "success", autoHideDuration: 3000 })
+                            break;
+                        case 400:
+                            Promise.resolve(response.json()).then(data => {
+                                if (data.detail) enqueueSnackbar(`Submit ${op}: ${data.detail}`, { variant: "warning", autoHideDuration: 3000 })
+                            })
+                            break;
+                        default:
+                            enqueueSnackbar(`Unknown submit operation ${response.status} ${op}: ${response.statusText}`, { variant: "warning", autoHideDuration: 3000 })
+                    }
+                    resolve(response.status)
+                })
+                .then(() => {
+                    fetchEvents()
+                })
+                .catch((err) => {
+                    enqueueSnackbar(`failed to submit ${op}: ${err}`, { variant: "error", autoHideDuration: 3000 })
+                    resolve(err) // This application is not robust enough to handle rejection.
+                });
+        })
+    }
+
+
     return (
         <>
             <SnackbarProvider maxSnack={5} />
@@ -277,6 +323,7 @@ function Switzerland(props) {
                 {props.auth !== null ? (
                     <Grid2 item size={{ xs: 11, md: 8 }}>
                         <AuthDisplay
+                            postEndpoint={postEndpoint}
                             drawerOpen={props.drawerOpen}
                             toggleDrawer={props.toggleDrawer}
                             myPowerup={myPowerup}
@@ -301,6 +348,9 @@ function Switzerland(props) {
                 )}
                 <Grid2 item size={{ xs: 11, md: 8 }}>
                     <Events events={events} fetchEvents={fetchEvents} updateEvents={props.updateEvents} elevation={elevation} />
+                </Grid2>
+                <Grid2 item size={{ xs: 11, md: 8 }}>
+                    <Message elevation={elevation} postEndpoint={postEndpoint} />
                 </Grid2>
                 <Grid2 item size={{ xs: 11, md: 8 }}>
                     <Score canton={canton} elevation={elevation} cantons={cantons} />

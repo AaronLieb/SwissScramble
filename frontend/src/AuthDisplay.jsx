@@ -19,7 +19,7 @@ import { useEffect, useState } from 'react';
 import Drawer from './Drawer.jsx'
 import challenge from './assets/challengesmall.png'
 import curse from './assets/cursesmall.png'
-import { styled, lighten, darken } from '@mui/system';
+import SportsScoreIcon from '@mui/icons-material/SportsScore';
 
 function AuthDisplay(props) {
 
@@ -38,21 +38,11 @@ function AuthDisplay(props) {
     const [powerup, setPowerup] = useState("")
     const [powerups, setPowerups] = useState([])
 
-    const [eventMessage, setEventMessage] = useState("")
+
 
     const [tabValue, setTabValue] = useState(0)
     const handleTabChange = (event, newValue) => {
         setTabValue(newValue);
-    }
-
-    async function sendMessage() {
-        if (eventMessage.length === 0) {
-            enqueueSnackbar("Cannot send empty message", { variant: "error", autoHideDuration: 3000 })
-            return
-        }
-        await postEndpoint("/event/", JSON.stringify({
-            text: eventMessage,
-        }))
     }
 
     async function handleSubmitChallenge() {
@@ -68,7 +58,7 @@ function AuthDisplay(props) {
         if (!window.confirm(text)) {
             return
         }
-        await postEndpoint("/challenge/", JSON.stringify({
+        await props.postEndpoint("/challenge/", JSON.stringify({
             id: selectedChallenge.id,
             canton: selectedCanton.id,
         }))
@@ -87,7 +77,7 @@ function AuthDisplay(props) {
             return
         }
         console.log(powerup)
-        await postEndpoint("/powerup/", JSON.stringify({
+        await props.postEndpoint("/powerup/", JSON.stringify({
             id: powerup.id,
         }))
         await fetchEndpoint("/team/powerups/")
@@ -106,7 +96,7 @@ function AuthDisplay(props) {
         }
 
         console.log()
-        await postEndpoint("/use_powerup/", JSON.stringify({
+        await props.postEndpoint("/use_powerup/", JSON.stringify({
             id: props.myPowerup.id,
         }))
         props.setMyPowerup("")
@@ -121,7 +111,7 @@ function AuthDisplay(props) {
         if (!window.confirm(text)) {
             return
         }
-        await postEndpoint("/curse/", JSON.stringify({
+        await props.postEndpoint("/curse/", JSON.stringify({
             id: 1,
         }))
         fetchEndpoint("/team/")
@@ -137,7 +127,7 @@ function AuthDisplay(props) {
         if (!window.confirm(text)) {
             return
         }
-        await postEndpoint("/use_curse/", JSON.stringify({
+        await props.postEndpoint("/use_curse/", JSON.stringify({
             id: 1,
         }))
         fetchEndpoint("/team/")
@@ -151,7 +141,7 @@ function AuthDisplay(props) {
         }
         let text = `Are you sure you want to DESTROY ${props.canton}?`
         if (window.confirm(text)) {
-            postEndpoint("/destroy_canton/", JSON.stringify({
+            props.postEndpoint("/destroy_canton/", JSON.stringify({
                 id: sel.id,
             }))
         }
@@ -167,7 +157,7 @@ function AuthDisplay(props) {
         if (!window.confirm(text)) {
             return
         }
-        await postEndpoint("/enter_canton/", JSON.stringify({
+        await props.postEndpoint("/enter_canton/", JSON.stringify({
             id: sel.id,
         }))
         fetchEndpoint("/team/")
@@ -239,50 +229,7 @@ function AuthDisplay(props) {
                 });
         })
     }
-
-    async function postEndpoint(endpoint, body) {
-        let op = endpoint.replaceAll("/", "")
-        return new Promise((resolve) => {
-            fetch(props.backend + endpoint, {
-                method: 'POST',
-                body: body,
-                headers: new Headers({
-                    'Authorization': `Bearer ${props.auth}`,
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                }),
-            })
-                .then((response) => {
-                    switch (response.status) {
-                        case 401:
-                            enqueueSnackbar(`Failed to submit ${op}: ${response.statusText}`, { variant: "error", autoHideDuration: 3000 })
-                            break;
-                        case 422:
-                            enqueueSnackbar(`Failed to submit ${op}: ${response.statusText}`, { variant: "error", autoHideDuration: 3000 })
-                            break;
-                        case 200:
-                            enqueueSnackbar(`Successfully submitted ${op} 🎉`, { variant: "success", autoHideDuration: 3000 })
-                            break;
-                        case 400:
-                            Promise.resolve(response.json()).then(data => {
-                                if (data.detail) enqueueSnackbar(`Submit ${op}: ${data.detail}`, { variant: "warning", autoHideDuration: 3000 })
-                            })
-                            break;
-                        default:
-                            enqueueSnackbar(`Unknown submit operation ${response.status} ${op}: ${response.statusText}`, { variant: "warning", autoHideDuration: 3000 })
-                    }
-                    resolve(response.status)
-                })
-                .then(() => {
-                    props.fetchEvents()
-                })
-                .catch((err) => {
-                    enqueueSnackbar(`failed to submit ${op}: ${err}`, { variant: "error", autoHideDuration: 3000 })
-                    resolve(err) // This application is not robust enough to handle rejection.
-                });
-        })
-    }
-
+    
     function a11yProps(index) {
         return {
             id: `simple-tab-${index}`,
@@ -359,18 +306,12 @@ function AuthDisplay(props) {
                             </Stack>
                         </Paper>
                         </Grid2>
-                        <Grid2 item size={{ xs: 12,md: 6 }}>
-                        <Paper sx={{ p: 2 }} elevation={props.elevation}>
-                            <Grid2 spacing={2} container>
-                                <Grid2 item size={{ xs: 12 }}>
-                                    <FormControl sx={{ width: "100%" }} aria-label="Powerups">
-                                        <TextField multiline minRows={4} onChange={(d) => { setEventMessage(d.target.value) }} value={eventMessage} label="Message" />
-                                    </FormControl>
-                                </Grid2>
-                                <Grid2 display="flex" justifyContent={"center"} item size={{ xs: 12 }}>
-                                    <Button variant="contained" sx={{ m: 1, width: "100%" }} onClick={sendMessage} type="submit">Send Message</Button>
-                                </Grid2>
-                            </Grid2>
+                        <Grid2 item size={{ xs: 12, md: 6 }}>
+                        <Paper sx={{ py: 2 }} elevation={props.elevation}>
+                            <Stack spacing={2} alignItems={"center"} justifyContent={"center"} direction={"row"}>
+                                <SportsScoreIcon />
+                                <Typography variant="h3" align="center">{new Date().getTime()}</Typography>
+                            </Stack>
                         </Paper>
                         </Grid2>
                     </Grid2>
