@@ -34,8 +34,15 @@ function Drawer(props) {
 
     return (
         <>
-
-
+            <CssBaseline />
+            <Global
+                styles={{
+                    '.MuiDrawer-root > .MuiPaper-root': {
+                        height: `calc(25% - ${drawerBleeding}px)`,
+                        overflow: 'visible',
+                    },
+                }}
+            />
             <SwipeableDrawer
                 anchor="bottom"
                 container={container}
