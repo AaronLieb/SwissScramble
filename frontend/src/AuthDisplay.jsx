@@ -6,6 +6,7 @@ import {
     Button,
     Autocomplete,
     TextField,
+    Typography,
 } from "@mui/material";
 import { enqueueSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
@@ -39,7 +40,6 @@ function AuthDisplay(props) {
         await postEndpoint("/event/", JSON.stringify({
             text: eventMessage,
         }))
-        await fetchEndpoint("/events/")
     }
 
     async function handleSubmitChallenge() {
@@ -116,12 +116,13 @@ function AuthDisplay(props) {
 
     // useCurse purchases a curse.
     async function useCurse() {
+        if (team.curses < 1) {
+            enqueueSnackbar("No curses available.", { variant: "error", autoHideDuration: 3000 })
+            return
+        }
         let text = `Are you sure you want to use a curse? You currently have ${team.curses}.`
         if (!window.confirm(text)) {
             return
-        }
-        if (team.curses < 1) {
-            enqueueSnackbar("No curses available.", { variant: "error", autoHideDuration: 3000 })
         }
         await postEndpoint("/use_curse/", JSON.stringify({
             id: 1,
@@ -203,7 +204,7 @@ function AuthDisplay(props) {
                             setPowerups(data.sort((a, b) => a.cost - b.cost))
                             break;
                         case "/challenges/":
-                            setChallenges(data)
+                            setChallenges(data.sort((a,b) => a.description > b.description))
                             break;
                         case "/curses/":
                             props.setCurses(data)
@@ -307,6 +308,7 @@ function AuthDisplay(props) {
                                         aria-labelledby="challenge-select"
                                         options={challenges || null}
                                         value={selectedChallenge}
+                                        //groupBy={(option) => option.firstLetter}
                                         getOptionLabel={(option) =>
                                             option ? `${option.description} | ${option.levels} Level | ${option.money}₣` : ''
                                         }
@@ -320,15 +322,17 @@ function AuthDisplay(props) {
                                 </FormControl>
                             </Grid2>
                             <Grid2 item size={{ xs: 12, lg: 6 }}>
-                                <Button variant="outlined" sx={{ m: 1 }} onClick={handleEnterCanton} type="submit">Enter Canton</Button>
-                                <Button variant="outlined" sx={{ m: 1 }} onClick={handleSubmitChallenge} type="submit">Submit Challenge</Button>
+                                <Button variant="contained" sx={{ width: "100%" }} onClick={handleEnterCanton} type="submit">Enter Canton</Button>
+                            </Grid2>
+                            <Grid2 item size={{ xs: 12, lg: 6 }}>
+                                <Button variant="contained" sx={{ width: "100%" }} onClick={handleSubmitChallenge} type="submit">Submit Challenge</Button>
                             </Grid2>
                         </Grid2>
                     </Paper>
                 </Grid2>
                 <Grid2 item size={12}>
-                <Paper sx={{ padding: "2%" }} elevation={props.elevation}>
-                    <Grid2 spacing={2} container>
+                <Paper sx={{p: 2 }} elevation={props.elevation}>
+                    <Grid2 spacing={2} container alignItems={"center"}>
                         <Grid2 item size={{ xs: 12, lg: 6 }}>
                             <FormControl sx={{ width: "100%" }} aria-label="Powerups">
                                 <Autocomplete
@@ -352,7 +356,7 @@ function AuthDisplay(props) {
                             </FormControl>
                         </Grid2>
                         <Grid2 item size={{ xs: 12, lg: 6 }}>
-                            <Button variant="outlined" sx={{ m: 1 }} onClick={purchasePowerup} type="submit">Purchase Power-Up</Button>
+                            <Button variant="contained" sx={{ width:"100%" }} onClick={purchasePowerup} type="submit">Purchase Power-Up</Button>
                         </Grid2>
                         <Grid2 item size={{ xs: 12, lg: 6 }}>
                             <FormControl sx={{ width: "100%" }} aria-label="My Powerups">
@@ -376,26 +380,36 @@ function AuthDisplay(props) {
                             </FormControl>
                         </Grid2>
                         <Grid2 item size={{ xs: 12, lg: 6 }}>
-                            <Button variant="outlined" sx={{ m: 1 }} onClick={usePowerup} type="submit">Use Powerup</Button>
-                        </Grid2>
-                        <Grid2 item size={{ xs: 12, lg: 12 }}>
-                            <Button variant="outlined" sx={{ m: 1 }} onClick={purchaseCurse} type="submit">Purchase Curse</Button>
-                            <Button variant="outlined" sx={{ m: 1 }} onClick={useCurse} type="submit">Use Curse</Button>
-                            <Button variant="outlined" sx={{ m: 1 }} onClick={destroyCanton} type="submit">☢️ DESTROY CANTON ☢️</Button>
+                            <Button variant="contained" sx={{ width:"100%" }} onClick={usePowerup} type="submit">Use Powerup</Button>
                         </Grid2>
                     </Grid2>
                 </Paper>
                 </Grid2>
                 <Grid2 item size={12}>
-                <Paper sx={{ padding: "2%", my: 2 }} elevation={props.elevation}>
+                <Paper align={"center"} elevation={props.elevation}>
+                    <Button variant="outlined" sx={{ m: 1 }} onClick={purchaseCurse} type="submit">Purchase Curse</Button>
+                    <Button variant="outlined" sx={{ m: 1 }} onClick={useCurse} type="submit">Use Curse</Button>
+                </Paper>
+                </Grid2>
+                <Grid2 item size={12}>
+                <Paper elevation={props.elevation}>
+                    <Button variant="contained" sx={{ width: "100%" }} onClick={destroyCanton} type="submit">
+                        <Typography variant="h5">
+                            ☢️ DESTROY CANTON ☢️
+                        </Typography>
+                    </Button>
+                </Paper>
+                </Grid2>
+                <Grid2 item size={12}>
+                <Paper sx={{p: 2 }} elevation={props.elevation}>
                     <Grid2 spacing={2} container>
-                        <Grid2 item size={{ xs: 12, lg: 6 }}>
+                        <Grid2 item size={{ xs: 12 }}>
                             <FormControl sx={{ width: "100%" }} aria-label="Powerups">
-                                <TextField onChange={(d) => { setEventMessage(d.target.value) }} value={eventMessage} label="Message" />
+                                <TextField multiline minRows={4} onChange={(d) => { setEventMessage(d.target.value) }} value={eventMessage} label="Message" />
                             </FormControl>
                         </Grid2>
-                        <Grid2 item size={{ xs: 12, lg: 6 }}>
-                            <Button variant="outlined" sx={{ m: 1 }} onClick={sendMessage} type="submit">Send Message</Button>
+                        <Grid2 display="flex" justifyContent={"center"} item size={{ xs: 12 }}>
+                            <Button variant="contained" sx={{ m: 1, width: "100%" }} onClick={sendMessage} type="submit">Send Message</Button>
                         </Grid2>
                     </Grid2>
                 </Paper>

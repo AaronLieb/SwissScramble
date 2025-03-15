@@ -36,7 +36,7 @@ function Switzerland(props) {
     }
 
     // Interactivity for map.
-    const width = 900, height = 500;
+    const width = 900, height = 900;
     const [mapLoaded, setMapLoaded] = useState(false)
 
     const [canton, setSelectedCanton] = useState("");
@@ -269,7 +269,7 @@ function Switzerland(props) {
             <SnackbarProvider maxSnack={5} />
             <Grid2 sx={{m: 2}} spacing={2} container direction="column" alignItems={"center"} justifyContent={"center"}>
                 <Grid2 item className='h-100' size={{ sx: 10, md: 8 }} sx={{mt:4}}>
-                    <Paper elevation={elevation}>
+                    <Paper sx={{ borderColor: 'primary', border: 3 }} elevation={elevation}>
                         <svg id="travelmap">
                         </svg>
                     </Paper>
@@ -300,10 +300,10 @@ function Switzerland(props) {
                     </Grid2>
                 )}
                 <Grid2 item className='h-100' size={{ sx: 10, md: 8 }}>
-                    <Score canton={canton} elevation={elevation} cantons={cantons} />
+                    <Events events={events} fetchEvents={fetchEvents} updateEvents={props.updateEvents} elevation={elevation} />
                 </Grid2>
                 <Grid2 item className='h-100' size={{ sx: 10, md: 8 }}>
-                    <Events events={events} fetchEvents={fetchEvents} updateEvents={props.updateEvents} elevation={elevation} />
+                    <Score canton={canton} elevation={elevation} cantons={cantons} />
                 </Grid2>
                 <Grid2 item className='h-100' size={{ sx: 10, md: 8 }}>
                     <About elevation={elevation} />
