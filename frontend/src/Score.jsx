@@ -33,7 +33,10 @@ function Score(props) {
     const [score, setScore] = useState(props.cantons);
 
     useEffect(() => {
-        setScore(groupBy(props.cantons, 'team_id'))
+        let group = groupBy(props.cantons, 'team_id')
+        // Remove keys like 'null'.
+        Object.keys(group).forEach(k => (k === "null") && delete group[k])
+        setScore(group)
     }, [props.cantons])
 
     return (

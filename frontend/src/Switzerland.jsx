@@ -45,8 +45,10 @@ function Switzerland(props) {
     // Player state.
     const [team, setTeam] = useState({})
     const [money, setMoney] = useState(0)
-    const [myPowerups, setMyPowerups] = useState([])
     const [curses, setCurses] = useState([])
+
+    const [myPowerups, setMyPowerups] = useState([])
+    const [myPowerup, setMyPowerup] = useState("")
 
     const [events, setEvents] = useState([]);
 
@@ -282,7 +284,13 @@ function Switzerland(props) {
                 {props.auth !== null ? (
                     <Grid2 item className='h-100' size={{ sx: 10, md: 8 }}>
                         <AuthDisplay
-                         fetchEvents={fetchEvents}
+                            money={money}
+                            setMoney={setMoney}
+                            myPowerup={myPowerup}
+                            setMyPowerup={setMyPowerup}
+                            myPowerups={myPowerups}
+                            setMyPowerups={setMyPowerups}
+                            fetchEvents={fetchEvents}
                             updateEvents={updateEvents}
                             setUpdateEvents={setUpdateEvents}
                             auth={props.auth}

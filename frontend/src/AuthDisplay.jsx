@@ -26,7 +26,7 @@ function AuthDisplay(props) {
     // Shop values with selection.
 
     const [powerup, setPowerup] = useState("")
-    const [powerups, setPowerups] = useState(["A", "B"])
+    const [powerups, setPowerups] = useState([])
     const [curse, setCurse] = useState("")
 
     async function handleSubmitChallenge() {
@@ -54,7 +54,7 @@ function AuthDisplay(props) {
         }
         console.log(powerup)
         await postEndpoint("/powerup/", JSON.stringify({
-            id: "a",
+            id: powerup.id,
             //current_user: user 
         }))
         await fetchEndpoint("/powerups/")
@@ -62,16 +62,21 @@ function AuthDisplay(props) {
     }
 
     // usePowerup purchases a powerup.
-    function usePowerup() {
-        if (powerup === "") {
+    async function usePowerup() {
+        if (props.myPowerup === "") {
             enqueueSnackbar("No powerup selected", { variant: "error", autoHideDuration: 3000 })
             return
         }
-        let text = `Are you sure you want to use "${powerup}"?`
+        let text = `Are you sure you want to use "${props.myPowerup}"?`
         if (!window.confirm(text)) {
             return
         }
-        console.log(powerup)
+        // TODO: POST POWERUP TO USE IT.
+        // await postEndpoint("/powerup/", JSON.stringify({
+        //     id: powerup.id,
+        //     //current_user: user 
+        // }))
+        await fetchEndpoint("/team/powerups/")
     }
 
 
@@ -90,7 +95,7 @@ function AuthDisplay(props) {
                 let pick = Math.floor(Math.random() * curseCount)
                 console.log(`Picked curse number ${pick} out of ${curseCount} curses.`)
                 await postEndpoint("/curse/", JSON.stringify({
-                    id: pick,
+                    id: 1,
                 }))
                 await fetchEndpoint("/curses/")
             }
@@ -141,6 +146,7 @@ function AuthDisplay(props) {
 
     // Fetch all data on map load.
     useEffect(() => {
+        fetchEndpoint("/team/powerups/")
         fetchEndpoint("/powerups/")
         fetchEndpoint("/challenges/")
         fetchEndpoint("/user/")
@@ -168,31 +174,30 @@ function AuthDisplay(props) {
                 })
                 .then((data) => {
                     switch(endpoint) {
+                        case "/team/powerups/":
+                            console.log(data)
+                            props.setMyPowerups(data)
+                            break;
                         case "/powerups/":
                             setPowerups(data.sort((a, b) => a.cost - b.cost))
-                            resolve();
                             break;
                         case "/challenges/":
                             setChallenges(data)
-                            resolve();
                             break;
                         case "/curses/":
                             props.setCurses(data)
-                            resolve();
                             break;
                         case "/user/":
                             setUser(data)
                             //console.log(data)
-                            resolve();
                             break;
                         case "/team/":
                             setTeam(data)
-                            //console.log(data)
-                            resolve();
+                            props.setMoney(data.money)
                             break;
                         default:
                             console.log(`warning: no endpoint handler available for ${endpoint}`)
-                            resolve();
+                            break;
                     }
                 })
                 .catch((err) => {
@@ -224,11 +229,15 @@ function AuthDisplay(props) {
                     case 200:
                         enqueueSnackbar(`Successfully submitted ${op} 🎉`, { variant: "success", autoHideDuration: 3000 })
                         break;
+                    case 400:
+                        Promise.resolve(response.json()).then(data => {
+                            if(data.detail) enqueueSnackbar(`Submit ${op}: ${data.detail}`, { variant: "warning", autoHideDuration: 3000 })
+                        })
+                        break;
                     default:
-                        enqueueSnackbar(`Unknown submit operation ${op}`, { variant: "warning", autoHideDuration: 3000 })
+                        enqueueSnackbar(`Unknown submit operation ${response.status} ${op}: ${response.statusText}`, { variant: "warning", autoHideDuration: 3000 })
                 }
                 resolve(response.status)
-                return response.status
             })
             .then(() => {
                 props.fetchEvents()
@@ -321,19 +330,19 @@ function AuthDisplay(props) {
                         <Button variant="outlined" sx={{ m: 1 }} onClick={purchasePowerup} type="submit">Purchase Power-Up</Button>
                     </Grid2>
                     <Grid2 item size={{ xs: 12, lg: 6 }}>
-                        <FormControl sx={{ width: "100%" }} aria-label="Curses">
+                        <FormControl sx={{ width: "100%" }} aria-label="My Powerups">
                             <Autocomplete
                                 disablePortal
-                                id="curse-select"
-                                aria-labelledby="curse-select"
-                                options={props.curses || null}
-                                value={curse}
+                                id="my-powerup-select"
+                                aria-labelledby="my-powerup-select"
+                                options={props.myPowerups || null}
+                                value={props.myPowerup}
                                 getOptionLabel={(option) =>
-                                    option ? `${option}` : ''
-                                }
+                                    option ? `${option.description}` : ''
+                                }   
                                 onChange={(d, e) => {
-                                    if (e !== null) setCurse(e)
-                                    else setCurse("");
+                                    if (e !== null) props.setMyPowerup(e)
+                                    else props.setMyPowerup("");
                                 }}
                                 renderInput={(params) => (
                                     <TextField {...params} label="My Powerups" />
