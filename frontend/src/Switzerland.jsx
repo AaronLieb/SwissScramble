@@ -4,7 +4,7 @@ import {
     Paper,
 } from "@mui/material";
 import * as d3 from 'd3';
-import Drawer from './Drawer.jsx'
+
 import { useEffect, useState } from 'react';
 import './App.css';
 import * as topojson from 'topojson-client'
@@ -43,8 +43,7 @@ function Switzerland(props) {
     const [cantons, setCantons] = useState([])
 
     // Player state.
-    const [team, setTeam] = useState({})
-    const [money, setMoney] = useState(0)
+    const [teams, setTeams] = useState({})
     const [curses, setCurses] = useState([])
 
     const [myPowerups, setMyPowerups] = useState([])
@@ -79,7 +78,7 @@ function Switzerland(props) {
                 console.log("Error rendering map data " + err);
             });
         await fetchEndpoint("/cantons/")
-        await fetchEndpoint("/team/")
+        await fetchEndpoint("/teams/")
     }
 
     useEffect(() => {
@@ -202,7 +201,7 @@ function Switzerland(props) {
         }
     }
 
-    function updateColors(state) {
+    function updateColors() {
         var g = d3.select("#pathsG").select(".cantons").selectAll("g");
         g.selectAll("path")
             .transition()
@@ -237,13 +236,9 @@ function Switzerland(props) {
                 })
                 .then((data) => {
                     switch(endpoint) {
-                        case "/team/":
-                            setTeam(data)
-                            console.log(data)
-                            resolve();
-                            break;
                         case "/teams/":
                             setTeams(data)
+                            console.log(data)
                             resolve();
                             break;
                         case "/events/":
@@ -255,10 +250,10 @@ function Switzerland(props) {
                             updateColors(data)
                             resolve();
                             break;
-                        case "/events/":
-                            setEvents(data)
-                            resolve();
-                            break;
+                        // case "/events/":
+                        //     setEvents(data)
+                        //     resolve();
+                        //     break;
                         default:
                             console.log(`warning: no endpoint handler available for ${endpoint}`)
                             resolve();
@@ -274,18 +269,18 @@ function Switzerland(props) {
     return (
         <>
             <SnackbarProvider maxSnack={5} />
-            <Drawer elevation={elevation} curses={curses} money={money} drawerOpen={props.drawerOpen} toggleDrawer={props.toggleDrawer} />
             <Grid2 sx={{m: 2}} spacing={2} container direction="column" alignItems={"center"} justifyContent={"center"}>
                 <Grid2 item className='h-100' size={{ sx: 10, md: 8 }} sx={{mt:4}}>
                     <Paper elevation={elevation}>
-                        <svg id="travelmap"></svg>
+                        <svg id="travelmap">
+                        </svg>
                     </Paper>
                 </Grid2>
                 {props.auth !== null ? (
                     <Grid2 item className='h-100' size={{ sx: 10, md: 8 }}>
                         <AuthDisplay
-                            money={money}
-                            setMoney={setMoney}
+                            drawerOpen={props.drawerOpen}
+                            toggleDrawer={props.toggleDrawer}
                             myPowerup={myPowerup}
                             setMyPowerup={setMyPowerup}
                             myPowerups={myPowerups}

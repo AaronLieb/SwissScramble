@@ -9,6 +9,7 @@ from ..database.database import SessionDep
 from ..database.models import (
     BuyCursePost,
     BuyPowerUpPost,
+    UseCursePost,
     Canton,
     Challenge,
     ChallengePost,
@@ -206,14 +207,42 @@ async def buy_curse(
         )
 
     team.money -= curse_db.cost
+    team.curses += 1
 
-    text = "Team '{0}' purchased curse '{1}'".format(team.name, curse_db.name)
+    text = "Team '{0}' purchased a curse".format(team.name)
     new_event(db, text, team.name)
 
     db.add(team)
     db.commit()
     db.refresh(team)
 
+@router.post("/use_curse/")
+async def use_curse(
+    db: SessionDep,
+    current_user: Annotated[User, Depends(auth.get_current_user)],
+):
+    team = current_user.team
+
+    if team is None:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid Team",
+        )
+
+    if team.curses < 1:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="No curses available",
+        )
+    
+    team.curses -= 1
+
+    text = "Team '{0}' used a curse".format(team.name)
+    new_event(db, text, team.name)
+
+    db.add(team)
+    db.commit()
+    db.refresh(team)
 
 @router.post("/powerup/")
 async def buy_powerup(

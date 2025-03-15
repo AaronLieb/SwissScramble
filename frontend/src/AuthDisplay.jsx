@@ -9,13 +9,14 @@ import {
 } from "@mui/material";
 import { enqueueSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
+import Drawer from './Drawer.jsx'
 
 function AuthDisplay(props) {
 
 
     // Auth Required Fields - are these needed / wanted?
     const [user, setUser] = useState(null)
-    const [team, setTeam] = useState(null)
+    const [team, setTeam] = useState({money: 0, curses: 0})
 
 
     // Challenge form related info
@@ -30,6 +31,10 @@ function AuthDisplay(props) {
     const [curse, setCurse] = useState("")
 
     async function handleSubmitChallenge() {
+        let text = `Are you sure you want to submit "${selectedChallenge.description}"?`
+        if (!window.confirm(text)) {
+            return
+        }
         if (selectedCanton && selectedChallenge) {
             await postEndpoint("/challenge/", JSON.stringify({
                 id: selectedChallenge.id,
@@ -84,34 +89,28 @@ function AuthDisplay(props) {
     // We do not actually need to select a random curse here, just post an event and subtract some money.
     async function purchaseCurse() {
         let text = `Are you sure you want to purchase a random curse for 100₣?`
-        if (window.confirm(text)) {
-            const allCursesResponse = await fetch(props.backend + "/curses/")
-            if (allCursesResponse.ok) {
-                let curses = await allCursesResponse.json()
-                const curseCount = curses ? curses.length : 0
-                if (!curseCount) {
-                    throw "Failed to fetch curses."
-                }
-                let pick = Math.floor(Math.random() * curseCount)
-                console.log(`Picked curse number ${pick} out of ${curseCount} curses.`)
-                await postEndpoint("/curse/", JSON.stringify({
-                    id: 1,
-                }))
-                await fetchEndpoint("/curses/")
-            }
-        }
-    }
-
-    // useCurse purchases a curse.
-    function useCurse() {
-        if (curse === "") {
-            enqueueSnackbar("No curse selected", { variant: "error", autoHideDuration: 3000 })
-            return
-        }
-        let text = `Are you sure you want to use ${curse}?`
         if (!window.confirm(text)) {
             return
         }
+        await postEndpoint("/curse/", JSON.stringify({
+            id: 1,
+        }))
+        fetchEndpoint("/team/")
+    }
+
+    // useCurse purchases a curse.
+    async function useCurse() {
+        let text = `Are you sure you want to use a curse? You currently have ${team.curses}.`
+        if (!window.confirm(text)) {
+            return
+        }
+        if(team.curses < 1) {
+            enqueueSnackbar("No curses available.", { variant: "error", autoHideDuration: 3000 })
+        }
+        await postEndpoint("/use_curse/", JSON.stringify({
+            id: 1,
+        }))
+        fetchEndpoint("/team/")
     }
 
     function destroyCanton() {
@@ -132,6 +131,10 @@ function AuthDisplay(props) {
         let sel = getCantonFromName(props.canton)
         if(!sel) {
             enqueueSnackbar("Cannot find canton to enter.", { variant: "error", autoHideDuration: 3000 })
+            return
+        }
+        let text = `Are you sure you want to enter "${props.canton}"?`
+        if (!window.confirm(text)) {
             return
         }
         await postEndpoint("/enter_canton/", JSON.stringify({
@@ -193,7 +196,6 @@ function AuthDisplay(props) {
                             break;
                         case "/team/":
                             setTeam(data)
-                            props.setMoney(data.money)
                             break;
                         default:
                             console.log(`warning: no endpoint handler available for ${endpoint}`)
@@ -251,6 +253,7 @@ function AuthDisplay(props) {
 
     return (
         <>
+            <Drawer team={team} drawerOpen={props.drawerOpen} toggleDrawer={props.toggleDrawer} />
             <Paper sx={{ p: 2, my: 1 }} elevation={props.elevation}>
                 <Grid2 spacing={2} container>
                     <Grid2 item size={{ xs: 9, lg: 9 }}>

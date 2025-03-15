@@ -14,7 +14,6 @@ import challenge from './assets/challengesmall.png'
 import curse from './assets/cursesmall.png'
 
 function Drawer(props) {
-
     const Puller = styled('div')(({ theme }) => ({
         width: 30,
         height: 6,
@@ -74,14 +73,14 @@ function Drawer(props) {
                     <Stack spacing={2} alignItems={"center"} justifyContent={"center"} direction={"row"}>
                         <Stack>
                             <Typography variant="h3" align="center">💰</Typography>
-                            <Typography variant="h3" align="center">{props.money}₣</Typography>
+                            <Typography variant="h3" align="center">{props.team.money}₣</Typography>
                         </Stack>
                         <img height={"50%"} width={"20%"} src={challenge} />
-                        <Typography variant="h3" align="center"> {props.curses.length} </Typography>
+                        <Typography variant="h3" align="center"> {props.team.money} </Typography>
 
 
                         <img height={"50%"} width={"20%"} src={curse} />
-                        <Typography variant="h3" align="center">{props.curses.length}</Typography>
+                        <Typography variant="h3" align="center">{props.team.curses}</Typography>
 
                     </Stack>
                 </Grid2>

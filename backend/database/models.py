@@ -34,6 +34,7 @@ class Team(SQLModel, table=True):
     name: str = Field(index=True)
     money: int = Field(default=0)
     score: int = Field(default=0)
+    curses: int = Field(default=0)
 
     users: list["User"] = Relationship(back_populates="team")
     cantons: list["Canton"] = Relationship(back_populates="team")
@@ -137,6 +138,8 @@ class Curse(CurseBase, table=True):
 class BuyCursePost(CurseBase):
     pass
 
+class UseCursePost(CurseBase):
+    pass
 
 class PowerUpBase(SQLModel):
     id: int | None = Field(default=None, primary_key=True)

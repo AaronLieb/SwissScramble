@@ -17,6 +17,7 @@ function Events(props) {
     function getEventEmoji(text) {
         if(text.includes("completed the challenge")) return "🏆"
         if(text.includes(" entered ")) return "🚂"
+        if(text.includes(" a curse")) return "👺"
     }
 
     return (
