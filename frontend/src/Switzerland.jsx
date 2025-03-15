@@ -36,7 +36,7 @@ function Switzerland(props) {
     }
 
     // Interactivity for map.
-    const width = 900, height = 900;
+    const width = 800, height = 800;
     const [mapLoaded, setMapLoaded] = useState(false)
 
     const [canton, setSelectedCanton] = useState("");
@@ -129,7 +129,7 @@ function Switzerland(props) {
         var projection = d3.geoMercator()
             .rotate([0, 0])
             .center([8.3, 46.8])
-            .scale(8000)
+            .scale(9000)
             .translate([width / 2, height / 2])
             .precision(.1);
 
@@ -140,9 +140,9 @@ function Switzerland(props) {
             .select("#travelmap")
             .attr("viewBox", [0, 0, width, height])
             .attr("width", "100%")
-            .attr("height", "60vh")
+            .attr("height", "50vh")
             .on('click', d => setCanton(d.target.id))
-            .attr("style", "max-width: 100%; height: auto; height: intrinsic; text-align: center; ")
+           .attr("style", "max-width: 100%; text-align: center;")
 
         let g = svg
             .append("g")
@@ -267,15 +267,15 @@ function Switzerland(props) {
     return (
         <>
             <SnackbarProvider maxSnack={5} />
-            <Grid2 sx={{m: 2}} spacing={2} container direction="column" alignItems={"center"} justifyContent={"center"}>
-                <Grid2 item className='h-100' size={{ sx: 10, md: 8 }} sx={{mt:4}}>
+            <Grid2 sx={{my: 2}} spacing={2} container direction="column" alignItems={"center"} justifyContent={"center"}>
+                <Grid2 item size={{ xs: 11, md: 8 }}>
                     <Paper sx={{ borderColor: 'primary', border: 3 }} elevation={elevation}>
-                        <svg id="travelmap">
+                        <svg display="flex" id="travelmap">
                         </svg>
                     </Paper>
                 </Grid2>
                 {props.auth !== null ? (
-                    <Grid2 item className='h-100' size={{ sx: 10, md: 8 }}>
+                    <Grid2 item size={{ xs: 11, md: 8 }}>
                         <AuthDisplay
                             drawerOpen={props.drawerOpen}
                             toggleDrawer={props.toggleDrawer}
@@ -295,17 +295,17 @@ function Switzerland(props) {
                         />
                     </Grid2>
                 ) : (
-                    <Grid2 item className='h-100' size={{ sx: 10, md: 8 }}>
+                    <Grid2 item size={{ xs: 11, md: 8 }}>
                         <h2>Hi guys :)</h2>
                     </Grid2>
                 )}
-                <Grid2 item className='h-100' size={{ sx: 10, md: 8 }}>
+                <Grid2 item size={{ xs: 11, md: 8 }}>
                     <Events events={events} fetchEvents={fetchEvents} updateEvents={props.updateEvents} elevation={elevation} />
                 </Grid2>
-                <Grid2 item className='h-100' size={{ sx: 10, md: 8 }}>
+                <Grid2 item size={{ xs: 11, md: 8 }}>
                     <Score canton={canton} elevation={elevation} cantons={cantons} />
                 </Grid2>
-                <Grid2 item className='h-100' size={{ sx: 10, md: 8 }}>
+                <Grid2 item size={{ xs: 11, md: 8 }}>
                     <About elevation={elevation} />
                 </Grid2>
             </Grid2>

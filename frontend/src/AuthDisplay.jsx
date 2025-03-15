@@ -33,7 +33,7 @@ function AuthDisplay(props) {
 
 
     async function sendMessage() {
-        if(eventMessage.length === 0) {
+        if (eventMessage.length === 0) {
             enqueueSnackbar("Cannot send empty message", { variant: "error", autoHideDuration: 3000 })
             return
         }
@@ -43,11 +43,11 @@ function AuthDisplay(props) {
     }
 
     async function handleSubmitChallenge() {
-        if(!selectedCanton.id) {
+        if (!selectedCanton.id) {
             enqueueSnackbar("Canton not specified", { variant: "error", autoHideDuration: 3000 })
             return
         }
-        if(!selectedChallenge) {
+        if (!selectedChallenge) {
             enqueueSnackbar("Challenge not specified", { variant: "error", autoHideDuration: 3000 })
             return
         }
@@ -204,7 +204,7 @@ function AuthDisplay(props) {
                             setPowerups(data.sort((a, b) => a.cost - b.cost))
                             break;
                         case "/challenges/":
-                            setChallenges(data.sort((a,b) => a.description > b.description))
+                            setChallenges(data.sort((a, b) => a.description > b.description))
                             break;
                         case "/curses/":
                             props.setCurses(data)
@@ -331,88 +331,94 @@ function AuthDisplay(props) {
                     </Paper>
                 </Grid2>
                 <Grid2 item size={12}>
-                <Paper sx={{p: 2 }} elevation={props.elevation}>
-                    <Grid2 spacing={2} container alignItems={"center"}>
-                        <Grid2 item size={{ xs: 12, lg: 6 }}>
-                            <FormControl sx={{ width: "100%" }} aria-label="Powerups">
-                                <Autocomplete
-                                    disablePortal
-                                    id="powerup-select"
-                                    aria-labelledby="powerup-select"
-                                    options={powerups || null}
-                                    value={powerup}
-                                    getOptionLabel={(option) =>
-                                        option ? `${option.description} | ${option.cost}₣` : ''
-                                    }
-                                    sx={{ textAlign: "left", align: "justify", color: "red" }}
-                                    onChange={(d, e) => {
-                                        if (e !== null) setPowerup(e)
-                                        else setPowerup("");
-                                    }}
-                                    renderInput={(params) => (
-                                        <TextField {...params} label="Powerups" />
-                                    )}
-                                />
-                            </FormControl>
+                    <Paper sx={{ p: 2 }} elevation={props.elevation}>
+                        <Grid2 spacing={2} container alignItems={"center"}>
+                            <Grid2 item size={{ xs: 12, lg: 6 }}>
+                                <FormControl sx={{ width: "100%" }} aria-label="Powerups">
+                                    <Autocomplete
+                                        disablePortal
+                                        id="powerup-select"
+                                        aria-labelledby="powerup-select"
+                                        options={powerups || null}
+                                        value={powerup}
+                                        getOptionLabel={(option) =>
+                                            option ? `${option.description} | ${option.cost}₣` : ''
+                                        }
+                                        sx={{ textAlign: "left", align: "justify", color: "red" }}
+                                        onChange={(d, e) => {
+                                            if (e !== null) setPowerup(e)
+                                            else setPowerup("");
+                                        }}
+                                        renderInput={(params) => (
+                                            <TextField {...params} label="Powerups" />
+                                        )}
+                                    />
+                                </FormControl>
+                            </Grid2>
+                            <Grid2 item size={{ xs: 12, lg: 6 }}>
+                                <Button variant="contained" sx={{ width: "100%" }} onClick={purchasePowerup} type="submit">Purchase Power-Up</Button>
+                            </Grid2>
+                            <Grid2 item size={{ xs: 12, lg: 6 }}>
+                                <FormControl sx={{ width: "100%" }} aria-label="My Powerups">
+                                    <Autocomplete
+                                        disablePortal
+                                        id="my-powerup-select"
+                                        aria-labelledby="my-powerup-select"
+                                        options={props.myPowerups || null}
+                                        value={props.myPowerup}
+                                        getOptionLabel={(option) =>
+                                            option ? `${option.description}` : ''
+                                        }
+                                        onChange={(d, e) => {
+                                            if (e !== null) props.setMyPowerup(e)
+                                            else props.setMyPowerup("");
+                                        }}
+                                        renderInput={(params) => (
+                                            <TextField {...params} label="My Powerups" />
+                                        )}
+                                    />
+                                </FormControl>
+                            </Grid2>
+                            <Grid2 item size={{ xs: 12, lg: 6 }}>
+                                <Button variant="contained" sx={{ width: "100%" }} onClick={usePowerup} type="submit">Use Powerup</Button>
+                            </Grid2>
                         </Grid2>
-                        <Grid2 item size={{ xs: 12, lg: 6 }}>
-                            <Button variant="contained" sx={{ width:"100%" }} onClick={purchasePowerup} type="submit">Purchase Power-Up</Button>
-                        </Grid2>
-                        <Grid2 item size={{ xs: 12, lg: 6 }}>
-                            <FormControl sx={{ width: "100%" }} aria-label="My Powerups">
-                                <Autocomplete
-                                    disablePortal
-                                    id="my-powerup-select"
-                                    aria-labelledby="my-powerup-select"
-                                    options={props.myPowerups || null}
-                                    value={props.myPowerup}
-                                    getOptionLabel={(option) =>
-                                        option ? `${option.description}` : ''
-                                    }
-                                    onChange={(d, e) => {
-                                        if (e !== null) props.setMyPowerup(e)
-                                        else props.setMyPowerup("");
-                                    }}
-                                    renderInput={(params) => (
-                                        <TextField {...params} label="My Powerups" />
-                                    )}
-                                />
-                            </FormControl>
-                        </Grid2>
-                        <Grid2 item size={{ xs: 12, lg: 6 }}>
-                            <Button variant="contained" sx={{ width:"100%" }} onClick={usePowerup} type="submit">Use Powerup</Button>
-                        </Grid2>
-                    </Grid2>
-                </Paper>
+                    </Paper>
                 </Grid2>
                 <Grid2 item size={12}>
-                <Paper align={"center"} elevation={props.elevation}>
-                    <Button variant="outlined" sx={{ m: 1 }} onClick={purchaseCurse} type="submit">Purchase Curse</Button>
-                    <Button variant="outlined" sx={{ m: 1 }} onClick={useCurse} type="submit">Use Curse</Button>
-                </Paper>
+                    <Paper align={"center"} elevation={props.elevation}>
+                        <Grid2 sx={{p: 1}} spacing={2} container>
+                            <Grid2 item size={{ xs: 12, lg: 6 }}>
+                                <Button variant="contained" sx={{ width: 1 }} onClick={purchaseCurse} type="submit">Purchase curse</Button>
+                            </Grid2>
+                            <Grid2 item size={{ xs: 12, lg: 6 }}>
+                                <Button variant="contained" sx={{ width: 1 }} onClick={useCurse} type="submit">Use Curse</Button>
+                            </Grid2>
+                        </Grid2>
+                    </Paper>
                 </Grid2>
                 <Grid2 item size={12}>
-                <Paper elevation={props.elevation}>
-                    <Button variant="contained" sx={{ width: "100%" }} onClick={destroyCanton} type="submit">
-                        <Typography variant="h5">
-                            ☢️ DESTROY CANTON ☢️
-                        </Typography>
-                    </Button>
-                </Paper>
+                    <Paper elevation={props.elevation}>
+                        <Button variant="contained" sx={{ width: "100%" }} onClick={destroyCanton} type="submit">
+                            <Typography variant="h5">
+                                ☢️ DESTROY CANTON ☢️
+                            </Typography>
+                        </Button>
+                    </Paper>
                 </Grid2>
                 <Grid2 item size={12}>
-                <Paper sx={{p: 2 }} elevation={props.elevation}>
-                    <Grid2 spacing={2} container>
-                        <Grid2 item size={{ xs: 12 }}>
-                            <FormControl sx={{ width: "100%" }} aria-label="Powerups">
-                                <TextField multiline minRows={4} onChange={(d) => { setEventMessage(d.target.value) }} value={eventMessage} label="Message" />
-                            </FormControl>
+                    <Paper sx={{ p: 2 }} elevation={props.elevation}>
+                        <Grid2 spacing={2} container>
+                            <Grid2 item size={{ xs: 12 }}>
+                                <FormControl sx={{ width: "100%" }} aria-label="Powerups">
+                                    <TextField multiline minRows={4} onChange={(d) => { setEventMessage(d.target.value) }} value={eventMessage} label="Message" />
+                                </FormControl>
+                            </Grid2>
+                            <Grid2 display="flex" justifyContent={"center"} item size={{ xs: 12 }}>
+                                <Button variant="contained" sx={{ m: 1, width: "100%" }} onClick={sendMessage} type="submit">Send Message</Button>
+                            </Grid2>
                         </Grid2>
-                        <Grid2 display="flex" justifyContent={"center"} item size={{ xs: 12 }}>
-                            <Button variant="contained" sx={{ m: 1, width: "100%" }} onClick={sendMessage} type="submit">Send Message</Button>
-                        </Grid2>
-                    </Grid2>
-                </Paper>
+                    </Paper>
                 </Grid2>
             </Grid2>
         </>
