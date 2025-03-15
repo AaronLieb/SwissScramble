@@ -47,7 +47,7 @@ def load_admin_user():
 
 def load_challenges(engine):
     challenges = []
-    with open("database/challenges.tsv", newline="") as csvfile:
+    with open("database/challenges.tsv", newline="", encoding='utf8') as csvfile:
         reader = csv.reader(csvfile, delimiter="\t", quotechar='"')
         next(reader)  # Discard the header line.
         for row in reader:

@@ -10,13 +10,16 @@ import {
     Tab,
     Tabs,
     Box,
-    Stack
+    Stack,
+    ListItem,
+    ListItemText
 } from "@mui/material";
 import { enqueueSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
 import Drawer from './Drawer.jsx'
 import challenge from './assets/challengesmall.png'
 import curse from './assets/cursesmall.png'
+import { styled, lighten, darken } from '@mui/system';
 
 function AuthDisplay(props) {
 
@@ -214,7 +217,7 @@ function AuthDisplay(props) {
                             setPowerups(data.sort((a, b) => a.cost - b.cost))
                             break;
                         case "/challenges/":
-                            setChallenges(data.sort((a, b) => a.description > b.description))
+                            setChallenges(data.sort((a,b) => Intl.Collator().compare(a.name.toUpperCase(), b.name.toUpperCase())))
                             break;
                         case "/curses/":
                             props.setCurses(data)
@@ -304,6 +307,28 @@ function AuthDisplay(props) {
     }
 
 
+    // function SortAlphabetically(alphabet)
+    // {
+    //     return function(a, b) {
+    //         var index_a = alphabet.indexOf(a[0]),
+    //         index_b = alphabet.indexOf(b[0]);
+    
+    //         if (index_a === index_b) {
+    //             // same first character, sort regular
+    //             if (a < b) {
+    //                 return -1;
+    //             } else if (a > b) {
+    //                 return 1;
+    //             }
+    //             return 0;
+    //         } else {
+    //             return index_a - index_b;
+    //         }
+    //     }
+    // }
+    
+
+
     return (
         <>
             <Drawer team={team} drawerOpen={props.drawerOpen} toggleDrawer={props.toggleDrawer} />
@@ -325,7 +350,7 @@ function AuthDisplay(props) {
                                     <Typography variant="h3" align="center">💰</Typography>
                                     <Typography variant="h3" align="center">{team.money}₣</Typography>
                                 </Stack>
-                                
+
                                 <img height={"50%"} width={"20%"} src={challenge} />
                                 <Typography variant="h3" align="center"> {team.challenges} </Typography>
 
@@ -386,10 +411,14 @@ function AuthDisplay(props) {
                                                 aria-labelledby="challenge-select"
                                                 options={challenges || null}
                                                 value={selectedChallenge}
-                                                //groupBy={(option) => option.firstLetter}
                                                 getOptionLabel={(option) =>
-                                                    option ? `${option.description} | ${option.levels} Level | ${option.money}₣` : ''
+                                                    option ? `${option.name}` : ''
                                                 }
+                                                renderOption={({ key, ...props }, option) => (
+                                                    <ListItem key={key} {...props}>
+                                                        <ListItemText primary={option.name} secondary={`${option.levels} Level, ${option.money} ₣`} />
+                                                    </ListItem>
+                                                  )}
                                                 onChange={(_, newValue) => {
                                                     setSelectedChallenge(newValue || null)
                                                 }}
