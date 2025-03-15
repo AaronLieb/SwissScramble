@@ -44,7 +44,6 @@ function Switzerland(props) {
 
     // Player state.
     const [teams, setTeams] = useState({})
-    const [curses, setCurses] = useState([])
 
     const [myPowerups, setMyPowerups] = useState([])
     const [myPowerup, setMyPowerup] = useState("")
@@ -238,7 +237,6 @@ function Switzerland(props) {
                     switch(endpoint) {
                         case "/teams/":
                             setTeams(data)
-                            console.log(data)
                             resolve();
                             break;
                         case "/events/":
@@ -294,8 +292,6 @@ function Switzerland(props) {
                             canton={canton}
                             setCanton={setCanton}
                             cantons={cantons}
-                            curses={curses}
-                            setCurses={setCurses}
                         />
                     </Grid2>
                 ) : (
@@ -307,7 +303,7 @@ function Switzerland(props) {
                     <Score canton={canton} elevation={elevation} cantons={cantons} />
                 </Grid2>
                 <Grid2 item className='h-100' size={{ sx: 10, md: 8 }}>
-                    <Events events={events} fetchEvents={fetchEvents} updateEvents={props.updateEvents} backend={props.backend} elevation={elevation} />
+                    <Events events={events} fetchEvents={fetchEvents} updateEvents={props.updateEvents} elevation={elevation} />
                 </Grid2>
                 <Grid2 item className='h-100' size={{ sx: 10, md: 8 }}>
                     <About elevation={elevation} />

@@ -43,19 +43,23 @@ function AuthDisplay(props) {
     }
 
     async function handleSubmitChallenge() {
+        if(!selectedCanton.id) {
+            enqueueSnackbar("Canton not specified", { variant: "error", autoHideDuration: 3000 })
+            return
+        }
+        if(!selectedChallenge) {
+            enqueueSnackbar("Challenge not specified", { variant: "error", autoHideDuration: 3000 })
+            return
+        }
         let text = `Are you sure you want to submit "${selectedChallenge.description}"?`
         if (!window.confirm(text)) {
             return
         }
-        if (selectedCanton.id && selectedChallenge) {
-            await postEndpoint("/challenge/", JSON.stringify({
-                id: selectedChallenge.id,
-                canton: selectedCanton.id,
-            }))
-            await props.setUpdateEvents(selectedChallenge.id)
-        } else {
-            enqueueSnackbar("Challenge and canton not specified", { variant: "error", autoHideDuration: 3000 })
-        }
+        await postEndpoint("/challenge/", JSON.stringify({
+            id: selectedChallenge.id,
+            canton: selectedCanton.id,
+        }))
+        await props.setUpdateEvents(selectedChallenge.id)
     }
 
 
@@ -128,7 +132,7 @@ function AuthDisplay(props) {
     function destroyCanton() {
         let sel = getCantonFromName(props.canton)
         if (!sel) {
-            enqueueSnackbar("Cannot find canton to destroy.", { variant: "error", autoHideDuration: 3000 })
+            enqueueSnackbar("No canton selected.", { variant: "error", autoHideDuration: 3000 })
             return
         }
         let text = `Are you sure you want to DESTROY ${props.canton}?`
