@@ -16,7 +16,7 @@ function AuthDisplay(props) {
 
     // Auth Required Fields - are these needed / wanted?
     const [user, setUser] = useState(null)
-    const [team, setTeam] = useState({money: 0, curses: 0})
+    const [team, setTeam] = useState({ money: 0, curses: 0 })
 
 
     // Challenge form related info
@@ -25,10 +25,22 @@ function AuthDisplay(props) {
     const [selectedCanton, setSelectedCanton] = useState({})
 
     // Shop values with selection.
-
     const [powerup, setPowerup] = useState("")
     const [powerups, setPowerups] = useState([])
-    const [curse, setCurse] = useState("")
+
+    const [eventMessage, setEventMessage] = useState("")
+
+
+    async function sendMessage() {
+        if(eventMessage.length === 0) {
+            enqueueSnackbar("Cannot send empty message", { variant: "error", autoHideDuration: 3000 })
+            return
+        }
+        await postEndpoint("/event/", JSON.stringify({
+            text: eventMessage,
+        }))
+        await fetchEndpoint("/events/")
+    }
 
     async function handleSubmitChallenge() {
         let text = `Are you sure you want to submit "${selectedChallenge.description}"?`
@@ -104,7 +116,7 @@ function AuthDisplay(props) {
         if (!window.confirm(text)) {
             return
         }
-        if(team.curses < 1) {
+        if (team.curses < 1) {
             enqueueSnackbar("No curses available.", { variant: "error", autoHideDuration: 3000 })
         }
         await postEndpoint("/use_curse/", JSON.stringify({
@@ -115,7 +127,7 @@ function AuthDisplay(props) {
 
     function destroyCanton() {
         let sel = getCantonFromName(props.canton)
-        if(!sel) {
+        if (!sel) {
             enqueueSnackbar("Cannot find canton to destroy.", { variant: "error", autoHideDuration: 3000 })
             return
         }
@@ -129,7 +141,7 @@ function AuthDisplay(props) {
 
     async function handleEnterCanton() {
         let sel = getCantonFromName(props.canton)
-        if(!sel) {
+        if (!sel) {
             enqueueSnackbar("Cannot find canton to enter.", { variant: "error", autoHideDuration: 3000 })
             return
         }
@@ -166,17 +178,18 @@ function AuthDisplay(props) {
     async function fetchEndpoint(endpoint) {
         let authHeaders = {
             headers: new Headers({
-            'Authorization': `Bearer ${props.auth}`, 
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-        })}
+                'Authorization': `Bearer ${props.auth}`,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            })
+        }
         return new Promise((resolve) => {
-                fetch(props.backend + endpoint, authHeaders)
+            fetch(props.backend + endpoint, authHeaders)
                 .then((response) => {
                     return response.json()
                 })
                 .then((data) => {
-                    switch(endpoint) {
+                    switch (endpoint) {
                         case "/team/powerups/":
                             console.log(data)
                             props.setMyPowerups(data)
@@ -205,164 +218,184 @@ function AuthDisplay(props) {
                 .catch((err) => {
                     resolve(err) // This application is not robust enough to handle rejection.
                 });
-          })
+        })
     }
 
     async function postEndpoint(endpoint, body) {
-        let op = endpoint.replaceAll("/","")
+        let op = endpoint.replaceAll("/", "")
         return new Promise((resolve) => {
             fetch(props.backend + endpoint, {
                 method: 'POST',
                 body: body,
                 headers: new Headers({
-                    'Authorization': `Bearer ${props.auth}`, 
+                    'Authorization': `Bearer ${props.auth}`,
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
-                }), 
+                }),
             })
-            .then((response) => {
-                switch(response.status) {
-                    case 401:
-                        enqueueSnackbar(`Failed to submit ${op}: ${response.statusText}`, { variant: "error", autoHideDuration: 3000 })
-                        break;
-                    case 422:
-                        enqueueSnackbar(`Failed to submit ${op}: ${response.statusText}`, { variant: "error", autoHideDuration: 3000 })
-                        break;
-                    case 200:
-                        enqueueSnackbar(`Successfully submitted ${op} 🎉`, { variant: "success", autoHideDuration: 3000 })
-                        break;
-                    case 400:
-                        Promise.resolve(response.json()).then(data => {
-                            if(data.detail) enqueueSnackbar(`Submit ${op}: ${data.detail}`, { variant: "warning", autoHideDuration: 3000 })
-                        })
-                        break;
-                    default:
-                        enqueueSnackbar(`Unknown submit operation ${response.status} ${op}: ${response.statusText}`, { variant: "warning", autoHideDuration: 3000 })
-                }
-                resolve(response.status)
-            })
-            .then(() => {
-                props.fetchEvents()
-            })
-            .catch((err) => {
-                enqueueSnackbar(`failed to submit ${op}: ${err}`, { variant: "error", autoHideDuration: 3000 })
-                resolve(err) // This application is not robust enough to handle rejection.
-            });
-      })
+                .then((response) => {
+                    switch (response.status) {
+                        case 401:
+                            enqueueSnackbar(`Failed to submit ${op}: ${response.statusText}`, { variant: "error", autoHideDuration: 3000 })
+                            break;
+                        case 422:
+                            enqueueSnackbar(`Failed to submit ${op}: ${response.statusText}`, { variant: "error", autoHideDuration: 3000 })
+                            break;
+                        case 200:
+                            enqueueSnackbar(`Successfully submitted ${op} 🎉`, { variant: "success", autoHideDuration: 3000 })
+                            break;
+                        case 400:
+                            Promise.resolve(response.json()).then(data => {
+                                if (data.detail) enqueueSnackbar(`Submit ${op}: ${data.detail}`, { variant: "warning", autoHideDuration: 3000 })
+                            })
+                            break;
+                        default:
+                            enqueueSnackbar(`Unknown submit operation ${response.status} ${op}: ${response.statusText}`, { variant: "warning", autoHideDuration: 3000 })
+                    }
+                    resolve(response.status)
+                })
+                .then(() => {
+                    props.fetchEvents()
+                })
+                .catch((err) => {
+                    enqueueSnackbar(`failed to submit ${op}: ${err}`, { variant: "error", autoHideDuration: 3000 })
+                    resolve(err) // This application is not robust enough to handle rejection.
+                });
+        })
     }
 
     return (
         <>
             <Drawer team={team} drawerOpen={props.drawerOpen} toggleDrawer={props.toggleDrawer} />
-            <Paper sx={{ p: 2, my: 1 }} elevation={props.elevation}>
-                <Grid2 spacing={2} container>
-                    <Grid2 item size={{ xs: 9, lg: 9 }}>
-                        <FormControl sx={{ width: "100%" }} aria-label="Canton selection">
-                            <Autocomplete
-                                disablePortal
-                                id="challenge-select"
-                                aria-labelledby="challenge-select"
-                                options={props.cantons.map(e => e.name)}
-                                value={props.canton}
-                                onChange={(d, e) => {
-                                    if (e !== null) props.setCanton(e);
-                                    else props.setCanton("");
-                                }}
-                                renderInput={(params) => (
-                                    <TextField {...params} label="Canton" />
-                                )}
-                            />
-                        </FormControl>
-                    </Grid2>
-                    <Grid2 item size={{ xs: 3 }}>
-                        <FormControl sx={{ width: "100%" }} aria-label="Canton selection">
-                        <TextField id="outlined-basic" label="Level" defaultValue={selectedCanton.level} slotProps={{inputLabel: {shrink: true}, input: {readOnly: true}}} />
-                        </FormControl>
-                    </Grid2>
-                    <Grid2 item size={{ xs: 12, lg: 12 }}>
-                        <FormControl aria-label="Challenge selection" sx={{ width: "100%" }}>
-                            <Autocomplete
-                                disablePortal
-                                id="challenge-select"
-                                aria-labelledby="challenge-select"
-                                options={challenges || null}
-                                value={selectedChallenge}
-                                getOptionLabel={(option) =>
-                                    option ? `${option.description} | ${option.levels} Level | ${option.money}₣` : ''
-                                }
-                                onChange={(_, newValue) => {
-                                    setSelectedChallenge(newValue || null)
-                                }}
-                                renderInput={(params) => (
-                                    <TextField {...params} label="Challenge" />
-                                )}
-                            />
-                        </FormControl>
-                    </Grid2>
-                    <Grid2 item size={{ xs: 12, lg: 6 }}>
-                        <Button variant="outlined" sx={{ m: 1 }} onClick={handleEnterCanton} type="submit">Enter Canton</Button>
-                        <Button variant="outlined" sx={{ m: 1 }} onClick={handleSubmitChallenge} type="submit">Submit Challenge</Button>
-                    </Grid2>
+            <Grid2 spacing={2} container columns={{ xs: 12 }}>
+                <Grid2 item size={12}>
+                    <Paper sx={{ p: 2 }} elevation={props.elevation}>
+                        <Grid2 spacing={2} container>
+                            <Grid2 item size={{ xs: 9, lg: 9 }}>
+                                <FormControl sx={{ width: "100%" }} aria-label="Canton selection">
+                                    <Autocomplete
+                                        disablePortal
+                                        id="challenge-select"
+                                        aria-labelledby="challenge-select"
+                                        options={props.cantons.map(e => e.name)}
+                                        value={props.canton}
+                                        onChange={(d, e) => {
+                                            if (e !== null) props.setCanton(e);
+                                            else props.setCanton("");
+                                        }}
+                                        renderInput={(params) => (
+                                            <TextField {...params} label="Canton" />
+                                        )}
+                                    />
+                                </FormControl>
+                            </Grid2>
+                            <Grid2 item size={{ xs: 3 }}>
+                                <FormControl sx={{ width: "100%" }} aria-label="Canton selection">
+                                    <TextField id="outlined-basic" label="Level" defaultValue={selectedCanton.level} slotProps={{ inputLabel: { shrink: true }, input: { readOnly: true } }} />
+                                </FormControl>
+                            </Grid2>
+                            <Grid2 item size={{ xs: 12, lg: 12 }}>
+                                <FormControl aria-label="Challenge selection" sx={{ width: "100%" }}>
+                                    <Autocomplete
+                                        disablePortal
+                                        id="challenge-select"
+                                        aria-labelledby="challenge-select"
+                                        options={challenges || null}
+                                        value={selectedChallenge}
+                                        getOptionLabel={(option) =>
+                                            option ? `${option.description} | ${option.levels} Level | ${option.money}₣` : ''
+                                        }
+                                        onChange={(_, newValue) => {
+                                            setSelectedChallenge(newValue || null)
+                                        }}
+                                        renderInput={(params) => (
+                                            <TextField {...params} label="Challenge" />
+                                        )}
+                                    />
+                                </FormControl>
+                            </Grid2>
+                            <Grid2 item size={{ xs: 12, lg: 6 }}>
+                                <Button variant="outlined" sx={{ m: 1 }} onClick={handleEnterCanton} type="submit">Enter Canton</Button>
+                                <Button variant="outlined" sx={{ m: 1 }} onClick={handleSubmitChallenge} type="submit">Submit Challenge</Button>
+                            </Grid2>
+                        </Grid2>
+                    </Paper>
                 </Grid2>
-            </Paper>
-            <Paper sx={{ padding: "2%" }} elevation={props.elevation}>
-                <Grid2 spacing={2} container>
-                    <Grid2 item size={{ xs: 12, lg: 6 }}>
-                        <FormControl sx={{ width: "100%" }} aria-label="Powerups">
-                            <Autocomplete
-                                disablePortal
-                                id="powerup-select"
-                                aria-labelledby="powerup-select"
-                                options={powerups || null}
-                                value={powerup}
-                                getOptionLabel={(option) =>
-                                    option ? `${option.description} | ${option.cost}₣` : ''
-                                }
-                                sx={{ textAlign: "left", align: "justify", color: "red" }}
-                                onChange={(d, e) => {
-                                    if (e !== null) setPowerup(e)
-                                    else setPowerup("");
-                                }}
-                                renderInput={(params) => (
-                                    <TextField {...params} label="Powerups" />
-                                )}
-                            />
-                        </FormControl>
+                <Grid2 item size={12}>
+                <Paper sx={{ padding: "2%" }} elevation={props.elevation}>
+                    <Grid2 spacing={2} container>
+                        <Grid2 item size={{ xs: 12, lg: 6 }}>
+                            <FormControl sx={{ width: "100%" }} aria-label="Powerups">
+                                <Autocomplete
+                                    disablePortal
+                                    id="powerup-select"
+                                    aria-labelledby="powerup-select"
+                                    options={powerups || null}
+                                    value={powerup}
+                                    getOptionLabel={(option) =>
+                                        option ? `${option.description} | ${option.cost}₣` : ''
+                                    }
+                                    sx={{ textAlign: "left", align: "justify", color: "red" }}
+                                    onChange={(d, e) => {
+                                        if (e !== null) setPowerup(e)
+                                        else setPowerup("");
+                                    }}
+                                    renderInput={(params) => (
+                                        <TextField {...params} label="Powerups" />
+                                    )}
+                                />
+                            </FormControl>
+                        </Grid2>
+                        <Grid2 item size={{ xs: 12, lg: 6 }}>
+                            <Button variant="outlined" sx={{ m: 1 }} onClick={purchasePowerup} type="submit">Purchase Power-Up</Button>
+                        </Grid2>
+                        <Grid2 item size={{ xs: 12, lg: 6 }}>
+                            <FormControl sx={{ width: "100%" }} aria-label="My Powerups">
+                                <Autocomplete
+                                    disablePortal
+                                    id="my-powerup-select"
+                                    aria-labelledby="my-powerup-select"
+                                    options={props.myPowerups || null}
+                                    value={props.myPowerup}
+                                    getOptionLabel={(option) =>
+                                        option ? `${option.description}` : ''
+                                    }
+                                    onChange={(d, e) => {
+                                        if (e !== null) props.setMyPowerup(e)
+                                        else props.setMyPowerup("");
+                                    }}
+                                    renderInput={(params) => (
+                                        <TextField {...params} label="My Powerups" />
+                                    )}
+                                />
+                            </FormControl>
+                        </Grid2>
+                        <Grid2 item size={{ xs: 12, lg: 6 }}>
+                            <Button variant="outlined" sx={{ m: 1 }} onClick={usePowerup} type="submit">Use Powerup</Button>
+                        </Grid2>
+                        <Grid2 item size={{ xs: 12, lg: 12 }}>
+                            <Button variant="outlined" sx={{ m: 1 }} onClick={purchaseCurse} type="submit">Purchase Curse</Button>
+                            <Button variant="outlined" sx={{ m: 1 }} onClick={useCurse} type="submit">Use Curse</Button>
+                            <Button variant="outlined" sx={{ m: 1 }} onClick={destroyCanton} type="submit">☢️ DESTROY CANTON ☢️</Button>
+                        </Grid2>
                     </Grid2>
-                    <Grid2 item size={{ xs: 12, lg: 6 }}>
-                        <Button variant="outlined" sx={{ m: 1 }} onClick={purchasePowerup} type="submit">Purchase Power-Up</Button>
-                    </Grid2>
-                    <Grid2 item size={{ xs: 12, lg: 6 }}>
-                        <FormControl sx={{ width: "100%" }} aria-label="My Powerups">
-                            <Autocomplete
-                                disablePortal
-                                id="my-powerup-select"
-                                aria-labelledby="my-powerup-select"
-                                options={props.myPowerups || null}
-                                value={props.myPowerup}
-                                getOptionLabel={(option) =>
-                                    option ? `${option.description}` : ''
-                                }   
-                                onChange={(d, e) => {
-                                    if (e !== null) props.setMyPowerup(e)
-                                    else props.setMyPowerup("");
-                                }}
-                                renderInput={(params) => (
-                                    <TextField {...params} label="My Powerups" />
-                                )}
-                            />
-                        </FormControl>
-                    </Grid2>
-                    <Grid2 item size={{ xs: 12, lg: 6 }}>
-                        <Button variant="outlined" sx={{ m: 1 }} onClick={usePowerup} type="submit">Use Powerup</Button>
-                    </Grid2>
-                    <Grid2 item size={{ xs: 12, lg: 12 }}>
-                        <Button variant="outlined" sx={{ m: 1 }} onClick={purchaseCurse} type="submit">Purchase Curse</Button>
-                        <Button variant="outlined" sx={{ m: 1 }} onClick={useCurse} type="submit">Use Curse</Button>
-                        <Button variant="outlined" sx={{ m: 1 }} onClick={destroyCanton} type="submit">☢️ DESTROY CANTON ☢️</Button>
-                    </Grid2>
+                </Paper>
                 </Grid2>
-            </Paper>
+                <Grid2 item size={12}>
+                <Paper sx={{ padding: "2%", my: 2 }} elevation={props.elevation}>
+                    <Grid2 spacing={2} container>
+                        <Grid2 item size={{ xs: 12, lg: 6 }}>
+                            <FormControl sx={{ width: "100%" }} aria-label="Powerups">
+                                <TextField onChange={(d) => { setEventMessage(d.target.value) }} value={eventMessage} label="Message" />
+                            </FormControl>
+                        </Grid2>
+                        <Grid2 item size={{ xs: 12, lg: 6 }}>
+                            <Button multiline rows={3} variant="outlined" sx={{ m: 1 }} onClick={sendMessage} type="submit">Send Message</Button>
+                        </Grid2>
+                    </Grid2>
+                </Paper>
+                </Grid2>
+            </Grid2>
         </>
     )
 }

@@ -341,14 +341,23 @@ async def post_enter_canton(
 
 
 @router.post("/event/")
-async def send_event(event: EventPost, db: SessionDep):
-    event_db = Event.model_validate(event)
+async def send_event(
+        event: EventPost, 
+        db: SessionDep, 
+        current_user: Annotated[User, Depends(auth.get_current_user)],):
+    
+    team = current_user.team
 
-    db.add(event_db)
-    db.commit()
-    db.refresh(event_db)
-    return event_db
+    if team is None:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid team"
+    )
 
+    text = "({0}) {1}: {2}".format(
+            team.name, current_user.firstname, event.text
+        )
+
+    new_event(db, text, team.name)
 
 @router.post("/destroy_canton")
 async def post_destroy_canton(

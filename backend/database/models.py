@@ -59,7 +59,6 @@ class UserPublic(UserBase):
     id: int
     team_id: int | None
 
-
 class UserCreate(UserBase):
     password: str
 
@@ -104,8 +103,8 @@ class Event(EventBase, table=True):
     id: int | None = Field(default=None, primary_key=True)
 
 
-class EventPost(EventBase):
-    pass
+class EventPost(SQLModel):
+    text: str
 
 
 class ChallengeBase(SQLModel):
