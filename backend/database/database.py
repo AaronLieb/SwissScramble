@@ -1,6 +1,6 @@
 from typing import Annotated
 from fastapi import Depends
-from sqlmodel import Session, SQLModel, create_engine
+from sqlmodel import Session, SQLModel, create_engine, select
 import sqlite3
 import csv
 
@@ -58,9 +58,11 @@ def load_challenges(engine):
             )
 
     with Session(engine) as session:
-        for c in challenges:
-            session.add(c)
-            session.commit()
+        check_statement = select(Challenge)
+        if len(session.exec(check_statement).all()) == 0:
+            for c in challenges:
+                session.add(c)
+                session.commit()
 
 
 def load_curses(engine):
@@ -74,9 +76,11 @@ def load_curses(engine):
             )  # Curses all cost 100 money.
 
     with Session(engine) as session:
-        for c in curses:
-            session.add(c)
-            session.commit()
+        check_statement = select(Curse)
+        if len(session.exec(check_statement).all()) == 0:
+            for c in curses:
+                session.add(c)
+                session.commit()
 
 
 def load_powerups(engine):
@@ -90,9 +94,11 @@ def load_powerups(engine):
             )  # Curses all cost 100 money.
 
     with Session(engine) as session:
-        for p in powerups:
-            session.add(p)
-            session.commit()
+        check_statement = select(PowerUp)
+        if len(session.exec(check_statement).all()) == 0:
+            for p in powerups:
+                session.add(p)
+                session.commit()
 
 
 def get_session():
