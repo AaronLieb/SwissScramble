@@ -14,6 +14,7 @@ import Score from "./Score.jsx";
 import Events from "./Events.jsx"
 import About from './About.jsx';
 import Message from "./Message.jsx";
+import CantonSelect from "./CantonSelect.jsx";
 
 function Switzerland(props) {
     const elevation = 5;
@@ -26,12 +27,12 @@ function Switzerland(props) {
     const enemyHue = "175"
     const neutral = "oklch(90% 0 360)"
     const lightness = ["85%", "85%", "55%", "35%"]
-    const getColor = (item,faded) => {
-        if(!item)  return neutral
-        if(item.destroyed) return destroyed
-        if(item.level === 0)  return neutral
-        if(item.team_id === 1) return `oklch(${lightness[Math.min(item.level, 3)]} ${faded ? '0.03':'0.1'} ${teamHue})`
-        if(item.team_id === 2) return `oklch(${lightness[Math.min(item.level, 3)]} ${faded ? '0.03':'0.1'} ${enemyHue})`
+    const getColor = (item, faded) => {
+        if (!item) return neutral
+        if (item.destroyed) return destroyed
+        if (item.level === 0) return neutral
+        if (item.team_id === 1) return `oklch(${lightness[Math.min(item.level, 3)]} ${faded ? '0.03' : '0.1'} ${teamHue})`
+        if (item.team_id === 2) return `oklch(${lightness[Math.min(item.level, 3)]} ${faded ? '0.03' : '0.1'} ${enemyHue})`
         // Base case.
         return neutral
     }
@@ -40,7 +41,8 @@ function Switzerland(props) {
     const width = 800, height = 800;
     const [mapLoaded, setMapLoaded] = useState(false)
 
-    const [canton, setSelectedCanton] = useState("");
+    const [selectedCanton, setSelectedCanton] = useState({})
+    const [canton, setCanton] = useState("");
     const [cantons, setCantons] = useState([])
 
     // Player state.
@@ -54,10 +56,6 @@ function Switzerland(props) {
     // updateEvents is a hook to re-fetch.
     const [updateEvents, setUpdateEvents] = useState(0);
 
-    function setCanton(c) {
-        if (c == "travelmap") setSelectedCanton("")
-        else setSelectedCanton(c)
-    }
 
     // Fetch all data on initial map load.
     useEffect(() => {
@@ -84,10 +82,12 @@ function Switzerland(props) {
     useEffect(() => {
         updateColors(cantons)
     }, [cantons])
-    
+
     useEffect(() => {
         updateSelected(canton);
+        setSelectedCanton(cantons.find((e) => e.name == canton) || {})
     }, [canton]);
+
 
     // Print this user's location every 5 seconds.
     // useInterval(function() {
@@ -142,14 +142,14 @@ function Switzerland(props) {
             .attr("viewBox", [0, 0, width, height])
             .attr("width", "100%")
             .attr("height", "50vh")
-            .on('click', d => setCanton(d.target.id))
-           .attr("style", "max-width: 100%; text-align: center;")
+            .on('click', d => (d.target.id == "travelmap" ? setCanton("") : setCanton(d.target.id)))
+            .attr("style", "max-width: 100%; text-align: center;")
 
         let g = svg
             .append("g")
             .attr("id", "pathsG")
 
-        const cantons = g
+        const mapCantons = g
             .append("g")
             .attr("class", "cantons")
             .selectAll(".cantonholder")
@@ -157,7 +157,7 @@ function Switzerland(props) {
             .join("g")
             .attr("class", "cantonholder")
 
-        cantons.append("path")
+        mapCantons.append("path")
             .attr("class", "canton")
             .attr("d", path)
             .attr("id", d => d.properties.name)
@@ -169,7 +169,7 @@ function Switzerland(props) {
             .scaleExtent([0.5, 6])
             .translateExtent([[0, 0], [width, height]])
             .on("zoom", (d) => {
-                cantons.attr("transform", d.transform);
+                mapCantons.attr("transform", d.transform);
             });
 
         d3.select("#slider")
@@ -212,7 +212,7 @@ function Switzerland(props) {
 
     function getColorForCanton(value, faded) {
         let item = cantons.find(e => e.name === value)
-        return getColor(item,faded)
+        return getColor(item, faded)
     }
 
     async function fetchEvents() {
@@ -225,19 +225,21 @@ function Switzerland(props) {
     async function fetchEndpoint(endpoint) {
         let authHeaders = {
             headers: new Headers({
-            'Authorization': `Bearer ${props.auth}`, 
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-        })}
+                'Authorization': `Bearer ${props.auth}`,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            })
+        }
         return new Promise((resolve) => {
-                fetch(props.backend + endpoint, authHeaders)
+            fetch(props.backend + endpoint, authHeaders)
                 .then((response) => {
                     return response.json()
                 })
                 .then((data) => {
-                    switch(endpoint) {
+                    switch (endpoint) {
                         case "/teams/":
                             setTeams(data)
+                            console.log(data)
                             resolve();
                             break;
                         case "/events/":
@@ -262,7 +264,7 @@ function Switzerland(props) {
                     enqueueSnackbar(`Failed to fetch data for ${endpoint}: ${err}`, { variant: "error", autoHideDuration: 3000 })
                     resolve(err) // This application is not robust enough to handle rejection.
                 });
-          })
+        })
     }
 
 
@@ -313,14 +315,14 @@ function Switzerland(props) {
     return (
         <>
             <SnackbarProvider maxSnack={5} />
-            <Grid2 sx={{my: 2}} spacing={2} container direction="column" alignItems={"center"} justifyContent={"center"}>
+            <Grid2 sx={{ my: 2 }} spacing={2} container direction="column" alignItems={"center"} justifyContent={"center"}>
                 <Grid2 item size={{ xs: 11, md: 8 }}>
                     <Paper sx={{ borderColor: 'primary', border: 3 }} elevation={elevation}>
                         <svg display="flex" id="travelmap">
                         </svg>
                     </Paper>
                 </Grid2>
-                {props.auth && (
+                {props.auth ? (
                     <Grid2 item size={{ xs: 11, md: 8 }}>
                         <AuthDisplay
                             postEndpoint={postEndpoint}
@@ -337,21 +339,30 @@ function Switzerland(props) {
                             backend={props.backend}
                             elevation={elevation}
                             canton={canton}
+                            selectedCanton={selectedCanton}
                             setCanton={setCanton}
                             cantons={cantons}
                         />
+                    </Grid2>
+                ) : (
+                    <Grid2 item size={{ xs: 11, md: 8 }}>
+                        <Paper sx={{ p: 2 }} elevation={elevation}>
+                            <Grid2 container spacing={2}>
+                                <CantonSelect teams={props.teams} canton={canton} cantons={cantons} setCanton={setCanton} selectedCanton={selectedCanton} />
+                            </Grid2>
+                        </Paper>
                     </Grid2>
                 )}
                 <Grid2 item size={{ xs: 11, md: 8 }}>
                     <Events events={events} fetchEvents={fetchEvents} updateEvents={props.updateEvents} elevation={elevation} />
                 </Grid2>
                 {props.auth &&
-                <Grid2 item size={{ xs: 11, md: 8 }}>
-                    <Message elevation={elevation} postEndpoint={postEndpoint} />
-                </Grid2>
+                    <Grid2 item size={{ xs: 11, md: 8 }}>
+                        <Message elevation={elevation} postEndpoint={postEndpoint} />
+                    </Grid2>
                 }
                 <Grid2 item size={{ xs: 11, md: 8 }}>
-                    <Score canton={canton} elevation={elevation} cantons={cantons} />
+                    <Score teams={teams} canton={canton} elevation={elevation} cantons={cantons} />
                 </Grid2>
                 <Grid2 item size={{ xs: 11, md: 8 }}>
                     <About elevation={elevation} />

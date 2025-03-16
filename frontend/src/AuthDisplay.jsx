@@ -17,9 +17,9 @@ import {
 import { enqueueSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
 import Drawer from './Drawer.jsx'
+import CantonSelect from "./CantonSelect.jsx";
 import challenge from './assets/challengesmall.png'
 import curse from './assets/cursesmall.png'
-import SportsScoreIcon from '@mui/icons-material/SportsScore';
 
 function AuthDisplay(props) {
 
@@ -32,7 +32,6 @@ function AuthDisplay(props) {
     // Challenge form related info
     const [challenges, setChallenges] = useState([])
     const [selectedChallenge, setSelectedChallenge] = useState("")
-    const [selectedCanton, setSelectedCanton] = useState({})
 
     // Shop values with selection.
     const [powerup, setPowerup] = useState("")
@@ -178,9 +177,7 @@ function AuthDisplay(props) {
     }, [props.updateEvents]);
 
 
-    useEffect(() => {
-        setSelectedCanton(props.cantons.find((e) => e.name == props.canton) || {})
-    }, [props.canton]);
+
 
     // fetchEndpoint grabs data from and endpoint and handles its result by
     // storing it in specific frontend state.
@@ -322,29 +319,7 @@ function AuthDisplay(props) {
                         <Grid2 item size={12}>
                             <Paper sx={{ p: 2 }} elevation={props.elevation}>
                                 <Grid2 spacing={2} container>
-                                    <Grid2 item size={{ xs: 9, lg: 9 }}>
-                                        <FormControl sx={{ width: "100%" }} aria-label="Canton selection">
-                                            <Autocomplete
-                                                disablePortal
-                                                id="challenge-select"
-                                                aria-labelledby="challenge-select"
-                                                options={props.cantons.map(e => e.name)}
-                                                value={props.canton}
-                                                onChange={(d, e) => {
-                                                    if (e !== null) props.setCanton(e);
-                                                    else props.setCanton("");
-                                                }}
-                                                renderInput={(params) => (
-                                                    <TextField {...params} label="Canton" />
-                                                )}
-                                            />
-                                        </FormControl>
-                                    </Grid2>
-                                    <Grid2 item size={{ xs: 3 }}>
-                                        <FormControl sx={{ width: "100%" }} aria-label="Canton selection">
-                                            <TextField id="outlined-basic" label="Level" defaultValue={selectedCanton.level} slotProps={{ inputLabel: { shrink: true }, input: { readOnly: true } }} />
-                                        </FormControl>
-                                    </Grid2>
+                                    <CantonSelect canton={props.canton} cantons={props.cantons} selectedCanton={props.selectedCanton} />
                                     <Grid2 item size={{ xs: 12, lg: 12 }}>
                                         <FormControl aria-label="Challenge selection" sx={{ width: "100%" }}>
                                             <Autocomplete
