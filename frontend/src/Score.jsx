@@ -55,7 +55,7 @@ function Score(props) {
                     <LinearProgressWithLabel sx={{ height: 10, borderRadius: 5, }} key={key} variant="determinate" value={score[key].length} />
                     <Typography variant="subtitle1" align="left" sx={{ color: 'text.secondary'}}>
                         {score[key].map((c,idy) => 
-                        <span style={{ color: c.name === props.canton ? 'red' : '', fontWeight: c.name === props.canton ? 'bold' : 'normal'}} key={`${c.name}-${idx}-${idy}`}> {c.name}&nbsp;
+                        <span style={{ color: c.name === props.canton.name ? 'red' : '', fontWeight: c.name === props.canton.name ? 'bold' : 'normal'}} key={`${c.name}-${idx}-${idy}`}> {c.name}&nbsp;
                         </span>)}
                     </Typography>
                 </div>

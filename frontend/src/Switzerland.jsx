@@ -41,8 +41,8 @@ function Switzerland(props) {
     const width = 800, height = 800;
     const [mapLoaded, setMapLoaded] = useState(false)
 
-    const [selectedCanton, setSelectedCanton] = useState({})
-    const [canton, setCanton] = useState("");
+    const [canton, setCanton] = useState({});
+    const [mapCanton, setMapCanton] = useState("")
     const [cantons, setCantons] = useState([])
 
     // Player state.
@@ -79,15 +79,20 @@ function Switzerland(props) {
         await fetchEndpoint("/teams/")
     }
 
+    // For canton selection updated through the CantonSelect element,
+    // ensure we update the map too.
+    useEffect(() => {
+        updateSelected(canton.name);
+    }, [canton]);
+
     useEffect(() => {
         updateColors(cantons)
     }, [cantons])
 
     useEffect(() => {
-        updateSelected(canton);
-        setSelectedCanton(cantons.find((e) => e.name == canton) || {})
-    }, [canton]);
-
+        updateSelected(mapCanton);
+        setCanton(cantons.find((e) => e.name == mapCanton) || {})
+    }, [mapCanton]);
 
     // Print this user's location every 5 seconds.
     // useInterval(function() {
@@ -142,7 +147,7 @@ function Switzerland(props) {
             .attr("viewBox", [0, 0, width, height])
             .attr("width", "100%")
             .attr("height", "50vh")
-            .on('click', d => (d.target.id == "travelmap" ? setCanton("") : setCanton(d.target.id)))
+            .on('click', d => (d.target.id == setMapCanton(d.target.id)))
             .attr("style", "max-width: 100%; text-align: center;")
 
         let g = svg
@@ -186,7 +191,7 @@ function Switzerland(props) {
 
     function updateSelected(selected) {
         var g = d3.select("#pathsG").select(".cantons").selectAll("g");
-        if (canton !== "") {
+        if (selected && selected !== "" && selected !== "travelmap") {
             g.selectAll("path")
                 .transition()
                 .duration(200)
@@ -239,7 +244,6 @@ function Switzerland(props) {
                     switch (endpoint) {
                         case "/teams/":
                             setTeams(data)
-                            console.log(data)
                             resolve();
                             break;
                         case "/events/":
@@ -339,7 +343,6 @@ function Switzerland(props) {
                             backend={props.backend}
                             elevation={elevation}
                             canton={canton}
-                            selectedCanton={selectedCanton}
                             setCanton={setCanton}
                             cantons={cantons}
                         />
@@ -348,7 +351,7 @@ function Switzerland(props) {
                     <Grid2 item size={{ xs: 11, md: 8 }}>
                         <Paper sx={{ p: 2 }} elevation={elevation}>
                             <Grid2 container spacing={2}>
-                                <CantonSelect teams={props.teams} canton={canton} cantons={cantons} setCanton={setCanton} selectedCanton={selectedCanton} />
+                                <CantonSelect teams={props.teams} canton={canton} cantons={cantons} setCanton={setCanton} />
                             </Grid2>
                         </Paper>
                     </Grid2>

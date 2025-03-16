@@ -45,7 +45,7 @@ function AuthDisplay(props) {
     }
 
     async function handleSubmitChallenge() {
-        if (!selectedCanton.id) {
+        if (!props.canton.id) {
             enqueueSnackbar("Canton not specified", { variant: "error", autoHideDuration: 3000 })
             return
         }
@@ -59,7 +59,7 @@ function AuthDisplay(props) {
         }
         await props.postEndpoint("/challenge/", JSON.stringify({
             id: selectedChallenge.id,
-            canton: selectedCanton.id,
+            canton: props.canton.id,
         }))
         await props.setUpdateEvents(selectedChallenge.id)
     }
@@ -133,22 +133,20 @@ function AuthDisplay(props) {
     }
 
     function destroyCanton() {
-        let sel = getCantonFromName(props.canton)
-        if (!sel) {
+        if (!props.canton.name) {
             enqueueSnackbar("No canton selected.", { variant: "error", autoHideDuration: 3000 })
             return
         }
-        let text = `Are you sure you want to DESTROY ${props.canton}?`
+        let text = `Are you sure you want to DESTROY ${props.canton.name}?`
         if (window.confirm(text)) {
             props.postEndpoint("/destroy_canton/", JSON.stringify({
-                id: sel.id,
+                id: props.canton.id,
             }))
         }
     }
 
     async function handleEnterCanton() {
-        let sel = getCantonFromName(props.canton)
-        if (!sel) {
+        if (!props.canton.name) {
             enqueueSnackbar("Cannot find canton to enter.", { variant: "error", autoHideDuration: 3000 })
             return
         }
@@ -157,14 +155,10 @@ function AuthDisplay(props) {
             return
         }
         await props.postEndpoint("/enter_canton/", JSON.stringify({
-            id: sel.id,
+            id: props.canton.id,
         }))
         fetchEndpoint("/team/")
-        await props.setUpdateEvents(sel.id)
-    }
-
-    function getCantonFromName(name) {
-        return props.cantons.find(e => e.name === name)
+        await props.setUpdateEvents(props.canton.id)
     }
 
     // Fetch all data on map load.
@@ -319,7 +313,7 @@ function AuthDisplay(props) {
                         <Grid2 item size={12}>
                             <Paper sx={{ p: 2 }} elevation={props.elevation}>
                                 <Grid2 spacing={2} container>
-                                    <CantonSelect canton={props.canton} cantons={props.cantons} selectedCanton={props.selectedCanton} />
+                                    <CantonSelect canton={props.canton} setCanton={props.setCanton} cantons={props.cantons} />
                                     <Grid2 item size={{ xs: 12, lg: 12 }}>
                                         <FormControl aria-label="Challenge selection" sx={{ width: "100%" }}>
                                             <Autocomplete
