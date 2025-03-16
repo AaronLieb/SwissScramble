@@ -79,6 +79,7 @@ export default function Login(props) {
 
   const handleSubmit = async (event) => {
     event.preventDefault()
+    enqueueSnackbar(`Logging in...`, { variant: "info", autoHideDuration: 1000 })
 
     const username = document.getElementById('username');
     const password = document.getElementById('password');
@@ -129,6 +130,12 @@ export default function Login(props) {
     }
   };
 
+  const enterLogin = (e) => {
+    if (e.key === "Enter") {
+      handleSubmit()
+    }
+  }
+
   return (
     <SignInContainer direction="column" display={"flex"} justifyContent="space-between" alignContent={"center"}>
       <SnackbarProvider maxSnack={3} />
@@ -172,6 +179,7 @@ export default function Login(props) {
           <FormControl>
             <FormLabel htmlFor="password">Password</FormLabel>
             <TextField
+              onKeyDown={enterLogin}
               error={passwordError}
               helperText={passwordErrorMessage}
               name="password"
