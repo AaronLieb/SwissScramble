@@ -9,6 +9,7 @@ from ..database.database import SessionDep
 from ..database.models import (
     BuyCursePost,
     BuyPowerUpPost,
+    Game,
     UsePowerUpPost,
     Canton,
     Challenge,
@@ -26,6 +27,7 @@ from ..database.models import (
 from ..auth import auth
 
 TOLL_COST = 100
+PASSIVE_INCOME = 25
 
 router = APIRouter()
 
@@ -148,9 +150,9 @@ async def post_challenge(
 
         # Adjust passive income for each team.
         if team is not None:
-            team.income += 50
+            team.income += PASSIVE_INCOME
         if other_team is not None:
-            other_team.income -= 50
+            other_team.income -= PASSIVE_INCOME
 
     event = Event(
         text="Team '{0}' completed the challenge '{1}'".format(
@@ -380,7 +382,8 @@ async def post_enter_canton(
         other_team_id = 1 if team.id == 2 else 2
         other_team = db.get(Team, other_team_id)
 
-        team.money -= TOLL_COST
+        day = db.exec(select(Game)).all()[0].day
+        team.money -= TOLL_COST * day
 
         db.add(team)
         db.commit()
