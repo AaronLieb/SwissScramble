@@ -23,7 +23,7 @@ def load_default_data():
     with open("scripts/load-data.sql", "r") as sql_file:
         sql_script = sql_file.read()
 
-        db = sqlite3.connect("main.db")
+        db = sqlite3.connect("database/local/main.db")
         cursor = db.cursor()
         cursor.executescript(sql_script)
         db.commit()
@@ -103,7 +103,7 @@ def get_session():
 SessionDep = Annotated[Session, Depends(get_session)]
 
 sqlite_file_name = settings.dbname
-sqlite_url = f"sqlite:///{sqlite_file_name}"
+sqlite_url = f"sqlite:///database/local/{sqlite_file_name}"
 
 connect_args = {"check_same_thread": False}
 engine = create_engine(sqlite_url, connect_args=connect_args)

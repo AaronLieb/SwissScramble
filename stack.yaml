@@ -86,11 +86,8 @@ Resources:
         - Name: backend
           Image: !Sub ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/swiss-backend:latest
           Essential: true
-          Environment:
-            - Name: BACKUP_BUCKET
-              Value: !GetAtt BackupBucket.Arn
           MountPoints:
-            - ContainerPath: /mnt/db
+            - ContainerPath: /backend/database/local/
               SourceVolume: db
           PortMappings:
             - ContainerPort: 8000
