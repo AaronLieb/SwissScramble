@@ -27,12 +27,19 @@ function Message(props) {
         setEventMessage("")
     }
 
+    const onKeyPress = (e) => {
+        if (e.key === "Enter") {
+          sendMessage()
+          e.preventDefault();
+        }
+      }
+    
     return (
         <Paper sx={{ p: 2 }} elevation={props.elevation}>
         <Grid2 spacing={2} container>
             <Grid2 item size={{ xs: 12 }}>
                 <FormControl sx={{ width: "100%" }} aria-label="Message">
-                    <TextField disableAutoFocus multiline minRows={3} onChange={(d) => { setEventMessage(d.target.value) }} value={eventMessage} label="Message" />
+                    <TextField onKeyDown={onKeyPress} disableAutoFocus multiline minRows={3} onChange={(d) => { setEventMessage(d.target.value) }} value={eventMessage} label="Message" />
                 </FormControl>
             </Grid2>
             <Grid2 display="flex" justifyContent={"center"} item size={{ xs: 12 }}>
