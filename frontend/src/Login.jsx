@@ -125,7 +125,6 @@ export default function Login(props) {
       enqueueSnackbar(`Success! Redirecting...`, { variant: "success", autoHideDuration: 3000 })
       if(remember) Cookies.set('authCookie', resp.access_token)
       props.setAuth(resp.access_token)
-      props.setUser(resp.user)
       navigate("/")
     }
   };

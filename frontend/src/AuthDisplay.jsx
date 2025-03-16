@@ -16,7 +16,6 @@ import {
 } from "@mui/material";
 import { enqueueSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
-import Drawer from './Drawer.jsx'
 import CantonSelect from "./CantonSelect.jsx";
 import challenge from './assets/challengesmall.png'
 import curse from './assets/cursesmall.png'
@@ -171,9 +170,6 @@ function AuthDisplay(props) {
         fetchEndpoint("/team/")
     }, [props.updateEvents]);
 
-
-
-
     // fetchEndpoint grabs data from and endpoint and handles its result by
     // storing it in specific frontend state.
     async function fetchEndpoint(endpoint) {
@@ -192,7 +188,6 @@ function AuthDisplay(props) {
                 .then((data) => {
                     switch (endpoint) {
                         case "/team/powerups/":
-                            console.log(data)
                             props.setMyPowerups(data)
                             break;
                         case "/powerups/":
@@ -206,7 +201,6 @@ function AuthDisplay(props) {
                             break;
                         case "/user/":
                             setUser(data)
-                            //console.log(data)
                             break;
                         case "/team/":
                             setTeam(data)
@@ -247,7 +241,6 @@ function AuthDisplay(props) {
 
     return (
         <>
-            <Drawer team={team} drawerOpen={props.drawerOpen} toggleDrawer={props.toggleDrawer} />
             <Box sx={{ width: '100%' }}>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                     <Tabs variant="fullWidth" value={tabValue} onChange={handleTabChange} aria-label="basic tabs example">
