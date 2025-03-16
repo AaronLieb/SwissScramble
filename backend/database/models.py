@@ -4,8 +4,7 @@ from sqlmodel import Relationship, SQLModel, Field
 
 class GameBase(SQLModel):
     active: bool
-    start_time: datetime
-    end_time: datetime
+    day: int
 
 
 class Game(GameBase, table=True):

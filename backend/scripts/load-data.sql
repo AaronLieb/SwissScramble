@@ -36,3 +36,5 @@ INSERT or IGNORE INTO user (username, firstname, lastname, team_id, hashed_passw
    ('icf', 'Isaac', 'Feldman', 2, '$2b$12$DGHT20nYOFSX6b396YKdEeE62fz5Anu86jYPiGNHfNPQCOFD3w/ZO'),
    ('timjhh', 'Tim', 'Harrold', 2, '$2b$12$8vFV2m/UVBt6zt5w6aa4zud5zjkbGxKbYxj.bXYALPjqgyLiijSe6');
 
+INSERT INTO game (active, day) VALUES (true, 1);
+
