@@ -32,7 +32,7 @@ INSERT INTO team (name, money, score, curses, challenges, income) VALUES ('Timsa
 INSERT INTO user (username, firstname, lastname, team_id, hashed_password) VALUES
    -- remove these before starting the game, create users through api
    ('aaronlieb', 'Aaron', 'Lieberman', 1, '$2b$12$D.Sp6Eavi4YrE0gZ8fC.n.LEkxkvDRosaWSZYlDXQgw9vuzVLN1ne'),
-   ('antonio', 'Antonio', 'Alonso', 1, '$2b$12$IX7dW53VbObapVFf/KSzqOosgga8q3chv/stydFC8o4xSuAOuOcTK'),
+   ('antonio', 'Antonio', 'Alonso', 1, '$2b$12$6yGm3YcfVi9INTsxbvVwo.kgoZyeGHx7SoQsSuGLquVrVxgksTOfy'),
    ('icf', 'Isaac', 'Feldman', 2, '$2b$12$DGHT20nYOFSX6b396YKdEeE62fz5Anu86jYPiGNHfNPQCOFD3w/ZO'),
    ('timjhh', 'Tim', 'Harrold', 2, '$2b$12$8vFV2m/UVBt6zt5w6aa4zud5zjkbGxKbYxj.bXYALPjqgyLiijSe6');
 
