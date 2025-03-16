@@ -244,29 +244,6 @@ function AuthDisplay(props) {
         );
     }
 
-
-    // function SortAlphabetically(alphabet)
-    // {
-    //     return function(a, b) {
-    //         var index_a = alphabet.indexOf(a[0]),
-    //         index_b = alphabet.indexOf(b[0]);
-    
-    //         if (index_a === index_b) {
-    //             // same first character, sort regular
-    //             if (a < b) {
-    //                 return -1;
-    //             } else if (a > b) {
-    //                 return 1;
-    //             }
-    //             return 0;
-    //         } else {
-    //             return index_a - index_b;
-    //         }
-    //     }
-    // }
-    
-
-
     return (
         <>
             <Drawer team={team} drawerOpen={props.drawerOpen} toggleDrawer={props.toggleDrawer} />
@@ -275,8 +252,7 @@ function AuthDisplay(props) {
                     <Tabs variant="fullWidth" value={tabValue} onChange={handleTabChange} aria-label="basic tabs example">
                         <Tab wrapped label="Overview" {...a11yProps(0)} />
                         <Tab wrapped label="Challenges" {...a11yProps(1)} />
-                        <Tab wrapped label="Powerups" {...a11yProps(2)} />
-                        <Tab wrapped label="Curses" {...a11yProps(3)} />
+                        <Tab wrapped label="Shop" {...a11yProps(2)} />
                     </Tabs>
                 </Box>
                 <CustomTabPanel value={tabValue} index={0}>
@@ -413,9 +389,7 @@ function AuthDisplay(props) {
                             </Grid2>
                         </Grid2>
                     </Paper>
-                </CustomTabPanel>
-                <CustomTabPanel value={tabValue} index={3}>
-                    <Paper align={"center"} elevation={props.elevation}>
+                    <Paper sx={{my:2}} align={"center"} elevation={props.elevation}>
                         <Grid2 sx={{ p: 1 }} spacing={2} container>
                             <Grid2 item size={{ xs: 12, lg: 6 }}>
                                 <Button variant="contained" sx={{ width: 1 }} onClick={purchaseCurse} type="submit">Purchase curse</Button>
