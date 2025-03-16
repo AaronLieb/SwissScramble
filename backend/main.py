@@ -7,9 +7,12 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from .database.database import create_db_and_tables
+from .game.income import give_income, is_time_stopped
+
+from .database.database import create_db_and_tables, get_session
 from .auth.api import router as auth_router
 from .game.api import router as game_router
+from .game.admin import router as admin_router
 
 logging.basicConfig(
     level=logging.INFO,
@@ -27,7 +30,7 @@ async def lifespan(_: FastAPI):
     create_db_and_tables()
 
     logger.info("Creating scheduler")
-    schedule.every().hour.at(":00").do(give_income)
+    schedule.every().hour.at(":00").do(hourly)
     stop_schedule_thread = start_schedule_thread()
 
     yield
@@ -37,6 +40,7 @@ async def lifespan(_: FastAPI):
 app = FastAPI(lifespan=lifespan)
 app.include_router(auth_router)
 app.include_router(game_router)
+app.include_router(admin_router)
 
 origins = ["*"]
 
@@ -63,5 +67,6 @@ def start_schedule_thread(interval=1):
     return stop
 
 
-def give_income():
-    logger.info("give income")
+def hourly():
+    if not is_time_stopped():
+        give_income(next(get_session()))

@@ -1,21 +1,22 @@
-from typing import Annotated, Sequence
-from fastapi import APIRouter, Depends
-from sqlmodel import select
+from fastapi import APIRouter
+
+from .income import give_income, set_time_stopped
 
 from ..database.database import SessionDep
-from ..database.models import User, UserPublic
-from ..auth import auth
 
 router = APIRouter(prefix="/admin")
 
 
-@router.get("/user/", response_model=UserPublic)
-async def read_user(
-    current_user: Annotated[User, Depends(auth.get_current_user)],
-):
-    return current_user
+@router.get("/stop_time/")
+async def stop_time():
+    set_time_stopped(True)
 
 
-@router.get("/users/", response_model=Sequence[UserPublic])
-async def read_users(db: SessionDep):
-    return db.exec(select(User)).all()
+@router.get("/start_time/")
+async def start_time():
+    set_time_stopped(False)
+
+
+@router.get("/give_income/")
+async def income(db: SessionDep):
+    give_income(db)
