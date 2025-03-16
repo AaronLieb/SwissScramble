@@ -46,7 +46,7 @@ async def read_team(
     return current_user.team
 
 
-@router.get("/team/powerups")
+@router.get("/team_powerups")
 async def read_team_powerups(
     current_user: Annotated[User, Depends(auth.get_current_user)],
 ):
