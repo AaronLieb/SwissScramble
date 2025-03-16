@@ -30,13 +30,6 @@ const theme = createTheme({
 
 function App() {
   const backend = import.meta.env.VITE_BACKEND_URL
-
-  const toggleDrawer = (newOpen) => () => {
-    setDrawerOpen(newOpen);
-  };
-  const [drawerOpen, setDrawerOpen] = useState(false)
-  const [user, setUser] = useState('')
-
   const [auth, setAuth] = useState(null)
 
   useEffect(() => {
@@ -56,18 +49,6 @@ function App() {
           <ThemeProvider theme={theme}>
               <AppBar position="sticky">
                 <Toolbar>
-                  {auth && (
-                    <IconButton
-                      size="large"
-                      edge="start"
-                      color="secondary"
-                      aria-label="menu"
-                      onClick={toggleDrawer(!drawerOpen)}
-                      sx={{ mr: 2 }}
-                    >
-                      <MenuIcon />
-                    </IconButton>
-                  )}
                   <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                     Swiss Scramble 🇨🇭
                   </Typography>
@@ -78,16 +59,13 @@ function App() {
                     <Switzerland
                       auth={auth}
                       backend={backend}
-                      toggleDrawer={toggleDrawer}
-                      drawerOpen={drawerOpen}
-                      setDrawerOpen={setDrawerOpen}
                     />
                   </ThemeProvider>
           </ThemeProvider>
         } />
         <Route path='/login' element={
           <ThemeProvider theme={theme}>
-            <Login setUser={setUser} setAuth={setAuth} backend={backend} />
+            <Login setAuth={setAuth} backend={backend} />
           </ThemeProvider>
         } />
       </Routes>
