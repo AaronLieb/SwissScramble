@@ -36,7 +36,7 @@ function About(props) {
                 <hr/>
                 <Typography variant="h5">Income</Typography>
                 <Typography variant="body1">
-                Passive income will be gained from controlling a canton at level two. At level three, tariffs for entering the canton will be instilled. Tariffs will increase based on the day of the game, but the amount you are paid will not increase.
+                Passive income will be gained from controlling a canton at level two at a rate of 25₣ per hour. At level three, tariffs for entering the canton will be instilled. Tariffs will increase based on the day of the game, but the amount you are paid will not increase.
                 </Typography>
                 <ul>
                     <li>On day one, pay 50₣.</li>

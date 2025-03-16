@@ -53,14 +53,16 @@ function AuthDisplay(props) {
             enqueueSnackbar("Challenge not specified", { variant: "error", autoHideDuration: 3000 })
             return
         }
-        let text = `Are you sure you want to submit "${selectedChallenge.description}"?`
+        let text = `Are you sure you want to submit "${selectedChallenge.name}"?`
         if (!window.confirm(text)) {
+            setSelectedChallenge("")
             return
         }
         await props.postEndpoint("/challenge/", JSON.stringify({
             id: selectedChallenge.id,
             canton: props.canton.id,
         }))
+        setSelectedChallenge("")
         await props.setUpdateEvents(selectedChallenge.id)
     }
 
@@ -94,7 +96,6 @@ function AuthDisplay(props) {
             return
         }
 
-        console.log()
         await props.postEndpoint("/use_powerup/", JSON.stringify({
             id: props.myPowerup.id,
         }))
@@ -289,7 +290,7 @@ function AuthDisplay(props) {
                         <Grid2 item size={12}>
                             <Paper sx={{ p: 2 }} elevation={props.elevation}>
                                 <Grid2 spacing={2} container>
-                                    <CantonSelect canton={props.canton} setCanton={props.setCanton} cantons={props.cantons} />
+                                    <CantonSelect teams={props.teams} canton={props.canton} setCanton={props.setCanton} cantons={props.cantons} />
                                     <Grid2 item size={{ xs: 12, lg: 12 }}>
                                         <FormControl aria-label="Challenge selection" sx={{ width: "100%" }}>
                                             <Autocomplete

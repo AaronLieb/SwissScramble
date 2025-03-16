@@ -36,18 +36,21 @@ function Score(props) {
         if(props.teams && props.teams.length) {
             let item = props.teams.find(e => e.id == id)
             if(item) return item.name
+            
         }
-        return id
+        return "None"
     }
 
     useEffect(() => {
         let group = groupBy(props.cantons, 'team_id')
         // Remove keys like 'null'.
-        Object.keys(group).forEach(k => (k === "null") && delete group[k])
+        Object.keys(group).forEach(k => (k === "null" || k === '0' || k === 0) && delete group[k])
         setScore(group)
     }, [props.cantons])
 
     return (
+        <>
+        {score && (
         <Paper sx={{ p: 2 }} elevation={props.elevation}>
             {Object.keys(score).map((key,idx) => (
                 <div key={`score${key}-${idx}`}>
@@ -61,6 +64,8 @@ function Score(props) {
                 </div>
             ))}
         </Paper>
+        )}
+        </>
     )
 }
 

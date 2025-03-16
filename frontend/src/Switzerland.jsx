@@ -329,6 +329,7 @@ function Switzerland(props) {
                 {props.auth ? (
                     <Grid2 item size={{ xs: 11, md: 8 }}>
                         <AuthDisplay
+                            teams={teams}
                             postEndpoint={postEndpoint}
                             drawerOpen={props.drawerOpen}
                             toggleDrawer={props.toggleDrawer}
