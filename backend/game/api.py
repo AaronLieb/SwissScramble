@@ -3,7 +3,12 @@ from typing import Annotated, Sequence
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlmodel import select
 
-from .helpers import new_event, handle_powerup
+from .helpers import (
+    calculate_passive_income,
+    calculate_score,
+    new_event,
+    handle_powerup,
+)
 
 from ..database.database import SessionDep
 from ..database.models import (
@@ -27,7 +32,6 @@ from ..database.models import (
 from ..auth import auth
 
 TOLL_COST = 100
-PASSIVE_INCOME = 25
 
 router = APIRouter()
 
@@ -128,31 +132,31 @@ async def post_challenge(
         if canton.team == team:
             canton.level += challenge_db.levels
             canton.team = team
-            canton.team_id = team.id
         elif canton.team is None:
             canton.level += challenge_db.levels
             canton.team = team
-            canton.team_id = team.id
-            team.score += canton.value
         else:
             if canton.level == challenge_db.levels:
                 canton.team = None
-                canton.team_id = None
             elif canton.level < challenge_db.levels:
                 canton.team = team
-                canton.team_id = team.id
-                team.score += canton.value
-            if other_team is not None:
-                other_team.score -= canton.value
             canton.level = abs(canton.level - challenge_db.levels)
 
         canton.level = min(canton.level, 3)
+        if canton.team:
+            canton.team_id = canton.team.id
+        else:
+            canton.team_id = None
 
-        # Adjust passive income for each team.
-        if team is not None:
-            team.income += PASSIVE_INCOME
-        if other_team is not None:
-            other_team.income -= PASSIVE_INCOME
+        team.income = calculate_passive_income(team)
+        team.score = calculate_score(team)
+
+        if other_team:
+            other_team.income = calculate_passive_income(team)
+            other_team.score = calculate_score(team)
+            db.add(other_team)
+            db.commit()
+            db.refresh(other_team)
 
     event = Event(
         text="Team '{0}' completed the challenge '{1}'".format(
