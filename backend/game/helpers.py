@@ -17,7 +17,6 @@ def handle_powerup(db: SessionDep, powerup: PowerUp, team: Team):
     if powerup.description == "Draw a Card.":
         team.challenges += 1
 
-    db.add(team)
-    db.commit()
-    db.refresh(team)
-
+        db.add(team)
+        db.commit()
+        db.refresh(team)

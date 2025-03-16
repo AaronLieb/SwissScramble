@@ -290,9 +290,10 @@ async def buy_powerup(
 
     handle_powerup(db, powerup, team)
 
-    db.add(team)
-    db.commit()
-    db.refresh(team)
+    if team:
+        db.add(team)
+        db.commit()
+        db.refresh(team)
 
 
 @router.post("/use_powerup/")
