@@ -48,6 +48,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 def start_schedule_thread(interval=1):
     stop = threading.Event()
 

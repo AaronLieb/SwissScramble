@@ -29,10 +29,7 @@ def get_user(db: SessionDep, username: str):
     """
     Get the first user who's username matched the input.
     """
-    user = db.exec(
-        select(User)
-        .where(User.username == username)
-    ).first()
+    user = db.exec(select(User).where(User.username == username)).first()
     logger.info("user: %s", user)
     return user
 
@@ -47,7 +44,7 @@ def authenticate_user(db, username: str, password: str):
             return user
         else:
             return False
-    except:
+    except Exception:
         logger.error("failed to verify password")
         return False
 

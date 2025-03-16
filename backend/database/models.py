@@ -61,6 +61,7 @@ class UserPublic(UserBase):
     id: int
     team_id: int | None
 
+
 class UserCreate(UserBase):
     password: str
 
@@ -139,8 +140,10 @@ class Curse(CurseBase, table=True):
 class BuyCursePost(CurseBase):
     pass
 
+
 class UseCursePost(CurseBase):
     pass
+
 
 class PowerUpBase(SQLModel):
     id: int | None = Field(default=None, primary_key=True)
@@ -155,6 +158,7 @@ class PowerUp(PowerUpBase, table=True):
 
 class BuyPowerUpPost(PowerUp):
     pass
+
 
 class UsePowerUpPost(PowerUpBase):
     pass
