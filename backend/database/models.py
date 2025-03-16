@@ -155,7 +155,7 @@ class PowerUp(PowerUpBase, table=True):
     cost: int
 
 
-class BuyPowerUpPost(PowerUp):
+class BuyPowerUpPost(PowerUpBase):
     pass
 
 

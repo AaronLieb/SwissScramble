@@ -290,7 +290,7 @@ async def buy_powerup(
     )
     new_event(db, text, team.name)
 
-    handle_powerup(db, powerup, team)
+    handle_powerup(db, powerup_db, team)
 
     if team:
         db.add(team)
