@@ -309,8 +309,9 @@ function AuthDisplay(props) {
                         <Grid2 item size={{ xs: 12, md: 6 }}>
                         <Paper sx={{ py: 2 }} elevation={props.elevation}>
                             <Stack spacing={2} alignItems={"center"} justifyContent={"center"} direction={"row"}>
-                                <SportsScoreIcon />
-                                <Typography variant="h3" align="center">{new Date().getTime()}</Typography>
+                                <ListItem>
+                                    <ListItemText primary={`+ ${team.income ? team.income : 0}₣`} secondary={`Passive Income`} />
+                                </ListItem>
                             </Stack>
                         </Paper>
                         </Grid2>

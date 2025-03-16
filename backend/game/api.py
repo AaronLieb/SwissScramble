@@ -147,6 +147,12 @@ async def post_challenge(
 
         canton.level = min(canton.level, 3)
 
+        # Adjust passive income for each team.
+        if team is not None:
+            team.income += 50
+        if other_team is not None:
+            other_team.income -= 50
+
     event = Event(
         text="Team '{0}' completed the challenge '{1}'".format(
             team.name, challenge_db.name

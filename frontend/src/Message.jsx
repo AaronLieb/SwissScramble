@@ -24,6 +24,7 @@ function Message(props) {
         await props.postEndpoint("/event/", JSON.stringify({
             text: eventMessage,
         }))
+        setEventMessage("")
     }
 
     return (

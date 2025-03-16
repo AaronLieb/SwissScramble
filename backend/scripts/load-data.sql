@@ -24,10 +24,10 @@ INSERT INTO canton (name, value, level, destroyed, team_id) VALUES
     ('Valais', 1, 1, false, 2),
     ('Vaud', 1, 1, false, 2),
     ('Zug', 1, 1, false, 2),
-    ('Zurich', 1, 1, false, 2);
+    ('Zurich', 1, 2, false, 2);
 
-INSERT INTO team (name, money, score, curses, challenges) VALUES ('A team', 0, 0, 0, 0);
-INSERT INTO team (name, money, score, curses, challenges) VALUES ('Timsaac', 0, 0, 0, 0);
+INSERT INTO team (name, money, score, curses, challenges, income) VALUES ('A team', 0, 0, 0, 0, 150);
+INSERT INTO team (name, money, score, curses, challenges, income) VALUES ('Timsaac', 0, 0, 0, 0, 50);
 
 INSERT INTO user (username, firstname, lastname, team_id, hashed_password) VALUES
    -- remove these before starting the game, create users through api
