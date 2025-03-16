@@ -76,11 +76,11 @@ function AuthDisplay(props) {
         if (!window.confirm(text)) {
             return
         }
-        console.log(powerup)
         await props.postEndpoint("/powerup/", JSON.stringify({
             id: powerup.id,
         }))
-        await fetchEndpoint("/team/powerups/")
+        setPowerup({})
+        await fetchEndpoint("/team_powerups/")
 
     }
 
@@ -99,7 +99,7 @@ function AuthDisplay(props) {
             id: props.myPowerup.id,
         }))
         props.setMyPowerup("")
-        await fetchEndpoint("/team/powerups/")
+        await fetchEndpoint("/team_powerups/")
     }
 
 
@@ -163,7 +163,7 @@ function AuthDisplay(props) {
 
     // Fetch all data on map load.
     useEffect(() => {
-        fetchEndpoint("/team/powerups/")
+        fetchEndpoint("/team_powerups/")
         fetchEndpoint("/powerups/")
         fetchEndpoint("/challenges/")
         fetchEndpoint("/user/")
@@ -187,7 +187,8 @@ function AuthDisplay(props) {
                 })
                 .then((data) => {
                     switch (endpoint) {
-                        case "/team/powerups/":
+                        case "/team_powerups/":
+                            console.log(data)
                             props.setMyPowerups(data)
                             break;
                         case "/powerups/":
