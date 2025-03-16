@@ -341,15 +341,20 @@ function AuthDisplay(props) {
                                         options={powerups || null}
                                         value={powerup}
                                         getOptionLabel={(option) =>
-                                            option ? `${option.description} | ${option.cost}₣` : ''
+                                            option ? `${option.description}` : ''
                                         }
                                         sx={{ textAlign: "left", align: "justify", color: "red" }}
                                         onChange={(d, e) => {
                                             if (e !== null) setPowerup(e)
                                             else setPowerup("");
                                         }}
+                                        renderOption={({ key, ...props }, option) => (
+                                            <ListItem key={key} {...props}>
+                                                <ListItemText primary={option.description} secondary={`${option.cost} ₣`} />
+                                            </ListItem>
+                                          )}
                                         renderInput={(params) => (
-                                            <TextField {...params} label="Powerups" />
+                                            <TextField {...params} label="Powerup" />
                                         )}
                                     />
                                 </FormControl>
@@ -375,6 +380,11 @@ function AuthDisplay(props) {
                                         renderInput={(params) => (
                                             <TextField {...params} label="My Powerups" />
                                         )}
+                                        renderOption={({ key, ...props }, option) => (
+                                            <ListItem key={key} {...props}>
+                                                <ListItemText primary={option.description} secondary={`${option.cost} ₣`} />
+                                            </ListItem>
+                                          )}
                                     />
                                 </FormControl>
                             </Grid2>
