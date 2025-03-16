@@ -19,6 +19,12 @@ Parameters:
     Default: vpc-09a91b65200dbbc8e
 
 Resources:
+  BackupBucket:
+    DeletionPolicy: RetainExceptOnCreate
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: swiss-db-backups
+
   FrontendRepository:
     DeletionPolicy: RetainExceptOnCreate
     Type: AWS::ECR::Repository
@@ -60,6 +66,11 @@ Resources:
       Cpu: "256"
       Memory: "512"
       ExecutionRoleArn: !GetAtt TaskExecutionRole.Arn
+      TaskRoleArn: !GetAtt TaskRole.Arn
+      Volumes:
+        - Name: db
+          Host:
+            SourcePath: /local/db
       ContainerDefinitions:
         - Name: frontend
           Image: !Sub ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/swiss-frontend:latest
@@ -75,6 +86,12 @@ Resources:
         - Name: backend
           Image: !Sub ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/swiss-backend:latest
           Essential: true
+          Environment:
+            - Name: BACKUP_BUCKET
+              Value: !GetAtt BackupBucket.Arn
+          MountPoints:
+            - ContainerPath: /mnt/db
+              SourceVolume: db
           PortMappings:
             - ContainerPort: 8000
           LogConfiguration:
@@ -113,6 +130,34 @@ Resources:
       Path: /
       Roles:
         - !Ref ECSInstanceRole
+
+  TaskRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: SwissTaskRole
+      Path: /
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: ecs-tasks.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: !Sub ecs-task-${AWS::StackName}
+          PolicyDocument: |
+            {
+                "Version": "2012-10-17",
+                "Statement": [{
+                        "Effect": "Allow",
+                        "Action": [
+                            "s3:Get*",
+                            "s3:List*",
+                            "s3:Put*"
+                        ],
+                        "Resource": "*"
+                }]
+            }
 
   ECSLaunchTemplate:
     Type: AWS::EC2::LaunchTemplate
