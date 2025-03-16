@@ -320,7 +320,7 @@ function Switzerland(props) {
                         </svg>
                     </Paper>
                 </Grid2>
-                {props.auth !== null ? (
+                {props.auth && (
                     <Grid2 item size={{ xs: 11, md: 8 }}>
                         <AuthDisplay
                             postEndpoint={postEndpoint}
@@ -341,17 +341,15 @@ function Switzerland(props) {
                             cantons={cantons}
                         />
                     </Grid2>
-                ) : (
-                    <Grid2 item size={{ xs: 11, md: 8 }}>
-                        <h2>Hi guys :)</h2>
-                    </Grid2>
                 )}
                 <Grid2 item size={{ xs: 11, md: 8 }}>
                     <Events events={events} fetchEvents={fetchEvents} updateEvents={props.updateEvents} elevation={elevation} />
                 </Grid2>
+                {props.auth &&
                 <Grid2 item size={{ xs: 11, md: 8 }}>
                     <Message elevation={elevation} postEndpoint={postEndpoint} />
                 </Grid2>
+                }
                 <Grid2 item size={{ xs: 11, md: 8 }}>
                     <Score canton={canton} elevation={elevation} cantons={cantons} />
                 </Grid2>
