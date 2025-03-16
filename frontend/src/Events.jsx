@@ -19,6 +19,7 @@ function Events(props) {
         if(text.includes(" entered ")) return "🚂"
         if(text.includes(" a curse")) return "👺"
         if(text.includes("powerup")) return "⚡"
+        if(text.includes("paid a toll")) return "🛃"
     }
 
     return (
