@@ -188,7 +188,6 @@ function AuthDisplay(props) {
                 .then((data) => {
                     switch (endpoint) {
                         case "/team_powerups/":
-                            console.log(data)
                             props.setMyPowerups(data)
                             break;
                         case "/powerups/":
@@ -291,7 +290,7 @@ function AuthDisplay(props) {
                                                 disablePortal
                                                 id="challenge-select"
                                                 aria-labelledby="challenge-select"
-                                                options={challenges || null}
+                                                options={challenges || []}
                                                 value={selectedChallenge}
                                                 getOptionLabel={(option) =>
                                                     option ? `${option.name}` : ''
@@ -339,7 +338,7 @@ function AuthDisplay(props) {
                                         disablePortal
                                         id="powerup-select"
                                         aria-labelledby="powerup-select"
-                                        options={powerups || null}
+                                        options={powerups || []}
                                         value={powerup}
                                         getOptionLabel={(option) =>
                                             option ? `${option.description}` : ''
@@ -369,11 +368,9 @@ function AuthDisplay(props) {
                                         disablePortal
                                         id="my-powerup-select"
                                         aria-labelledby="my-powerup-select"
-                                        options={props.myPowerups || null}
+                                        options={props.myPowerups && props.myPowerups.length > props.myPowerups || []}
                                         value={props.myPowerup}
-                                        getOptionLabel={(option) =>
-                                            option ? `${option.description}` : ''
-                                        }
+                                        getOptionLabel={(option) => option ? `${option.description}` : ''}
                                         onChange={(d, e) => {
                                             if (e !== null) props.setMyPowerup(e)
                                             else props.setMyPowerup("");
