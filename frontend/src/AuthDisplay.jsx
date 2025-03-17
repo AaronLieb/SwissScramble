@@ -150,7 +150,7 @@ function AuthDisplay(props) {
             enqueueSnackbar("Cannot find canton to enter.", { variant: "error", autoHideDuration: 3000 })
             return
         }
-        let text = `Are you sure you want to enter ${props.canton}?`
+        let text = `Are you sure you want to enter ${props.canton.name}?`
         if (!window.confirm(text)) {
             return
         }
