@@ -153,7 +153,7 @@ async def post_challenge(
 
         if other_team:
             other_team.income = calculate_passive_income(team)
-            other_team.score = calculate_score(team)
+            other_team.score = calculate_score(other_team)
             db.add(other_team)
             db.commit()
             db.refresh(other_team)
