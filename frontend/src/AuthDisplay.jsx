@@ -63,6 +63,7 @@ function AuthDisplay(props) {
         }))
         setSelectedChallenge("")
         await props.setUpdateEvents(selectedChallenge.id)
+        await fetchEndpoint("/cantons/")
     }
 
 
@@ -79,7 +80,7 @@ function AuthDisplay(props) {
         await props.postEndpoint("/powerup/", JSON.stringify({
             id: powerup.id,
         }))
-        setPowerup({})
+        setPowerup("")
         await fetchEndpoint("/team_powerups/")
 
     }

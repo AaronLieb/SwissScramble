@@ -1,7 +1,6 @@
 import Switzerland from './Switzerland.jsx'
 import Login from './Login.jsx'
 import {
-  Grid2,
   AppBar,
   Button,
   Toolbar,
@@ -9,9 +8,7 @@ import {
 } from "@mui/material";
 import './App.css'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import IconButton from '@mui/material/IconButton';
 import { useEffect, useState } from 'react';
-import MenuIcon from '@mui/icons-material/Menu';
 import { red, grey } from '@mui/material/colors';
 import { BrowserRouter as Router, Routes, Route, NavLink } from "react-router";
 import Cookies from 'js-cookie'
