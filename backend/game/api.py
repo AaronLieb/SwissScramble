@@ -131,7 +131,6 @@ async def post_challenge(
 
         if canton.team == team:
             canton.level += challenge_db.levels
-            canton.team = team
         elif canton.team is None:
             canton.level += challenge_db.levels
             canton.team = team
@@ -143,6 +142,7 @@ async def post_challenge(
             canton.level = abs(canton.level - challenge_db.levels)
 
         canton.level = min(canton.level, 3)
+
         if canton.team:
             canton.team_id = canton.team.id
         else:
@@ -152,7 +152,7 @@ async def post_challenge(
         team.score = calculate_score(team)
 
         if other_team:
-            other_team.income = calculate_passive_income(team)
+            other_team.income = calculate_passive_income(other_team)
             other_team.score = calculate_score(other_team)
             db.add(other_team)
             db.commit()

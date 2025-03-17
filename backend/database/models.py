@@ -74,7 +74,7 @@ class UserUpdate(UserBase):
 
 class Canton(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
-    name: str
+    name: str = Field(unique=True)
     value: int = Field(default=1)
     level: int = Field(default=0)
     destroyed: bool = Field(default=False)
