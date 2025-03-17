@@ -4,6 +4,8 @@ import {
     FormControl,
     Autocomplete,
     TextField,
+    ListItem,
+    ListItemText
 } from "@mui/material";
 
 function CantonSelect(props) {
@@ -24,18 +26,22 @@ function CantonSelect(props) {
                 <FormControl sx={{ width: "100%" }} aria-label="Canton selection">
                     <Autocomplete
                         disablePortal
-                        id="challenge-select"
-                        aria-labelledby="challenge-select"
-                        options={props.cantons}
-                        value={props.canton}
+                        id="canton-select"
+                        aria-labelledby="canton-select"
+                        options={props.cantons || []}
+                        value={props.canton || {}}
                         getOptionLabel={c => c.name ? `${c.name}` : ''}
                         onChange={(d, e) => {
-                            if (e !== null) props.setCanton(e);
-                            else props.setCanton({});
+                            props.setCanton(e || {});
                         }}
                         renderInput={(params) => (
                             <TextField {...params} label="Canton" />
                         )}
+                        renderOption={({ key, ...props }, option) => (
+                            <ListItem key={key.name} {...props}>
+                                <ListItemText primary={option.name} />
+                            </ListItem>
+                        )}                        
                     />
                 </FormControl>
             </Grid2>
