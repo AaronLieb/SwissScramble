@@ -158,6 +158,9 @@ async def post_challenge(
             db.commit()
             db.refresh(other_team)
 
+    if team.challenges > 0:
+        team.challenges -= 1
+        
     event = Event(
         text="Team '{0}' completed the challenge '{1}'".format(
             team.name, challenge_db.name

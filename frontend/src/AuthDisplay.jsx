@@ -368,7 +368,7 @@ function AuthDisplay(props) {
                                         disablePortal
                                         id="my-powerup-select"
                                         aria-labelledby="my-powerup-select"
-                                        options={props.myPowerups && props.myPowerups.length > props.myPowerups || []}
+                                        options={props.myPowerups || []}
                                         value={props.myPowerup}
                                         getOptionLabel={(option) => option ? `${option.description}` : ''}
                                         onChange={(d, e) => {
