@@ -5,7 +5,7 @@ import {
 } from "@mui/material";
 import * as d3 from 'd3';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import './App.css';
 import * as topojson from 'topojson-client'
 import { SnackbarProvider, enqueueSnackbar } from 'notistack';
@@ -107,25 +107,30 @@ function Switzerland(props) {
     //     });
     // }, 5000)
 
-    // function useInterval(callback, delay) {
-    //     const savedCallback = useRef();
+    useInterval(function() {
+        fetchEndpoint("/events/")
+        fetchEndpoint("/cantons/")
+    }, 10000)
 
-    //     // Remember the latest callback.
-    //     useEffect(() => {
-    //       savedCallback.current = callback;
-    //     }, [callback]);
+    function useInterval(callback, delay) {
+        const savedCallback = useRef();
 
-    //     // Set up the interval.
-    //     useEffect(() => {
-    //       function tick() {
-    //         savedCallback.current();
-    //       }
-    //       if (delay !== null) {
-    //         let id = setInterval(tick, delay);
-    //         return () => clearInterval(id);
-    //       }
-    //     }, [delay]);
-    // }
+        // Remember the latest callback.
+        useEffect(() => {
+          savedCallback.current = callback;
+        }, [callback]);
+
+        // Set up the interval.
+        useEffect(() => {
+          function tick() {
+            savedCallback.current();
+          }
+          if (delay !== null) {
+            let id = setInterval(tick, delay);
+            return () => clearInterval(id);
+          }
+        }, [delay]);
+    }
 
     // drawMap renders on the svg an interactive map.
     // It sets the projection, zoom functionality and coloring.
