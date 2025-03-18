@@ -49,7 +49,7 @@ async def read_team(
     return current_user.team
 
 
-@router.get("/team/cantons")
+@router.get("/team/cantons/")
 async def read_team_cantons(
     current_user: Annotated[User, Depends(auth.get_current_user)],
 ):
@@ -399,7 +399,7 @@ async def send_event(
     new_event(db, text, team.name)
 
 
-@router.post("/destroy_canton")
+@router.post("/destroy_canton/")
 async def post_destroy_canton(
     db: SessionDep,
     current_user: Annotated[User, Depends(auth.get_current_user)],
