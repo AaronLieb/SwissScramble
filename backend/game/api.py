@@ -350,6 +350,25 @@ async def discard_card(
     db.refresh(team)
 
 
+@router.post("/draw_challenge/")
+async def draw_card(
+    db: SessionDep,
+    current_user: Annotated[User, Depends(auth.get_current_user)],
+):
+    team = current_user.team
+
+    if team is None:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid team"
+        )
+
+    team.hand_size += 1
+
+    db.add(team)
+    db.commit()
+    db.refresh(team)
+
+
 @router.post("/enter_canton/")
 async def post_enter_canton(
     db: SessionDep,
