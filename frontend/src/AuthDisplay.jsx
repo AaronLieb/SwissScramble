@@ -80,26 +80,6 @@ function AuthDisplay(props) {
             id: powerup.id,
         }))
         setPowerup("")
-        await fetchEndpoint("/team_powerups/")
-
-    }
-
-    // usePowerup purchases a powerup.
-    async function usePowerup() {
-        if (props.myPowerup === "") {
-            enqueueSnackbar("No powerup selected", { variant: "error", autoHideDuration: 3000 })
-            return
-        }
-        let text = `Are you sure you want to use "${props.myPowerup.description}"?`
-        if (!window.confirm(text)) {
-            return
-        }
-
-        await props.postEndpoint("/use_powerup/", JSON.stringify({
-            id: props.myPowerup.id,
-        }))
-        props.setMyPowerup("")
-        await fetchEndpoint("/team_powerups/")
     }
 
 
@@ -163,7 +143,6 @@ function AuthDisplay(props) {
 
     // Fetch all data on map load.
     useEffect(() => {
-        fetchEndpoint("/team_powerups/")
         fetchEndpoint("/powerups/")
         fetchEndpoint("/user/")
         fetchEndpoint("/team/")
@@ -186,9 +165,6 @@ function AuthDisplay(props) {
                 })
                 .then((data) => {
                     switch (endpoint) {
-                        case "/team_powerups/":
-                            props.setMyPowerups(data)
-                            break;
                         case "/powerups/":
                             setPowerups(data.sort((a, b) => a.cost - b.cost))
                             break;
@@ -357,33 +333,6 @@ function AuthDisplay(props) {
                             </Grid2>
                             <Grid2 item size={{ xs: 12, lg: 6 }}>
                                 <Button variant="contained" sx={{ width: "100%" }} onClick={purchasePowerup} type="submit">Purchase Power-Up</Button>
-                            </Grid2>
-                            <Grid2 item size={{ xs: 12, lg: 6 }}>
-                                <FormControl sx={{ width: "100%" }} aria-label="My Powerups">
-                                    <Autocomplete
-                                        disablePortal
-                                        id="my-powerup-select"
-                                        aria-labelledby="my-powerup-select"
-                                        options={props.myPowerups || []}
-                                        value={props.myPowerup}
-                                        getOptionLabel={(option) => option ? `${option.description}` : ''}
-                                        onChange={(d, e) => {
-                                            if (e !== null) props.setMyPowerup(e)
-                                            else props.setMyPowerup("");
-                                        }}
-                                        renderInput={(params) => (
-                                            <TextField {...params} label="My Powerups" />
-                                        )}
-                                        renderOption={({ key, ...props }, option) => (
-                                            <ListItem key={key} {...props}>
-                                                <ListItemText primary={option.description} secondary={`${option.cost} ₣`} />
-                                            </ListItem>
-                                          )}
-                                    />
-                                </FormControl>
-                            </Grid2>
-                            <Grid2 item size={{ xs: 12, lg: 6 }}>
-                                <Button variant="contained" sx={{ width: "100%" }} onClick={usePowerup} type="submit">Use Powerup</Button>
                             </Grid2>
                         </Grid2>
                     </Paper>
