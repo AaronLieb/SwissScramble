@@ -307,6 +307,7 @@ async def get_powerups(
 ):
     return db.exec(select(PowerUp)).all()
 
+
 @router.post("/draw_challenge/")
 async def discard_card(
     db: SessionDep,
@@ -405,6 +406,7 @@ async def post_enter_canton(
 
         day = db.exec(select(Game)).all()[0].day
         team.money -= TOLL_COST * day
+        team.money = max(0, team.money)
 
         db.add(team)
         db.commit()
