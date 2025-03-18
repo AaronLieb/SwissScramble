@@ -300,6 +300,25 @@ async def get_powerups(
 ):
     return db.exec(select(PowerUp)).all()
 
+@router.post("/draw_challenge/")
+async def discard_card(
+    db: SessionDep,
+    current_user: Annotated[User, Depends(auth.get_current_user)],
+):
+    team = current_user.team
+
+    if team is None:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid team"
+        )
+
+    if team.challenges < team.hand_size:
+        team.challenges += 1
+
+    db.add(team)
+    db.commit()
+    db.refresh(team)
+
 
 @router.post("/discard_challenge/")
 async def discard_card(

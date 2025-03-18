@@ -29,6 +29,8 @@ function About(props) {
                 <Typography variant="h5">Decks</Typography>
                 <Typography variant="h6">Challenge Deck</Typography>
                 <Typography variant="body1">Each team starts with two cards in their hands. These cards represent challenges you can do to either get in game income. A new challenge card can be drawn when you enter a canton every hour, or by purchasing it through the shop.
+
+                    You may not do challenges while on public transportation, save for duels where it is convenient for both teams such as Play 8 Ball!
                 </Typography>
                 <Typography variant="h6">Curse Deck</Typography>
                 <Typography variant="body1">A curse card can be bought one at a time and randomly drawn. There is a hand limit of 3. These curses can be played at any time.

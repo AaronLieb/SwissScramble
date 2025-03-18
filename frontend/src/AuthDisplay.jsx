@@ -12,7 +12,8 @@ import {
     Box,
     Stack,
     ListItem,
-    ListItemText
+    ListItemText,
+    Switch
 } from "@mui/material";
 import { enqueueSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
@@ -21,6 +22,21 @@ import challenge from './assets/challengesmall.png'
 import curse from './assets/cursesmall.png'
 
 function AuthDisplay(props) {
+
+    // Destroy canton state
+    const [checked1, setChecked1] = useState(false)
+    const [checked2, setChecked2] = useState(false)
+    const [checked3, setChecked3] = useState(false)
+
+    const handleChange1 = (event) => {
+        setChecked1(event.target.checked);
+      };
+    const handleChange2 = (event) => {
+        setChecked2(event.target.checked);
+    };
+    const handleChange3 = (event) => {
+        setChecked3(event.target.checked);
+    };
 
 
     // Auth Required Fields - are these needed / wanted?
@@ -33,8 +49,6 @@ function AuthDisplay(props) {
     // Shop values with selection.
     const [powerup, setPowerup] = useState("")
     const [powerups, setPowerups] = useState([])
-
-
 
     const [tabValue, setTabValue] = useState(0)
     const handleTabChange = (event, newValue) => {
@@ -81,6 +95,31 @@ function AuthDisplay(props) {
         setPowerup("")
     }
 
+        // discard removes a card manually from your hand.
+        async function discard() {
+            if (team.challenges < 1) {
+                enqueueSnackbar("No cards to discard", { variant: "error", autoHideDuration: 3000 })
+                return
+            }
+            let text = `Are you sure you want to discard a card?`
+            if (!window.confirm(text)) {
+                return
+            }
+            await props.postEndpoint("/discard_challenge/")
+            fetchEndpoint("/team/")
+        }
+    
+
+
+        // draw adds a card to your hand.
+        async function draw() {
+            let text = `Are you sure you want to discard a card?`
+            if (!window.confirm(text)) {
+                return
+            }
+            await props.postEndpoint("/draw_challenge/")
+            fetchEndpoint("/team/")
+        }
 
     // purchaseCurse purchases a random curse.
     // We do not actually need to select a random curse here, just post an event and subtract some money.
@@ -288,7 +327,12 @@ function AuthDisplay(props) {
                         </Grid2>
                         <Grid2 item size={12}>
                             <Paper elevation={props.elevation}>
-                                <Button variant="contained" sx={{ width: "100%" }} onClick={destroyCanton} type="submit">
+                                <Grid2 display={"flex"} justifyContent={"space-evenly"} container>
+                                    <Switch label="Enable1" checked={checked1} onChange={handleChange1} defaultChecked />
+                                    <Switch label="Enable2" checked={checked2} onChange={handleChange2} defaultChecked />
+                                    <Switch label="Enable3" checked={checked3} onChange={handleChange3} defaultChecked />
+                                </Grid2>
+                                <Button disabled={!checked1 || !checked2 || !checked3} variant="contained" sx={{ width: "100%" }} onClick={destroyCanton} type="submit">
                                     <Typography variant="h5">
                                         ☢️ DESTROY CANTON ☢️
                                     </Typography>
@@ -329,6 +373,12 @@ function AuthDisplay(props) {
                             </Grid2>
                             <Grid2 item size={{ xs: 12, lg: 6 }}>
                                 <Button variant="contained" sx={{ width: "100%" }} onClick={purchasePowerup} type="submit">Purchase Power-Up</Button>
+                            </Grid2>
+                            <Grid2 item size={{ xs: 12, lg: 6 }}>
+                                <Button variant="contained" sx={{ width: "100%" }} onClick={draw} type="submit">Draw a card</Button>
+                            </Grid2>
+                            <Grid2 item size={{ xs: 12, lg: 6 }}>
+                                <Button variant="contained" sx={{ width: "100%" }} onClick={discard} type="submit">Dicard a card</Button>
                             </Grid2>
                         </Grid2>
                     </Paper>
