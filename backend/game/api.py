@@ -15,7 +15,6 @@ from ..database.models import (
     BuyCursePost,
     BuyPowerUpPost,
     Game,
-    UsePowerUpPost,
     Canton,
     Challenge,
     ChallengePost,
@@ -48,15 +47,6 @@ async def read_team(
     current_user: Annotated[User, Depends(auth.get_current_user)],
 ):
     return current_user.team
-
-
-@router.get("/team_powerups/")
-async def read_team_powerups(
-    current_user: Annotated[User, Depends(auth.get_current_user)],
-):
-    if current_user.team:
-        return current_user.team.powerups
-    return None
 
 
 @router.get("/team/cantons")
@@ -293,63 +283,15 @@ async def buy_powerup(
         )
 
     team.money -= powerup_db.cost
-    team.powerups.append(powerup_db)
 
-    text = "Team '{0}' purchased power up '{1}'".format(
-        team.name, powerup_db.description
-    )
+    text = "Team '{0}' used power up '{1}'".format(team.name, powerup_db.description)
     new_event(db, text, team.name)
-
     handle_powerup(db, powerup_db, team)
 
     if team:
         db.add(team)
         db.commit()
         db.refresh(team)
-
-
-@router.post("/use_powerup/")
-async def use_powerup(
-    powerup: UsePowerUpPost,
-    db: SessionDep,
-    current_user: Annotated[User, Depends(auth.get_current_user)],
-):
-    team = current_user.team
-
-    if team is None:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Invalid Team",
-        )
-
-    powerup_db = db.get(PowerUp, powerup.id)
-
-    if powerup_db is None:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Invalid Power Up",
-        )
-
-    found = False
-    for p in team.powerups:
-        if p.id == powerup.id:
-            found = True
-            team.powerups.remove(powerup_db)
-
-            text = "Team '{0}' used power up '{1}'".format(
-                team.name, powerup_db.description
-            )
-            new_event(db, text, team.name)
-
-            db.add(team)
-            db.commit()
-            db.refresh(team)
-
-    if not found:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Invalid Power Up",
-        )
 
 
 @router.get("/powerups/")

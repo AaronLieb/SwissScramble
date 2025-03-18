@@ -21,13 +21,6 @@ class GameUpdate:
     end_time: datetime | None
 
 
-class TeamPowerUpLink(SQLModel, table=True):
-    team_id: int | None = Field(default=None, foreign_key="team.id", primary_key=True)
-    powerup_id: int | None = Field(
-        default=None, foreign_key="powerup.id", primary_key=True
-    )
-
-
 class Team(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
     name: str = Field(index=True)
@@ -40,7 +33,6 @@ class Team(SQLModel, table=True):
 
     users: list["User"] = Relationship(back_populates="team")
     cantons: list["Canton"] = Relationship(back_populates="team")
-    powerups: list["PowerUp"] = Relationship(link_model=TeamPowerUpLink)
 
 
 class UserBase(SQLModel):
@@ -157,8 +149,4 @@ class PowerUp(PowerUpBase, table=True):
 
 
 class BuyPowerUpPost(PowerUpBase):
-    pass
-
-
-class UsePowerUpPost(PowerUpBase):
     pass
