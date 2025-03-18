@@ -26,8 +26,8 @@ INSERT or IGNORE INTO canton (name, value, level, destroyed, team_id) VALUES
     ('Zug', 1, 0, false, 0),
     ('Zurich', 1, 0, false, 0);
 
-INSERT or IGNORE INTO team (name, money, score, curses, challenges, income) VALUES ('A team', 0, 0, 0, 2, 0);
-INSERT or IGNORE INTO team (name, money, score, curses, challenges, income) VALUES ('Swiss Misters', 0, 0, 0, 2, 0);
+INSERT or IGNORE INTO team (name, money, score, curses, challenges, income, hand_size) VALUES ('A team', 0, 0, 0, 2, 0, 3);
+INSERT or IGNORE INTO team (name, money, score, curses, challenges, income, hand_size) VALUES ('Swiss Misters', 0, 0, 0, 2, 0, 3);
 
 INSERT or IGNORE INTO user (username, firstname, lastname, team_id, hashed_password) VALUES
    -- remove these before starting the game, create users through api
