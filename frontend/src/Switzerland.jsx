@@ -358,7 +358,7 @@ function Switzerland(props) {
                     <Grid2 item size={{ xs: 11, md: 8 }}>
                         <Paper sx={{ p: 2 }} elevation={elevation}>
                             <Grid2 container spacing={2}>
-                                <CantonSelect teams={props.teams} canton={canton} cantons={cantons} setCanton={setCanton} />
+                                <CantonSelect teams={teams} canton={canton} cantons={cantons} setCanton={setCanton} />
                             </Grid2>
                         </Paper>
                     </Grid2>
