@@ -3,40 +3,34 @@ import {
     FormControl,
     ListItem,
     ListItemText,
-    Autocomplete,
-    TextField
+    List,
+    Typography
 } from "@mui/material";
-import { useState } from 'react';
 
+// Challenges is a view for un-authenticated users to see all challenges.
 function Challenges(props) {
-
-    const [challenge, setChallenge] = useState("")
-
     return (
+        <FormControl aria-label="Challenge selection" sx={{ width: "100%" }}>
+            <Typography variant="h5">Challenges</Typography>
+            <List
+                sx={{
+                    width: '100%',
+                    bgcolor: 'background.paper',
+                    position: 'relative',
+                    overflow: 'auto',
+                    maxHeight: 300,
+                    '& ul': { padding: 0 },
+                }}
+                subheader={<li />}
+            >
+                {props.challenges.sort((a, b) => Date.parse(b.time) - Date.parse(a.time)).map((item) => (
+                    <ListItem key={`chal-${item.name}`} {...props}>
+                        <ListItemText primary={`${item.name}`} secondary={`${item.description} (${item.levels} Levels, ${item.money} ₣)`} />
+                    </ListItem>
+                ))}
+            </List>
 
-                <FormControl aria-label="Challenge selection" sx={{ width: "100%" }}>
-                    <Autocomplete
-                        disablePortal
-                        id="challenge-select"
-                        aria-labelledby="challenge-select"
-                        options={props.challenges || []}
-                        value={challenge}
-                        getOptionLabel={(option) =>
-                            option ? `${option.name}` : ''
-                        }
-                        renderOption={({ key, ...props }, option) => (
-                            <ListItem key={key} {...props}>
-                                <ListItemText primary={`${option.name}`} secondary={`${option.description} (${option.levels} Levels, ${option.money} ₣)`} />
-                            </ListItem>
-                            )}
-                        onChange={(_, newValue) => {
-                            setChallenge(newValue || null)
-                        }}
-                        renderInput={(params) => (
-                            <TextField {...params} label="Challenge" />
-                        )}
-                    />
-                </FormControl>
+        </FormControl>
     )
 }
 
