@@ -30,7 +30,7 @@ from ..database.models import (
 )
 from ..auth import auth
 
-TOLL_COST = 100
+TOLL_COST = 50
 
 router = APIRouter()
 
