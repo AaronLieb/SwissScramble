@@ -15,6 +15,7 @@ import Events from "./Events.jsx"
 import About from './About.jsx';
 import Message from "./Message.jsx";
 import CantonSelect from "./CantonSelect.jsx";
+import Challenges from "./Challenges.jsx";
 
 function Switzerland(props) {
     const elevation = 5;
@@ -53,6 +54,8 @@ function Switzerland(props) {
 
     const [events, setEvents] = useState([]);
 
+    const [challenges, setChallenges] = useState([]);
+
     // updateEvents is a hook to re-fetch.
     const [updateEvents, setUpdateEvents] = useState(0);
 
@@ -77,6 +80,7 @@ function Switzerland(props) {
             });
         await fetchEndpoint("/cantons/")
         await fetchEndpoint("/teams/")
+        await fetchEndpoint("/challenges/")
     }
 
     // For canton selection updated through the CantonSelect element,
@@ -244,16 +248,16 @@ function Switzerland(props) {
                     switch (endpoint) {
                         case "/teams/":
                             setTeams(data)
-                            resolve();
                             break;
                         case "/events/":
                             setEvents(data)
-                            resolve();
                             break;
                         case "/cantons/":
                             setCantons(data)
                             updateColors(data)
-                            resolve();
+                            break;
+                        case "/challenges/":
+                            setChallenges(data.sort((a,b) => Intl.Collator().compare(a.name.toUpperCase(), b.name.toUpperCase())))
                             break;
                         // case "/events/":
                         //     setEvents(data)
@@ -263,6 +267,7 @@ function Switzerland(props) {
                             console.log(`warning: no endpoint handler available for ${endpoint}`)
                             resolve();
                     }
+                    resolve();
                 })
                 .catch((err) => {
                     enqueueSnackbar(`Failed to fetch data for ${endpoint}: ${err}`, { variant: "error", autoHideDuration: 3000 })
@@ -270,7 +275,6 @@ function Switzerland(props) {
                 });
         })
     }
-
 
     async function postEndpoint(endpoint, body) {
         let op = endpoint.replaceAll("/", "")
@@ -330,6 +334,7 @@ function Switzerland(props) {
                     <Grid2 item size={{ xs: 11, md: 8 }}>
                         <AuthDisplay
                             teams={teams}
+                            challenges={challenges}
                             postEndpoint={postEndpoint}
                             drawerOpen={props.drawerOpen}
                             toggleDrawer={props.toggleDrawer}
@@ -349,6 +354,7 @@ function Switzerland(props) {
                         />
                     </Grid2>
                 ) : (
+                    <>
                     <Grid2 item size={{ xs: 11, md: 8 }}>
                         <Paper sx={{ p: 2 }} elevation={elevation}>
                             <Grid2 container spacing={2}>
@@ -356,6 +362,14 @@ function Switzerland(props) {
                             </Grid2>
                         </Paper>
                     </Grid2>
+                    <Grid2 item size={{ xs: 11, md: 8 }}>
+                        <Paper sx={{ p: 2 }} elevation={elevation}>
+                            <Grid2 container spacing={2}>
+                                <Challenges challenges={challenges} />
+                            </Grid2>
+                        </Paper>
+                    </Grid2>
+                    </>
                 )}
                 <Grid2 item size={{ xs: 11, md: 8 }}>
                     <Events events={events} fetchEvents={fetchEvents} updateEvents={props.updateEvents} elevation={elevation} />

@@ -29,7 +29,6 @@ function AuthDisplay(props) {
 
 
     // Challenge form related info
-    const [challenges, setChallenges] = useState([])
     const [selectedChallenge, setSelectedChallenge] = useState("")
 
     // Shop values with selection.
@@ -166,7 +165,6 @@ function AuthDisplay(props) {
     useEffect(() => {
         fetchEndpoint("/team_powerups/")
         fetchEndpoint("/powerups/")
-        fetchEndpoint("/challenges/")
         fetchEndpoint("/user/")
         fetchEndpoint("/team/")
     }, [props.updateEvents]);
@@ -193,9 +191,6 @@ function AuthDisplay(props) {
                             break;
                         case "/powerups/":
                             setPowerups(data.sort((a, b) => a.cost - b.cost))
-                            break;
-                        case "/challenges/":
-                            setChallenges(data.sort((a,b) => Intl.Collator().compare(a.name.toUpperCase(), b.name.toUpperCase())))
                             break;
                         case "/curses/":
                             props.setCurses(data)
@@ -291,7 +286,7 @@ function AuthDisplay(props) {
                                                 disablePortal
                                                 id="challenge-select"
                                                 aria-labelledby="challenge-select"
-                                                options={challenges || []}
+                                                options={props.challenges || []}
                                                 value={selectedChallenge}
                                                 getOptionLabel={(option) =>
                                                     option ? `${option.name}` : ''
