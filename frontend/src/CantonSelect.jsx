@@ -7,7 +7,6 @@ import {
     ListItem,
     ListItemText
 } from "@mui/material";
-import { useEffect } from 'react';
 
 function CantonSelect(props) {
 

@@ -24,7 +24,6 @@ function AuthDisplay(props) {
 
 
     // Auth Required Fields - are these needed / wanted?
-    const [user, setUser] = useState(null)
     const [team, setTeam] = useState({ money: 0, curses: 0 })
 
 
@@ -170,9 +169,6 @@ function AuthDisplay(props) {
                             break;
                         case "/curses/":
                             props.setCurses(data)
-                            break;
-                        case "/user/":
-                            setUser(data)
                             break;
                         case "/team/":
                             setTeam(data)
