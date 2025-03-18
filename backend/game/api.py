@@ -158,6 +158,9 @@ async def post_challenge(
             db.commit()
             db.refresh(other_team)
 
+    if team.hand_size == 4:
+        team.hand_size = 3
+
     if team.challenges > 0:
         team.challenges -= 1
 
@@ -356,6 +359,29 @@ async def get_powerups(
     return db.exec(select(PowerUp)).all()
 
 
+@router.post("/discard_challenge/")
+async def discard_card(
+    db: SessionDep,
+    current_user: Annotated[User, Depends(auth.get_current_user)],
+):
+    team = current_user.team
+
+    if team is None:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid team"
+        )
+
+    if team.hand_size == 4:
+        team.hand_size = 3
+
+    if team.challenges > 0:
+        team.challenges -= 1
+
+    db.add(team)
+    db.commit()
+    db.refresh(team)
+
+
 @router.post("/enter_canton/")
 async def post_enter_canton(
     db: SessionDep,
@@ -381,7 +407,7 @@ async def post_enter_canton(
     new_event(db, text, team.name)
 
     team.challenges += 1
-    team.challenges = min(3, team.challenges)
+    team.challenges = min(team.hand_size, team.challenges)
     db.add(team)
     db.commit()
     db.refresh(team)

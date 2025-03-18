@@ -36,6 +36,7 @@ class Team(SQLModel, table=True):
     curses: int = Field(default=0)
     challenges: int = Field(default=0)
     income: int = Field(default=0)
+    hand_size: int = Field(default=3)
 
     users: list["User"] = Relationship(back_populates="team")
     cantons: list["Canton"] = Relationship(back_populates="team")

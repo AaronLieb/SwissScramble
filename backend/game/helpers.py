@@ -24,6 +24,13 @@ def handle_powerup(db: SessionDep, powerup: PowerUp, team: Team):
         db.commit()
         db.refresh(team)
 
+    if "Increase your hand size" in powerup.description:
+        team.hand_size = 4
+
+        db.add(team)
+        db.commit()
+        db.refresh(team)
+
 
 def calculate_passive_income(team: Team):
     sum = 0
