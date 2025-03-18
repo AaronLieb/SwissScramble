@@ -62,7 +62,7 @@ function AuthDisplay(props) {
         }))
         setSelectedChallenge("")
         await props.setUpdateEvents(selectedChallenge.id)
-        await fetchEndpoint("/cantons/")
+        await props.fetchEndpoint("/cantons/")
     }
 
 

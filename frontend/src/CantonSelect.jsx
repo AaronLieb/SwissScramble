@@ -7,9 +7,9 @@ import {
     ListItem,
     ListItemText
 } from "@mui/material";
+import { useEffect } from 'react';
 
 function CantonSelect(props) {
-
 
     function getTeamName(id) {
         if(props.teams && props.teams.length) {

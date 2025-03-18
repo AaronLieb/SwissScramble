@@ -91,6 +91,8 @@ function Switzerland(props) {
 
     useEffect(() => {
         updateColors(cantons)
+        let cn = canton;
+        setCanton(cn);
     }, [cantons])
 
     useEffect(() => {
@@ -333,6 +335,7 @@ function Switzerland(props) {
                 {props.auth ? (
                     <Grid2 item size={{ xs: 11, md: 8 }}>
                         <AuthDisplay
+                            fetchEndpoint={fetchEndpoint}
                             teams={teams}
                             challenges={challenges}
                             postEndpoint={postEndpoint}
