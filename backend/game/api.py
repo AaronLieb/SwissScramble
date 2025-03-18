@@ -381,6 +381,7 @@ async def post_enter_canton(
     new_event(db, text, team.name)
 
     team.challenges += 1
+    team.challenges = min(3, team.challenges)
     db.add(team)
     db.commit()
     db.refresh(team)
