@@ -294,6 +294,13 @@ async def buy_powerup(
         db.refresh(team)
 
 
+@router.get("/game/")
+async def get_game(
+    db: SessionDep,
+):
+    return db.get(Game, 1)
+
+
 @router.get("/powerups/")
 async def get_powerups(
     db: SessionDep,
