@@ -252,6 +252,7 @@ function Switzerland(props) {
                     return response.json()
                 })
                 .then((data) => {
+                    if(!data) return;
                     switch (endpoint) {
                         case "/teams/":
                             setTeams(data)
@@ -266,10 +267,6 @@ function Switzerland(props) {
                         case "/challenges/":
                             setChallenges(data.sort((a,b) => Intl.Collator().compare(a.name.toUpperCase(), b.name.toUpperCase())))
                             break;
-                        // case "/events/":
-                        //     setEvents(data)
-                        //     resolve();
-                        //     break;
                         default:
                             console.log(`warning: no endpoint handler available for ${endpoint}`)
                             resolve();

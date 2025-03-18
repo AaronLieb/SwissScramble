@@ -143,7 +143,6 @@ function AuthDisplay(props) {
     // Fetch all data on map load.
     useEffect(() => {
         fetchEndpoint("/powerups/")
-        fetchEndpoint("/user/")
         fetchEndpoint("/team/")
     }, [props.updateEvents]);
 
@@ -163,6 +162,7 @@ function AuthDisplay(props) {
                     return response.json()
                 })
                 .then((data) => {
+                    if(!data) return;
                     switch (endpoint) {
                         case "/powerups/":
                             setPowerups(data.sort((a, b) => a.cost - b.cost))
