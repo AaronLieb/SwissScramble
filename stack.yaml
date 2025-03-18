@@ -18,13 +18,11 @@ Parameters:
     Type: String
     Default: vpc-09a91b65200dbbc8e
 
-Resources:
-  BackupBucket:
-    DeletionPolicy: RetainExceptOnCreate
-    Type: AWS::S3::Bucket
-    Properties:
-      BucketName: swiss-db-backups
+  CertificateArn:
+    Type: String
+    Default: arn:aws:acm:us-west-2:416463444955:certificate/c0d4a271-259b-4cdf-aa24-af60396a2ad7
 
+Resources:
   FrontendRepository:
     DeletionPolicy: RetainExceptOnCreate
     Type: AWS::ECR::Repository
@@ -66,7 +64,6 @@ Resources:
       Cpu: "256"
       Memory: "512"
       ExecutionRoleArn: !GetAtt TaskExecutionRole.Arn
-      TaskRoleArn: !GetAtt TaskRole.Arn
       Volumes:
         - Name: db
           Host:
@@ -128,34 +125,6 @@ Resources:
       Roles:
         - !Ref ECSInstanceRole
 
-  TaskRole:
-    Type: AWS::IAM::Role
-    Properties:
-      RoleName: SwissTaskRole
-      Path: /
-      AssumeRolePolicyDocument:
-        Version: "2012-10-17"
-        Statement:
-          - Effect: Allow
-            Principal:
-              Service: ecs-tasks.amazonaws.com
-            Action: sts:AssumeRole
-      Policies:
-        - PolicyName: !Sub ecs-task-${AWS::StackName}
-          PolicyDocument: |
-            {
-                "Version": "2012-10-17",
-                "Statement": [{
-                        "Effect": "Allow",
-                        "Action": [
-                            "s3:Get*",
-                            "s3:List*",
-                            "s3:Put*"
-                        ],
-                        "Resource": "*"
-                }]
-            }
-
   ECSLaunchTemplate:
     Type: AWS::EC2::LaunchTemplate
     Properties:
@@ -184,3 +153,98 @@ Resources:
       MinSize: "1"
       MaxSize: "3"
       DesiredCapacity: "1"
+
+  ECSService:
+    Type: AWS::ECS::Service
+    DependsOn:
+      - FrontendRepository
+      - BackendRepository
+      - LoadBalancer
+    Properties:
+      Cluster: !Ref ECSCluster
+      TaskDefinition: !Ref ECSTaskDefinition
+      LaunchType: EC2
+      ServiceName: swiss-scramble-service
+      SchedulingStrategy: REPLICA
+      DesiredCount: 0
+      AvailabilityZoneRebalancing: DISABLED
+      LoadBalancers:
+        - ContainerName: frontend
+          ContainerPort: 80
+          TargetGroupArn: !Ref FrontendTargetGroup
+        - ContainerName: backend
+          ContainerPort: 8000
+          TargetGroupArn: !Ref BackendTargetGroup
+      DeploymentConfiguration:
+        DeploymentCircuitBreaker:
+          Enable: true
+          Rollback: true
+        MaximumPercent: 100
+        MinimumHealthyPercent: 0
+      DeploymentController:
+        Type: ECS
+      PlacementStrategies:
+        - Field: attribute:ecs.availability-zone
+          Type: spread
+        - Field: instanceId
+          Type: spread
+      EnableECSManagedTags: true
+
+  LoadBalancer:
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+    Properties:
+      Name: swiss-balance
+      Subnets: !Ref SubnetIDs
+      Type: application
+
+  FrontendTargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      HealthCheckPath: /
+      Name: frontend
+      Port: 80
+      Protocol: HTTP
+      TargetType: instance
+      HealthCheckProtocol: HTTP
+      VpcId: !Ref VPCID
+      TargetGroupAttributes:
+        - Key: deregistration_delay.timeout_seconds
+          Value: "10"
+
+  BackendTargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      HealthCheckPath: /docs
+      Name: backend
+      Port: 8000
+      Protocol: HTTP
+      TargetType: instance
+      HealthCheckProtocol: HTTP
+      VpcId: !Ref VPCID
+      TargetGroupAttributes:
+        - Key: deregistration_delay.timeout_seconds
+          Value: "10"
+
+  FrontendListener:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      Certificates:
+        - !Ref CertificateArn
+      DefaultActions:
+        - Type: forward
+          TargetGroupArn: !Ref FrontendTargetGroup
+      LoadBalancerArn: !Ref LoadBalancer
+      Port: 443
+      Protocol: HTTPS
+
+  BackendListener:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      Certificates:
+        - !Ref CertificateArn
+      DefaultActions:
+        - Type: forward
+          TargetGroupArn: !Ref BackendTargetGroup
+      LoadBalancerArn: !Ref LoadBalancer
+      Port: 8000
+      Protocol: HTTPS

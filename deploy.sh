@@ -1,9 +1,13 @@
 #!/bin/bash
 # Deploy the container images to ECR.
+# usage: ./deploy.sh <region>
 set -e
 # Variables
-DOCKER_BUILD="finch build --progress=plain --platform=linux/amd64"
-AWS_REGION="us-west-2"
+DOCKER_BUILD="finch build --platform=linux/amd64"
+AWS_REGION="$1"
+if [ -z ${AWS_REGION} ]; then
+  AWS_REGION="us-west-2"
+fi
 AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
 FRONTEND_REPO_NAME="swiss-frontend"
 BACKEND_REPO_NAME="swiss-backend"
