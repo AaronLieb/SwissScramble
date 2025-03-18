@@ -31,13 +31,13 @@ function CantonSelect(props) {
                         value={props.canton || {}}
                         getOptionLabel={c => c.name ? `${c.name}` : ''}
                         onChange={(d, e) => {
-                            props.setCanton(e || {});
+                            if(e !== props.canton) props.setCanton(e || {});
                         }}
                         renderInput={(params) => (
                             <TextField {...params} label="Canton" />
                         )}
                         renderOption={({ key, ...props }, option) => (
-                            <ListItem key={key.name} {...props}>
+                            <ListItem id={`${key.name}-canton-select-id`} key={`${key.name}-canton-select`} {...props}>
                                 <ListItemText primary={option.name} />
                             </ListItem>
                         )}                        
@@ -46,12 +46,12 @@ function CantonSelect(props) {
             </Grid2>
             <Grid2 item size={{ xs: 6, lg: 3 }}>
                 <FormControl sx={{ width: "100%" }} aria-label="Canton level display">
-                    <TextField id="outlined-basic" label="Level" defaultValue={props.canton.level} slotProps={{ inputLabel: { shrink: true }, input: { readOnly: true } }} />
+                    <TextField id="level-textfield" label="Level" defaultValue={props.canton.level} slotProps={{ inputLabel: { shrink: true }, input: { readOnly: true } }} />
                 </FormControl>
             </Grid2>
             <Grid2 item size={{ xs: 6, lg: 3 }}>
-                <FormControl sx={{ width: "100%" }} aria-label="Canton level display">
-                    <TextField id="outlined-basic" label="Team" defaultValue={getTeamName(props.canton.team_id)} slotProps={{ inputLabel: { shrink: true }, input: { readOnly: true } }} />
+                <FormControl sx={{ width: "100%" }} aria-label="Canton team display">
+                    <TextField id="team-textfield" label="Team" defaultValue={getTeamName(props.canton.team_id)} slotProps={{ inputLabel: { shrink: true }, input: { readOnly: true } }} />
                 </FormControl>
             </Grid2>
         </>

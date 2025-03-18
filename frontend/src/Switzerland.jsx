@@ -91,8 +91,6 @@ function Switzerland(props) {
 
     useEffect(() => {
         updateColors(cantons)
-        let cn = canton;
-        setCanton(cn);
     }, [cantons])
 
     useEffect(() => {
@@ -100,17 +98,10 @@ function Switzerland(props) {
         setCanton(cantons.find((e) => e.name == mapCanton) || {})
     }, [mapCanton]);
 
-    // Print this user's location every 5 seconds.
-    // useInterval(function() {
-    //     navigator.geolocation.getCurrentPosition((position) => {
-    //         console.log(position)
-    //     });
-    // }, 5000)
-
     useInterval(function() {
         fetchEndpoint("/events/")
         fetchEndpoint("/cantons/")
-    }, 10000)
+    }, 5000)
 
     function useInterval(callback, delay) {
         const savedCallback = useRef();
@@ -236,6 +227,18 @@ function Switzerland(props) {
         await fetchEndpoint("/cantons/")
     }
 
+    const objectsEqual = (o1, o2) => 
+        typeof o1 === 'object' && Object.keys(o1).length > 0 
+            ? Object.keys(o1).length === Object.keys(o2).length 
+                && Object.keys(o1).every(p => objectsEqual(o1[p], o2[p]))
+            : o1 === o2;
+
+
+    const arraysEqual = (a1, a2) => 
+        a1.length === a2.length && a1.every((o, idx) => objectsEqual(o, a2[idx]));
+
+
+
     // fetchEndpoint grabs data from and endpoint and handles its result by
     // storing it in specific frontend state.
     async function fetchEndpoint(endpoint) {
@@ -252,18 +255,24 @@ function Switzerland(props) {
                     return response.json()
                 })
                 .then((data) => {
-                    if(!data) return;
+                    if(!data || data.length == 0) return;
                     switch (endpoint) {
                         case "/teams/":
                             setTeams(data)
                             break;
                         case "/events/":
-                            setEvents(data)
+                            // Only update the events if something has actually changed.
+                            if((Math.max(...data.map(o => o.id)) !== Math.max(...events.map(o => o.id))) || events.length === 0) {
+                                setEvents(data)
+                            }
                             break;
-                        case "/cantons/":
-                            setCantons(data)
-                            updateColors(data)
+                        case "/cantons/": {
+                            // Only update cantons if they have changed.
+                            if(!arraysEqual(data.sort((a,b) => a.name < b.name), cantons.sort((a,b) => a.name < b.name))) {
+                                setCantons(data)
+                            }
                             break;
+                        }
                         case "/challenges/":
                             setChallenges(data.sort((a,b) => Intl.Collator().compare(a.name.toUpperCase(), b.name.toUpperCase())))
                             break;

@@ -328,9 +328,9 @@ function AuthDisplay(props) {
                         <Grid2 item size={12}>
                             <Paper elevation={props.elevation}>
                                 <Grid2 display={"flex"} justifyContent={"space-evenly"} container>
-                                    <Switch label="Enable1" checked={checked1} onChange={handleChange1} defaultChecked />
-                                    <Switch label="Enable2" checked={checked2} onChange={handleChange2} defaultChecked />
-                                    <Switch label="Enable3" checked={checked3} onChange={handleChange3} defaultChecked />
+                                    <Switch id="enableswitch1" label="Enable1" checked={checked1} onChange={handleChange1} defaultChecked />
+                                    <Switch id="enableswitch2" label="Enable2" checked={checked2} onChange={handleChange2} defaultChecked />
+                                    <Switch id="enableswitch3" label="Enable3" checked={checked3} onChange={handleChange3} defaultChecked />
                                 </Grid2>
                                 <Button disabled={!checked1 || !checked2 || !checked3} variant="contained" sx={{ width: "100%" }} onClick={destroyCanton} type="submit">
                                     <Typography variant="h5">

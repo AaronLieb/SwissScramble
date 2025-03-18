@@ -36,9 +36,9 @@ function Events(props) {
                 }}
                 subheader={<li />}
             >
-                <ListSubheader>Events</ListSubheader>
+                <ListSubheader id="events-title">Events</ListSubheader>
                 {props.events.sort((a,b) => Date.parse(b.time) - Date.parse(a.time)).map((item) => (
-                    <ListItem key={`item-${item.id}-${item.time}`}>
+                    <ListItem id={`itemid-${item.id}-${item.time}`} key={`item-${item.id}-${item.time}`}>
                         <ListItemText primary={<b>{item.text} {getEventEmoji(item.text)}</b>} secondary={`${new Date(item.time).toLocaleString()}`} />
                     </ListItem>
                 ))}

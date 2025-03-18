@@ -38,8 +38,8 @@ function Message(props) {
         <Paper sx={{ p: 2 }} elevation={props.elevation}>
         <Grid2 spacing={2} container>
             <Grid2 item size={{ xs: 12 }}>
-                <FormControl sx={{ width: "100%" }} aria-label="Message">
-                    <TextField onKeyDown={onKeyPress} disableAutoFocus multiline minRows={3} onChange={(d) => { setEventMessage(d.target.value) }} value={eventMessage} label="Message" />
+                <FormControl id="message-input-form" sx={{ width: "100%" }} aria-label="Message">
+                    <TextField id="message-input" onKeyDown={onKeyPress} multiline minRows={3} onChange={(d) => { setEventMessage(d.target.value) }} value={eventMessage} label="Message" />
                 </FormControl>
             </Grid2>
             <Grid2 display="flex" justifyContent={"center"} item size={{ xs: 12 }}>
