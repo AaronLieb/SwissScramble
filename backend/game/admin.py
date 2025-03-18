@@ -2,9 +2,7 @@ from fastapi import APIRouter
 from sqlmodel import select
 
 from ..database.models import Game, PowerUp
-
 from .income import give_income, set_time_stopped
-
 from ..database.database import SessionDep
 
 router = APIRouter(prefix="/admin")
