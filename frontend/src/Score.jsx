@@ -33,7 +33,6 @@ function Score(props) {
     const [score, setScore] = useState({});
 
     function getTeamName(id) {
-        
         if(props.teams && props.teams.length) {
             let item = props.teams.find(e => e.id == id)
             if(item) return item.name
@@ -43,12 +42,10 @@ function Score(props) {
     }
 
     useEffect(() => {
-
         let group = groupBy(props.cantons, 'team_id')
         // Remove keys like 'null'.
         Object.keys(group).forEach(k => (k === "null" || k === '0' || k === 0) && delete group[k])
         setScore(group)
-        console.log(score)
     }, [props.cantons])
 
     return (
