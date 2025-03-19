@@ -21,6 +21,7 @@ function Events(props) {
         if(text.includes("power up")) return "⚡"
         if(text.includes("paid a toll")) return "🛃"
         if(text.includes("passive income")) return "📈"
+        if(text.includes(" destroyed ")) return "💣"
     }
 
     return (

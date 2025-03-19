@@ -351,25 +351,6 @@ async def discard_card(
     db.refresh(team)
 
 
-@router.post("/draw_challenge/")
-async def draw_card(
-    db: SessionDep,
-    current_user: Annotated[User, Depends(auth.get_current_user)],
-):
-    team = current_user.team
-
-    if team is None:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid team"
-        )
-
-    team.hand_size += 1
-
-    db.add(team)
-    db.commit()
-    db.refresh(team)
-
-
 @router.post("/enter_canton/")
 async def post_enter_canton(
     db: SessionDep,
@@ -420,7 +401,7 @@ async def post_enter_canton(
         db.commit()
         db.refresh(team)
 
-        text = "Team '{0}' payed a toll to Team '{1}'".format(
+        text = "Team '{0}' paid a toll to Team '{1}'".format(
             team.name, other_team.name
         )
         new_event(db, text, team.name)
@@ -479,7 +460,10 @@ async def post_destroy_canton(
     db_canton.team_id = None
     db_canton.destroyed = True
 
-    # TODO: Create event
+    text = "Team '{0}' destroyed {1}".format(
+        team.name, db_canton.name
+    )
+    new_event(db, text, team.name)
 
     db.add(db_canton)
     db.commit()
