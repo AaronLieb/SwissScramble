@@ -36,5 +36,5 @@ INSERT or IGNORE INTO user (username, firstname, lastname, team_id, hashed_passw
    ('icf', 'Isaac', 'Feldman', 2, '$2b$12$DGHT20nYOFSX6b396YKdEeE62fz5Anu86jYPiGNHfNPQCOFD3w/ZO'),
    ('timjhh', 'Tim', 'Harrold', 2, '$2b$12$8vFV2m/UVBt6zt5w6aa4zud5zjkbGxKbYxj.bXYALPjqgyLiijSe6');
 
-INSERT INTO game (active, day) VALUES (true, 1);
+INSERT or IGNORE INTO game (active, day, 'start', 'end', 'day_start', 'day_end', passive_income_enabled) VALUES (true, 1, '2025-03-20T08:00:05+01:00', '2025-03-22T19:00:05+01:00', '08:00:05.000', '19:00:05.000', true);
 

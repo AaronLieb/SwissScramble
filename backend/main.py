@@ -1,3 +1,4 @@
+from datetime import datetime
 import logging
 import schedule
 import threading
@@ -7,7 +8,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from .game.income import give_income, is_time_stopped
+from .game.income import give_income, is_passive_income_enabled
 
 from .database.database import create_db_and_tables, get_session
 from .auth.api import router as auth_router
@@ -68,5 +69,5 @@ def start_schedule_thread(interval=1):
 
 
 def hourly():
-    if not is_time_stopped():
+    if not is_passive_income_enabled(next(get_session())):
         give_income(next(get_session()))
