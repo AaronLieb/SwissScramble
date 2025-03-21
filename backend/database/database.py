@@ -47,7 +47,7 @@ def load_admin_user():
 
 def load_challenges(engine):
     challenges = []
-    with open("database/challenges.tsv", newline="", encoding='utf8') as csvfile:
+    with open("database/challenges.tsv", newline="", encoding="utf8") as csvfile:
         reader = csv.reader(csvfile, delimiter="\t", quotechar='"')
         next(reader)  # Discard the header line.
         for row in reader:
@@ -90,7 +90,9 @@ def load_powerups(engine):
         next(reader)  # Discard the header line.
         for row in reader:
             powerups.append(
-                PowerUp(name="powerup", description=row[0], cost=int(row[1]))
+                PowerUp(
+                    name="powerup", description=row[0], cost=int(row[1]), multiplier=1
+                )
             )  # Curses all cost 100 money.
 
     with Session(engine) as session:
