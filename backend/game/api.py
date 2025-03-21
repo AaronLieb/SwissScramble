@@ -309,7 +309,7 @@ async def get_powerups(
 
 
 @router.post("/draw_challenge/")
-async def discard_card(
+async def draw_challenge(
     db: SessionDep,
     current_user: Annotated[User, Depends(auth.get_current_user)],
 ):
@@ -401,9 +401,7 @@ async def post_enter_canton(
         db.commit()
         db.refresh(team)
 
-        text = "Team '{0}' paid a toll to Team '{1}'".format(
-            team.name, other_team.name
-        )
+        text = "Team '{0}' paid a toll to Team '{1}'".format(team.name, other_team.name)
         new_event(db, text, team.name)
 
     return {"draw_card": True}
@@ -460,9 +458,7 @@ async def post_destroy_canton(
     db_canton.team_id = None
     db_canton.destroyed = True
 
-    text = "Team '{0}' destroyed {1}".format(
-        team.name, db_canton.name
-    )
+    text = "Team '{0}' destroyed {1}".format(team.name, db_canton.name)
     new_event(db, text, team.name)
 
     db.add(db_canton)
