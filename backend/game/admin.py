@@ -1,5 +1,6 @@
 from typing import Annotated
 from fastapi import APIRouter, Depends, HTTPException, status
+from pydantic import BaseModel
 from sqlmodel import select
 
 from ..auth import auth
@@ -7,6 +8,7 @@ from ..auth import auth
 from ..database.models import (
     Canton,
     CantonUpdate,
+    Curse,
     Game,
     PowerUp,
     Team,
@@ -123,29 +125,39 @@ async def income(
 
     give_income(db)
 
+class MultiplierItem(BaseModel):
+    mult: int
 
-@router.get("/next_day/")
-async def next_day(
+@router.get("/set_multipliers/")
+async def set_multipliers(
     db: SessionDep,
     current_user: Annotated[User, Depends(auth.get_current_user)],
+    multiplier: MultiplierItem
 ):
     if current_user.username != "admin":
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
 
-    game = db.exec(select(Game)).all()[0]
-    game.day += 1
+    game = db.get(Game, 1)
 
-    powerups = db.exec(select(PowerUp)).all()
-    for powerup in powerups:
-        if game.day == 2:
-            powerup.cost *= 2
-        if game.day == 3:
-            powerup.cost = int(powerup.cost * 3 / 2)
+    if game is None:
+        raise HTTPException(status_code=status.HTTP_400, detail="Unable to find game.")
 
-        db.add(powerup)
-        db.commit()
-        db.refresh(powerup)
-
+    game.multiplier = multiplier.mult
     db.add(game)
     db.commit()
     db.refresh(game)
+
+    curses = db.exec(select(Curse)).all()
+    powerups = db.exec(select(PowerUp)).all()
+
+    for curse in curses:
+        curse.multiplier = multiplier.mult
+        db.add(curse)
+        db.commit()
+        db.refresh(curse)
+
+    for powerup in powerups:
+        powerup.multiplier = multiplier.mult
+        db.add(powerup)
+        db.commit()
+        db.refresh(powerup)

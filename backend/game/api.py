@@ -386,8 +386,13 @@ async def post_enter_canton(
         other_team_id = 1 if team.id == 2 else 2
         other_team = db.get(Team, other_team_id)
 
-        day = db.exec(select(Game)).all()[0].day
-        team.money -= TOLL_COST * day
+        game = db.get(Game, 1)
+        if game is None:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST, detail="Unable to find game."
+            )
+
+        team.money -= TOLL_COST * game.multiplier
         team.money = max(0, team.money)
 
         db.add(team)

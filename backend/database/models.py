@@ -10,6 +10,7 @@ class GameBase(SQLModel):
     day_start: datetime.time
     day_end: datetime.time
     passive_income_enabled: bool
+    multiplier: int
 
 
 class Game(GameBase, table=True):
@@ -146,6 +147,7 @@ class Curse(CurseBase, table=True):
     name: str
     description: str
     cost: int
+    multiplier: int
 
 
 class BuyCursePost(CurseBase):
@@ -160,11 +162,11 @@ class PowerUpBase(SQLModel):
     name: str
     description: str
     cost: int
-    multiplier: float
 
 
 class PowerUp(PowerUpBase, table=True):
     id: int | None = Field(default=None, primary_key=True)
+    multiplier: float
 
 
 class BuyPowerUpPost(PowerUpBase):

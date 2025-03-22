@@ -72,7 +72,7 @@ def load_curses(engine):
         next(reader)  # Discard the header line.
         for row in reader:
             curses.append(
-                Curse(name=row[0], description=row[1], cost=100)
+                Curse(name=row[0], description=row[1], cost=100, multiplier=1)
             )  # Curses all cost 100 money.
 
     with Session(engine) as session:
