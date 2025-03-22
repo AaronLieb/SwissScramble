@@ -159,13 +159,13 @@ class UseCursePost(CurseBase):
 
 
 class PowerUpBase(SQLModel):
-    name: str
-    description: str
-    cost: int
-
+    pass
 
 class PowerUp(PowerUpBase, table=True):
     id: int | None = Field(default=None, primary_key=True)
+    name: str
+    description: str
+    cost: int
     multiplier: float
 
 

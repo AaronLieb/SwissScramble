@@ -215,7 +215,16 @@ async def buy_curse(
             detail="Insufficient money",
         )
 
-    team.money -= curse_db.cost
+
+    game = db.get(Game, 1)
+    if game is None:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Unable to find game.",
+        )
+
+
+    team.money -= curse_db.cost * game.multiplier
     team.curses += 1
 
     text = "Team '{0}' purchased a curse".format(team.name)
@@ -283,7 +292,14 @@ async def buy_powerup(
             detail="Insufficient money",
         )
 
-    team.money -= powerup_db.cost
+    game = db.get(Game, 1)
+    if game is None:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Unable to find game.",
+        )
+
+    team.money -= powerup_db.cost * game.multiplier
 
     text = "Team '{0}' used power up '{1}'".format(team.name, powerup_db.description)
     new_event(db, text, team.name)

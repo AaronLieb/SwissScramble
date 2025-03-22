@@ -128,7 +128,7 @@ async def income(
 class MultiplierItem(BaseModel):
     mult: int
 
-@router.get("/set_multipliers/")
+@router.post("/set_multipliers/")
 async def set_multipliers(
     db: SessionDep,
     current_user: Annotated[User, Depends(auth.get_current_user)],
@@ -140,7 +140,7 @@ async def set_multipliers(
     game = db.get(Game, 1)
 
     if game is None:
-        raise HTTPException(status_code=status.HTTP_400, detail="Unable to find game.")
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Unable to find game.")
 
     game.multiplier = multiplier.mult
     db.add(game)

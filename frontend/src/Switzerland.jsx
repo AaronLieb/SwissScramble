@@ -59,6 +59,8 @@ function Switzerland(props) {
     // updateEvents is a hook to re-fetch.
     const [updateEvents, setUpdateEvents] = useState(0);
 
+    const [curses, setCurses] = useState([])
+
 
     // Fetch all data on initial map load.
     useEffect(() => {
@@ -81,6 +83,7 @@ function Switzerland(props) {
         await fetchEndpoint("/cantons/")
         await fetchEndpoint("/teams/")
         await fetchEndpoint("/challenges/")
+        await fetchEndpoint("/curses/")
     }
 
     // For canton selection updated through the CantonSelect element,
@@ -276,6 +279,9 @@ function Switzerland(props) {
                         case "/challenges/":
                             setChallenges(data.sort((a,b) => Intl.Collator().compare(a.name.toUpperCase(), b.name.toUpperCase())))
                             break;
+                        case "/curses/":
+                            setCurses(data)
+                            break;
                         default:
                             console.log(`warning: no endpoint handler available for ${endpoint}`)
                             resolve();
@@ -365,6 +371,8 @@ function Switzerland(props) {
                             canton={canton}
                             setCanton={setCanton}
                             cantons={cantons}
+                            curses={curses}
+                            setCurses={setCurses}
                         />
                     </Grid2>
                 ) : (

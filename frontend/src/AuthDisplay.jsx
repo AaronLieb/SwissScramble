@@ -124,7 +124,9 @@ function AuthDisplay(props) {
   // purchaseCurse purchases a random curse.
   // We do not actually need to select a random curse here, just post an event and subtract some money.
   async function purchaseCurse() {
-    let text = `Are you sure you want to purchase a random curse for 100₣?`
+    console.log(props.curses)
+
+    let text = `Are you sure you want to purchase a random curse for ${props.curses[0].multiplier * 100}₣?`
     if (!window.confirm(text)) {
       return
     }
@@ -205,10 +207,9 @@ function AuthDisplay(props) {
           switch (endpoint) {
             case "/powerups/":
               setPowerups(data.sort((a, b) => a.cost - b.cost))
-              console.log(Math.floor(data[0].cost * data[0].multiplier))
               break;
             case "/curses/":
-              props.setCurses(data)
+              setCurses(data)
               break;
             case "/team/":
               setTeam(data)
