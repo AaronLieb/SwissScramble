@@ -116,37 +116,38 @@ async def post_challenge(
     if not canton.destroyed:
         team.money += challenge_db.money
 
-        other_team_id = 1 if team.id == 2 else 2
-        other_team = db.get(Team, other_team_id)
+        if challenge_db.levels > 0:
+            other_team_id = 1 if team.id == 2 else 2
+            other_team = db.get(Team, other_team_id)
 
-        if canton.team == team:
-            canton.level += challenge_db.levels
-        elif canton.team is None:
-            canton.level += challenge_db.levels
-            canton.team = team
-        else:
-            if canton.level == challenge_db.levels:
-                canton.team = None
-            elif canton.level < challenge_db.levels:
+            if canton.team == team:
+                canton.level += challenge_db.levels
+            elif canton.team is None:
+                canton.level += challenge_db.levels
                 canton.team = team
-            canton.level = abs(canton.level - challenge_db.levels)
+            else:
+                if canton.level == challenge_db.levels:
+                    canton.team = None
+                elif canton.level < challenge_db.levels:
+                    canton.team = team
+                canton.level = abs(canton.level - challenge_db.levels)
 
-        canton.level = min(canton.level, 3)
+            canton.level = min(canton.level, 3)
 
-        if canton.team:
-            canton.team_id = canton.team.id
-        else:
-            canton.team_id = None
+            if canton.team:
+                canton.team_id = canton.team.id
+            else:
+                canton.team_id = None
 
-        team.income = calculate_passive_income(team)
-        team.score = calculate_score(team)
+            team.income = calculate_passive_income(team)
+            team.score = calculate_score(team)
 
-        if other_team:
-            other_team.income = calculate_passive_income(other_team)
-            other_team.score = calculate_score(other_team)
-            db.add(other_team)
-            db.commit()
-            db.refresh(other_team)
+            if other_team:
+                other_team.income = calculate_passive_income(other_team)
+                other_team.score = calculate_score(other_team)
+                db.add(other_team)
+                db.commit()
+                db.refresh(other_team)
 
     if team.hand_size == 4:
         team.hand_size = 3

@@ -69,5 +69,5 @@ def start_schedule_thread(interval=1):
 
 
 def hourly():
-    if not is_passive_income_enabled(next(get_session())):
+    if is_passive_income_enabled(next(get_session())):
         give_income(next(get_session()))

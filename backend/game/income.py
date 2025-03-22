@@ -10,13 +10,15 @@ logger = logging.getLogger(__name__)
 
 
 def is_passive_income_enabled(db: SessionDep):
+
     game = db.get(Game, 1)
 
     if game is None:
         return True
 
-    now = datetime.now()
+    tz = game.start.tzinfo
 
+    now = datetime.now(tz)
     if now < game.start:
         return False
 
