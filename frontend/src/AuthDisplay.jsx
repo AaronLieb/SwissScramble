@@ -197,8 +197,15 @@ function AuthDisplay(props) {
         'Accept': 'application/json',
       })
     }
+    let url;
+    if(props.backend === 'local') {
+      url = `/${props.backend}/${endpoint.replaceAll("/", "")}.json`;
+      console.log(url)
+  } else {
+      url = props.backend + endpoint;
+  }
     return new Promise((resolve) => {
-      fetch(props.backend + endpoint, authHeaders)
+      fetch(url, authHeaders)
         .then((response) => {
           return response.json()
         })

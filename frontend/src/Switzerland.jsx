@@ -37,7 +37,7 @@ function Switzerland(props) {
         // Base case.
         return neutral
     }
-
+    
     // Interactivity for map.
     const width = 800, height = 800;
     const [mapLoaded, setMapLoaded] = useState(false)
@@ -252,8 +252,14 @@ function Switzerland(props) {
                 'Accept': 'application/json',
             })
         }
+        let url;
+        if(props.backend === 'local') {
+            url = `/${props.backend}/${endpoint.replaceAll("/", "")}.json`;
+        } else {
+            url = props.backend + endpoint;
+        }
         return new Promise((resolve) => {
-            fetch(props.backend + endpoint, authHeaders)
+            fetch(url, authHeaders)
                 .then((response) => {
                     return response.json()
                 })

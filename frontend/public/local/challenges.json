@@ -1,0 +1,709 @@
+[
+    {
+        "description": "Find an embassy, wave another flag in front of it.",
+        "id": 1,
+        "levels": 1,
+        "money": 0,
+        "name": "These Damn Immigrants"
+    },
+    {
+        "description": "Roll a wheel of cheese at least 10m.",
+        "id": 2,
+        "levels": 1,
+        "money": 50,
+        "name": "Rollin' in it"
+    },
+    {
+        "description": "Break a swiss law.",
+        "id": 3,
+        "levels": 1,
+        "money": 0,
+        "name": "Öutlaw"
+    },
+    {
+        "description": "Break an American law.",
+        "id": 4,
+        "levels": 1,
+        "money": 0,
+        "name": "Outlaw"
+    },
+    {
+        "description": "Find a restaurant that sells an entree costing 50 CHF or more.",
+        "id": 5,
+        "levels": 1,
+        "money": 0,
+        "name": "Just Takin' a Look at the Menu"
+    },
+    {
+        "description": "Complete scratch off lottery tickets until you win something.",
+        "id": 6,
+        "levels": 1,
+        "money": 0,
+        "name": "Swiss Investor"
+    },
+    {
+        "description": "Make a chemical weapon.",
+        "id": 7,
+        "levels": 1,
+        "money": 0,
+        "name": "Geneva Convention"
+    },
+    {
+        "description": "Find and consume a tiny little drink. (≤ 8 oz)",
+        "id": 8,
+        "levels": 0,
+        "money": 50,
+        "name": "BIG HANDS"
+    },
+    {
+        "description": "Buy a local paper and solve one of the puzzles.",
+        "id": 9,
+        "levels": 1,
+        "money": 0,
+        "name": "Sign of The Times"
+    },
+    {
+        "description": "Find and eat at the worst rated restaurant within a 1km radius.",
+        "id": 10,
+        "levels": 1,
+        "money": 0,
+        "name": "The Worst Wurst"
+    },
+    {
+        "description": "Find and visit the nearest church. Find a way to donate to this church.",
+        "id": 11,
+        "levels": 1,
+        "money": 0,
+        "name": "Say Your Prayers"
+    },
+    {
+        "description": "Mail home a postcard.",
+        "id": 12,
+        "levels": 1,
+        "money": 0,
+        "name": "Hi, Mom!"
+    },
+    {
+        "description": "Re-create a piece of American art.",
+        "id": 13,
+        "levels": 0,
+        "money": 50,
+        "name": "What is this, a Crossover Episode?"
+    },
+    {
+        "description": "Find printed media using this Swiss typeface.",
+        "id": 14,
+        "levels": 1,
+        "money": 0,
+        "name": "Confoederatio Helvetica"
+    },
+    {
+        "description": "Eat \"American Food\" from a restaurant.",
+        "id": 15,
+        "levels": 1,
+        "money": 0,
+        "name": "Diners, Drive-Ins and Dives"
+    },
+    {
+        "description": "Make a sandwich.",
+        "id": 16,
+        "levels": 0,
+        "money": 50,
+        "name": "Un Bien"
+    },
+    {
+        "description": "Buy something silly and wear it until the rest period or 3 hours, whichever is longer.",
+        "id": 17,
+        "levels": 1,
+        "money": 0,
+        "name": "Fashion Statement"
+    },
+    {
+        "description": "Find a statue and take a photograph mimicking it.",
+        "id": 18,
+        "levels": 0,
+        "money": 50,
+        "name": "Stoned"
+    },
+    {
+        "description": "Buy a Swiss army knife.",
+        "id": 19,
+        "levels": 1,
+        "money": 0,
+        "name": "Swiss Army Knife"
+    },
+    {
+        "description": "Create a Swiss army knife (At least 3 unique tools).",
+        "id": 20,
+        "levels": 1,
+        "money": 50,
+        "name": "My Swiss Army Knife"
+    },
+    {
+        "description": "Both teams have 10 minutes to find the oldest thing. You must be able to prove its age ±100 years.",
+        "id": 21,
+        "levels": 1,
+        "money": 0,
+        "name": "Duel: Historian"
+    },
+    {
+        "description": "Sketch a scene you are looking at, the better scene with more votes wins.",
+        "id": 22,
+        "levels": 1,
+        "money": 0,
+        "name": "Duel: Sketchy Scene"
+    },
+    {
+        "description": "Both teams have 10 minutes to get as high as possible. The higher team wins.",
+        "id": 23,
+        "levels": 1,
+        "money": 0,
+        "name": "Duel: I have the high ground"
+    },
+    {
+        "description": "Both teams have 10 minutes to build a cairn. The taller Cairn wins.",
+        "id": 24,
+        "levels": 1,
+        "money": 0,
+        "name": "Duel: Ok Cairn"
+    },
+    {
+        "description": "Play 8 ball!",
+        "id": 25,
+        "levels": 0,
+        "money": 100,
+        "name": "Duel: Let's Play 8 Ball"
+    },
+    {
+        "description": "Play Hangman.",
+        "id": 26,
+        "levels": 0,
+        "money": 100,
+        "name": "Duel: Hangman"
+    },
+    {
+        "description": "Estimate one minute; whoever is closer wins.",
+        "id": 27,
+        "levels": 1,
+        "money": 0,
+        "name": "Duel: Swiss Clock"
+    },
+    {
+        "description": "Compare your steps taken since the beginning of the day, whoever has the most steps wins.",
+        "id": 28,
+        "levels": 1,
+        "money": 0,
+        "name": "Duel: Longest road"
+    },
+    {
+        "description": "Eat a three course meal and write 1 paragraph reviewing it of at least 6 sentences to Google or Yelp.",
+        "id": 29,
+        "levels": 1,
+        "money": 50,
+        "name": "Become a Michelin Critic"
+    },
+    {
+        "description": "Pick up ten pieces of trash.",
+        "id": 30,
+        "levels": 1,
+        "money": 0,
+        "name": "Community Service"
+    },
+    {
+        "description": "Teams have 10 minutes to take as many pictures different Swiss flags as possible. The team with more pictures wins.",
+        "id": 31,
+        "levels": 1,
+        "money": 0,
+        "name": "Duel: Now that's a big plus!"
+    },
+    {
+        "description": "Make one of Switzerland's national dishes. Fondue, Rösti, or Raclette.",
+        "id": 32,
+        "levels": 2,
+        "money": 0,
+        "name": "Ratatöuille"
+    },
+    {
+        "description": "Find a spring or waterfall.",
+        "id": 33,
+        "levels": 2,
+        "money": 0,
+        "name": "Evian"
+    },
+    {
+        "description": "You must insist on tipping the next time you buy something.",
+        "id": 34,
+        "levels": 0,
+        "money": 50,
+        "name": "Homesick"
+    },
+    {
+        "description": "Find a QWERTZ keyboard.",
+        "id": 35,
+        "levels": 1,
+        "money": 0,
+        "name": "Nice Kezboard"
+    },
+    {
+        "description": "Find signage that contains 3 out of the 4 official languages of Switzerland (German, French, Italian, Romansh). This challenge can be started and completed in different cantons.",
+        "id": 36,
+        "levels": 2,
+        "money": 0,
+        "name": "Polgylot"
+    },
+    {
+        "description": "Touch the border of another country.",
+        "id": 37,
+        "levels": 2,
+        "money": 50,
+        "name": "Leave"
+    },
+    {
+        "description": "Guess the population of the town you're in. (no phone, ±20%)",
+        "id": 38,
+        "levels": 2,
+        "money": 0,
+        "name": "Census"
+    },
+    {
+        "description": "Wait 10 minutes. (no help, ±30 sec)",
+        "id": 39,
+        "levels": 1,
+        "money": 50,
+        "name": "Internal Clock"
+    },
+    {
+        "description": "Walk half a mile. (no help, no prep, ±0.05 miles)",
+        "id": 40,
+        "levels": 1,
+        "money": 50,
+        "name": "Internal Pedometer"
+    },
+    {
+        "description": "Find a town hall. (no phone)",
+        "id": 41,
+        "levels": 1,
+        "money": 0,
+        "name": "GPS"
+    },
+    {
+        "description": "Find an exact product that is 2x more expensive than on Amazon or a retail store in the US. No food or drink.",
+        "id": 42,
+        "levels": 2,
+        "money": 0,
+        "name": "Foreign Tarrifs"
+    },
+    {
+        "description": "Using a device that is not yours and an email that is not yours, send a threatening email to the other team.",
+        "id": 43,
+        "levels": 1,
+        "money": 50,
+        "name": "Send an Anonymous Threat"
+    },
+    {
+        "description": "If you are not on a train 10 mins after drawing this card, this card is vetoed.",
+        "id": 44,
+        "levels": 1,
+        "money": 50,
+        "name": "Get on a Train Immediately"
+    },
+    {
+        "description": "Between your team, do 100 squats or push-ups in Bern.",
+        "id": 45,
+        "levels": 2,
+        "money": 0,
+        "name": "Feel the Bern"
+    },
+    {
+        "description": "Bring at least 200ml of water from one water source to another.",
+        "id": 46,
+        "levels": 1,
+        "money": 0,
+        "name": "Lake to Lake"
+    },
+    {
+        "description": "Fill your water bottle from five different water sources.",
+        "id": 47,
+        "levels": 1,
+        "money": 0,
+        "name": "Hydrate or Diedrate"
+    },
+    {
+        "description": "Pray to a dam.",
+        "id": 48,
+        "levels": 2,
+        "money": 0,
+        "name": "Goddam"
+    },
+    {
+        "description": "Find a castle. Ride something and become a knight.",
+        "id": 49,
+        "levels": 2,
+        "money": 0,
+        "name": "Get Knighted"
+    },
+    {
+        "description": "Go ice skating.",
+        "id": 50,
+        "levels": 2,
+        "money": 50,
+        "name": "On Ice"
+    },
+    {
+        "description": "Find an animal that produces milk or eggs.",
+        "id": 51,
+        "levels": 1,
+        "money": 50,
+        "name": "From the Source"
+    },
+    {
+        "description": "Build a snowman.",
+        "id": 52,
+        "levels": 2,
+        "money": 0,
+        "name": "Do You Wanna ... ?"
+    },
+    {
+        "description": "Drink a beer out of an unusual vessel.",
+        "id": 53,
+        "levels": 1,
+        "money": 0,
+        "name": "Das Boot"
+    },
+    {
+        "description": "Make a charcuterie board complete with cheese, chocolate, and fruit all from Switzerland.",
+        "id": 54,
+        "levels": 1,
+        "money": 0,
+        "name": "Local Date Night"
+    },
+    {
+        "description": "Take an unusual mode of transportation. No train, bus, bike or car.",
+        "id": 55,
+        "levels": 1,
+        "money": 50,
+        "name": "How Did We Get Here?"
+    },
+    {
+        "description": "Acquire something gold and bury it.",
+        "id": 56,
+        "levels": 0,
+        "money": 200,
+        "name": "Don't Trust Them Banks"
+    },
+    {
+        "description": "Consume a liter of milk.",
+        "id": 57,
+        "levels": 1,
+        "money": 50,
+        "name": "LOMAD"
+    },
+    {
+        "description": "Trade some American currency for some foreign currency.",
+        "id": 58,
+        "levels": 1,
+        "money": 0,
+        "name": "Cultural Exchange"
+    },
+    {
+        "description": "One team member must wear a cowbell for at 3 hours or until the rest period, whichever is longer.",
+        "id": 59,
+        "levels": 1,
+        "money": 50,
+        "name": "If You Liked it Then You Should Have Put a Bell on it"
+    },
+    {
+        "description": "Ride on a rack and pinion railway.",
+        "id": 60,
+        "levels": 2,
+        "money": 0,
+        "name": "Just a Cog in the Machine"
+    },
+    {
+        "description": "Acquire and spend 8.85CHF with one of each coin.",
+        "id": 61,
+        "levels": 1,
+        "money": 50,
+        "name": "Let me be Franc"
+    },
+    {
+        "description": "Make some hot chocolate the European way.",
+        "id": 62,
+        "levels": 1,
+        "money": 0,
+        "name": "Swiss Miss"
+    },
+    {
+        "description": "Build and use a sundial.",
+        "id": 63,
+        "levels": 1,
+        "money": 0,
+        "name": "Low Tech Swiss Clock"
+    },
+    {
+        "description": "Create a swiss flag. (must have color)",
+        "id": 64,
+        "levels": 1,
+        "money": 50,
+        "name": "Plus One"
+    },
+    {
+        "description": "Go to a museum and spend at least 20 minutes there. Share three facts with the group that you learned there.",
+        "id": 65,
+        "levels": 1,
+        "money": 50,
+        "name": "Class Trip"
+    },
+    {
+        "description": "Find a chain restaurant that is also in the states. Buy an item on the menu that you can't find in the US.",
+        "id": 66,
+        "levels": 1,
+        "money": 50,
+        "name": "Homesick 2"
+    },
+    {
+        "description": "Un-swiss swiss cheese.",
+        "id": 67,
+        "levels": 1,
+        "money": 0,
+        "name": "Swissn't"
+    },
+    {
+        "description": "Find something older than the USA. (no phone)",
+        "id": 68,
+        "levels": 1,
+        "money": 0,
+        "name": "Disprove Ron Swanson"
+    },
+    {
+        "description": "Find a prison, police station, or college.",
+        "id": 69,
+        "levels": 1,
+        "money": 0,
+        "name": "Go to Yale"
+    },
+    {
+        "description": "Film a rocky training montage. The video must be at least 30 seconds.",
+        "id": 70,
+        "levels": 1,
+        "money": 50,
+        "name": "Rocky"
+    },
+    {
+        "description": "Sketch the street you are currently on, ala Paul Klee.",
+        "id": 71,
+        "levels": 1,
+        "money": 50,
+        "name": "Art Kleek"
+    },
+    {
+        "description": "Get on a boat.",
+        "id": 72,
+        "levels": 2,
+        "money": 50,
+        "name": "I'm On a Boat"
+    },
+    {
+        "description": "Take a photo of the matterhorn.",
+        "id": 73,
+        "levels": 2,
+        "money": 50,
+        "name": "She...."
+    },
+    {
+        "description": "Sneak a horse into your opponents bag.",
+        "id": 74,
+        "levels": 2,
+        "money": 50,
+        "name": "Trojan Horse"
+    },
+    {
+        "description": "Bring some milk to Lucerne from outside of the city's boundary.",
+        "id": 75,
+        "levels": 2,
+        "money": 0,
+        "name": "Milkman's Milkman"
+    },
+    {
+        "description": "Ride on a bike.",
+        "id": 76,
+        "levels": 1,
+        "money": 0,
+        "name": "Bike"
+    },
+    {
+        "description": "Eat some basil in basel.",
+        "id": 77,
+        "levels": 2,
+        "money": 0,
+        "name": "Basil in Basel"
+    },
+    {
+        "description": "Put your toes into the Aare, Switzerland's longest river.",
+        "id": 78,
+        "levels": 2,
+        "money": 0,
+        "name": "Toes in the Aare"
+    },
+    {
+        "description": "Do an olympic sport not including running.",
+        "id": 79,
+        "levels": 1,
+        "money": 50,
+        "name": "Olympic Commissionee"
+    },
+    {
+        "description": "Memorize and perform the Swiss National Anthem in English without a mistake.",
+        "id": 80,
+        "levels": 2,
+        "money": 0,
+        "name": "Dubs not Subs"
+    },
+    {
+        "description": "Learn and perform a specific swiss dance. Link: https://youtu.be/Qua0AVJ9PH4",
+        "id": 81,
+        "levels": 1,
+        "money": 50,
+        "name": "Swiss Folk Dance"
+    },
+    {
+        "description": "Both teams have 30 minutes to buy the most expensive singular chocolate.",
+        "id": 82,
+        "levels": 1,
+        "money": 50,
+        "name": "Duel: Rich Tastes"
+    },
+    {
+        "description": "Find and consume some Apple Schorle.",
+        "id": 83,
+        "levels": 0,
+        "money": 50,
+        "name": "Schorle there is Apple"
+    },
+    {
+        "description": "Complete Sunny's Trivia Corner.",
+        "id": 84,
+        "levels": 2,
+        "money": 0,
+        "name": "Sunny's Trivia Corner"
+    },
+    {
+        "description": "Get half a mile away from any building.",
+        "id": 85,
+        "levels": 1,
+        "money": 50,
+        "name": "Isolationist"
+    },
+    {
+        "description": "Generate a number between 1-20,000, you must visit a city with a population within 1000 of that.",
+        "id": 86,
+        "levels": 1,
+        "money": 50,
+        "name": "Desolate 20"
+    },
+    {
+        "description": "Visit 3 places whose names that end with -wil. (-wilen and -wieler are also acceptable)",
+        "id": 87,
+        "levels": 1,
+        "money": 0,
+        "name": "Where There's a Wil There's a Way"
+    },
+    {
+        "description": "Go to a town without a train station. It must be at least 5 miles from a train station.",
+        "id": 88,
+        "levels": 2,
+        "money": 0,
+        "name": "Boo Hoo Choo Choo"
+    },
+    {
+        "description": "Visit a cave.",
+        "id": 89,
+        "levels": 1,
+        "money": 50,
+        "name": "Underground Scene"
+    },
+    {
+        "description": "Find a city with exactly one bank, if its open, speak to the teller.",
+        "id": 90,
+        "levels": 1,
+        "money": 0,
+        "name": "Banker? I hardly know her."
+    },
+    {
+        "description": "Find a clocktower.",
+        "id": 91,
+        "levels": 0,
+        "money": 50,
+        "name": "Big Time"
+    },
+    {
+        "description": "Find an old fortress.",
+        "id": 92,
+        "levels": 1,
+        "money": 0,
+        "name": "Well, That's Useless"
+    },
+    {
+        "description": "Visit a library and read aloud a children's book in another language to your partner.",
+        "id": 93,
+        "levels": 1,
+        "money": 0,
+        "name": "Your Little Prince"
+    },
+    {
+        "description": "Go to a family-owned business.",
+        "id": 94,
+        "levels": 0,
+        "money": 50,
+        "name": "It Runs in the Family"
+    },
+    {
+        "description": "Visit two Atlas Obscura locations at least 2 miles apart.",
+        "id": 95,
+        "levels": 1,
+        "money": 50,
+        "name": "Obscuricist"
+    },
+    {
+        "description": "Consume absinthe and play an instrument within 5 minutes of each other.",
+        "id": 96,
+        "levels": 1,
+        "money": 50,
+        "name": "Absinthesizer"
+    },
+    {
+        "description": "Throw a snack into your teammate's mouth from 5 feet away.",
+        "id": 97,
+        "levels": 1,
+        "money": 0,
+        "name": "Baller"
+    },
+    {
+        "description": "Make your own Jet d'Eau with your mouth.",
+        "id": 98,
+        "levels": 0,
+        "money": 50,
+        "name": "Jet t'adore"
+    },
+    {
+        "description": "Throw two small rocks at eachother until they collide at around the midpoint. Must be 10 feet apart.",
+        "id": 99,
+        "levels": 1,
+        "money": 0,
+        "name": "Large Hadrock Collider"
+    },
+    {
+        "description": "Make a map of the town, it must map most notable locations, including all banks, stores, and main roads.",
+        "id": 100,
+        "levels": 1,
+        "money": 50,
+        "name": "Cartographer"
+    },
+    {
+        "description": "Run a beer and pastry kilometer. You can mix and match and split the distance, but you must consume four items.",
+        "id": 101,
+        "levels": 1,
+        "money": 50,
+        "name": "Beer Kilometer"
+    }
+]

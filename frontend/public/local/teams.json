@@ -1,0 +1,22 @@
+[
+    {
+        "challenges": 2,
+        "curses": 0,
+        "hand_size": 3,
+        "id": 1,
+        "income": 0,
+        "money": 0,
+        "name": "A team",
+        "score": 0
+    },
+    {
+        "challenges": 2,
+        "curses": 0,
+        "hand_size": 3,
+        "id": 2,
+        "income": 0,
+        "money": 0,
+        "name": "Swiss Misters",
+        "score": 0
+    }
+]

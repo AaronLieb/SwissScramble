@@ -1,0 +1,210 @@
+[
+    {
+        "destroyed": 0,
+        "id": 1,
+        "level": 0,
+        "name": "Aargau",
+        "team_id": 0,
+        "value": 1
+    },
+    {
+        "destroyed": 0,
+        "id": 2,
+        "level": 0,
+        "name": "Appenzell Ausserrhoden",
+        "team_id": 0,
+        "value": 1
+    },
+    {
+        "destroyed": 0,
+        "id": 3,
+        "level": 0,
+        "name": "Appenzell Innerrhoden",
+        "team_id": 0,
+        "value": 1
+    },
+    {
+        "destroyed": 0,
+        "id": 4,
+        "level": 0,
+        "name": "Basel-Landschaft",
+        "team_id": 0,
+        "value": 1
+    },
+    {
+        "destroyed": 0,
+        "id": 5,
+        "level": 0,
+        "name": "Basel-Stadt",
+        "team_id": 0,
+        "value": 1
+    },
+    {
+        "destroyed": 0,
+        "id": 6,
+        "level": 0,
+        "name": "Bern",
+        "team_id": 0,
+        "value": 1
+    },
+    {
+        "destroyed": 0,
+        "id": 7,
+        "level": 0,
+        "name": "Fribourg / Freiburg",
+        "team_id": 0,
+        "value": 1
+    },
+    {
+        "destroyed": 0,
+        "id": 8,
+        "level": 0,
+        "name": "Geneva",
+        "team_id": 0,
+        "value": 1
+    },
+    {
+        "destroyed": 0,
+        "id": 9,
+        "level": 0,
+        "name": "Glarus",
+        "team_id": 0,
+        "value": 1
+    },
+    {
+        "destroyed": 0,
+        "id": 10,
+        "level": 0,
+        "name": "Grisons",
+        "team_id": 0,
+        "value": 1
+    },
+    {
+        "destroyed": 0,
+        "id": 11,
+        "level": 0,
+        "name": "Jura",
+        "team_id": 0,
+        "value": 1
+    },
+    {
+        "destroyed": 0,
+        "id": 12,
+        "level": 0,
+        "name": "Lucerne",
+        "team_id": 0,
+        "value": 1
+    },
+    {
+        "destroyed": 0,
+        "id": 13,
+        "level": 0,
+        "name": "Neuchatel",
+        "team_id": 0,
+        "value": 1
+    },
+    {
+        "destroyed": 0,
+        "id": 14,
+        "level": 0,
+        "name": "Nidwalden",
+        "team_id": 0,
+        "value": 1
+    },
+    {
+        "destroyed": 0,
+        "id": 15,
+        "level": 0,
+        "name": "Obwalden",
+        "team_id": 0,
+        "value": 1
+    },
+    {
+        "destroyed": 0,
+        "id": 16,
+        "level": 0,
+        "name": "Schaffhausen",
+        "team_id": 0,
+        "value": 1
+    },
+    {
+        "destroyed": 0,
+        "id": 17,
+        "level": 0,
+        "name": "Schwyz",
+        "team_id": 0,
+        "value": 1
+    },
+    {
+        "destroyed": 0,
+        "id": 18,
+        "level": 0,
+        "name": "Solothurn",
+        "team_id": 0,
+        "value": 1
+    },
+    {
+        "destroyed": 0,
+        "id": 19,
+        "level": 0,
+        "name": "St. Gallen",
+        "team_id": 0,
+        "value": 1
+    },
+    {
+        "destroyed": 0,
+        "id": 20,
+        "level": 0,
+        "name": "Thurgau",
+        "team_id": 0,
+        "value": 1
+    },
+    {
+        "destroyed": 0,
+        "id": 21,
+        "level": 0,
+        "name": "Ticino",
+        "team_id": 0,
+        "value": 1
+    },
+    {
+        "destroyed": 0,
+        "id": 22,
+        "level": 0,
+        "name": "Uri",
+        "team_id": 0,
+        "value": 1
+    },
+    {
+        "destroyed": 0,
+        "id": 23,
+        "level": 0,
+        "name": "Valais",
+        "team_id": 0,
+        "value": 1
+    },
+    {
+        "destroyed": 0,
+        "id": 24,
+        "level": 0,
+        "name": "Vaud",
+        "team_id": 0,
+        "value": 1
+    },
+    {
+        "destroyed": 0,
+        "id": 25,
+        "level": 0,
+        "name": "Zug",
+        "team_id": 0,
+        "value": 1
+    },
+    {
+        "destroyed": 0,
+        "id": 26,
+        "level": 0,
+        "name": "Zurich",
+        "team_id": 0,
+        "value": 1
+    }
+]
