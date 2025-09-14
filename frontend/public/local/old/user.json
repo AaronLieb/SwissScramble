@@ -1,0 +1,42 @@
+[
+    {
+        "firstname": "Aaron",
+        "hashed_password": "$2b$12$D.Sp6Eavi4YrE0gZ8fC.n.LEkxkvDRosaWSZYlDXQgw9vuzVLN1ne",
+        "id": 1,
+        "lastname": "Lieberman",
+        "team_id": 1,
+        "username": "aaronlieb"
+    },
+    {
+        "firstname": "Antonio",
+        "hashed_password": "$2b$12$6yGm3YcfVi9INTsxbvVwo.kgoZyeGHx7SoQsSuGLquVrVxgksTOfy",
+        "id": 2,
+        "lastname": "Alonso",
+        "team_id": 1,
+        "username": "antonio"
+    },
+    {
+        "firstname": "Isaac",
+        "hashed_password": "$2b$12$DGHT20nYOFSX6b396YKdEeE62fz5Anu86jYPiGNHfNPQCOFD3w/ZO",
+        "id": 3,
+        "lastname": "Feldman",
+        "team_id": 2,
+        "username": "icf"
+    },
+    {
+        "firstname": "Tim",
+        "hashed_password": "$2b$12$8vFV2m/UVBt6zt5w6aa4zud5zjkbGxKbYxj.bXYALPjqgyLiijSe6",
+        "id": 4,
+        "lastname": "Harrold",
+        "team_id": 2,
+        "username": "timjhh"
+    },
+    {
+        "firstname": "joe",
+        "hashed_password": "$2b$12$czPwjFRRsClo1d89RXrqeONNVw.Hv29ld05u57qIWxMyuPVMy0hHi",
+        "id": 5,
+        "lastname": "biden",
+        "team_id": null,
+        "username": ""
+    }
+]

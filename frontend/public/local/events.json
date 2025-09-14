@@ -1,1 +1,1244 @@
-null
+[
+    {
+        "id": 1,
+        "source": "A team",
+        "text": "Team 'A team' entered 'Aargau'",
+        "time": "2025-03-21 09:15:03.701821"
+    },
+    {
+        "id": 2,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' entered 'Zurich'",
+        "time": "2025-03-21 09:20:47.700124"
+    },
+    {
+        "id": 3,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' completed the challenge 'GPS'",
+        "time": "2025-03-21 09:20:59.649274"
+    },
+    {
+        "id": 4,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' entered 'Zug'",
+        "time": "2025-03-21 09:55:11.816281"
+    },
+    {
+        "id": 5,
+        "source": "A team",
+        "text": "Team 'A team' completed the challenge 'Diners, Drive-Ins and Dives'",
+        "time": "2025-03-21 10:10:34.869087"
+    },
+    {
+        "id": 6,
+        "source": "A team",
+        "text": "Team 'A team' completed the challenge 'Your Little Prince'",
+        "time": "2025-03-21 10:11:04.109345"
+    },
+    {
+        "id": 7,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' entered 'Lucerne'",
+        "time": "2025-03-21 10:14:33.173585"
+    },
+    {
+        "id": 8,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' completed the challenge 'Duel: Longest road'",
+        "time": "2025-03-21 10:36:11.896055"
+    },
+    {
+        "id": 9,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' completed the challenge 'Diners, Drive-Ins and Dives'",
+        "time": "2025-03-21 10:42:36.187918"
+    },
+    {
+        "id": 10,
+        "source": "A team",
+        "text": "Team 'A team' entered 'Solothurn'",
+        "time": "2025-03-21 10:47:58.246094"
+    },
+    {
+        "id": 11,
+        "source": "A team",
+        "text": "A team has earned 25 in passive income",
+        "time": "2025-03-21 11:11:04.560523"
+    },
+    {
+        "id": 12,
+        "source": "Swiss Misters",
+        "text": "Swiss Misters has earned 25 in passive income",
+        "time": "2025-03-21 11:11:04.570832"
+    },
+    {
+        "id": 13,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' completed the challenge 'Duel: Rich Tastes'",
+        "time": "2025-03-21 11:11:11.902280"
+    },
+    {
+        "id": 14,
+        "source": "A team",
+        "text": "Team 'A team' entered 'Basel-Landschaft'",
+        "time": "2025-03-21 11:43:34.703225"
+    },
+    {
+        "id": 15,
+        "source": "A team",
+        "text": "Team 'A team' entered 'Basel-Stadt'",
+        "time": "2025-03-21 11:44:07.025508"
+    },
+    {
+        "id": 16,
+        "source": "A team",
+        "text": "Team 'A team' completed the challenge 'It Runs in the Family'",
+        "time": "2025-03-21 11:44:49.203896"
+    },
+    {
+        "id": 17,
+        "source": "A team",
+        "text": "A team has earned 25 in passive income",
+        "time": "2025-03-21 12:13:45.956292"
+    },
+    {
+        "id": 18,
+        "source": "Swiss Misters",
+        "text": "Swiss Misters has earned 25 in passive income",
+        "time": "2025-03-21 12:13:45.965046"
+    },
+    {
+        "id": 19,
+        "source": "A team",
+        "text": "Team 'A team' completed the challenge 'I'm On a Boat'",
+        "time": "2025-03-21 12:14:07.800770"
+    },
+    {
+        "id": 20,
+        "source": "Swiss Misters",
+        "text": "(Swiss Misters) Tim: hi",
+        "time": "2025-03-21 12:28:13.927017"
+    },
+    {
+        "id": 21,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' entered 'Aargau'",
+        "time": "2025-03-21 12:28:57.330530"
+    },
+    {
+        "id": 22,
+        "source": "A team",
+        "text": "(A team) Aaron: Hi",
+        "time": "2025-03-21 12:30:49.415689"
+    },
+    {
+        "id": 23,
+        "source": "A team",
+        "text": "Team 'A team' purchased a curse",
+        "time": "2025-03-21 12:31:01.658592"
+    },
+    {
+        "id": 24,
+        "source": "A team",
+        "text": "Team 'A team' entered 'Basel-Landschaft'",
+        "time": "2025-03-21 12:52:37.418211"
+    },
+    {
+        "id": 25,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' entered 'Bern'",
+        "time": "2025-03-21 12:54:33.092809"
+    },
+    {
+        "id": 26,
+        "source": "A team",
+        "text": "A team has earned 50 in passive income",
+        "time": "2025-03-21 13:00:22.568648"
+    },
+    {
+        "id": 27,
+        "source": "Swiss Misters",
+        "text": "Swiss Misters has earned 25 in passive income",
+        "time": "2025-03-21 13:00:22.575198"
+    },
+    {
+        "id": 28,
+        "source": "A team",
+        "text": "Team 'A team' purchased a curse",
+        "time": "2025-03-21 13:01:15.973390"
+    },
+    {
+        "id": 29,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' completed the challenge 'Feel the Bern'",
+        "time": "2025-03-21 13:18:23.455993"
+    },
+    {
+        "id": 30,
+        "source": "A team",
+        "text": "Team 'A team' completed the challenge 'Evian'",
+        "time": "2025-03-21 13:52:03.078346"
+    },
+    {
+        "id": 31,
+        "source": "A team",
+        "text": "A team has earned 75 in passive income",
+        "time": "2025-03-21 14:06:22.720374"
+    },
+    {
+        "id": 32,
+        "source": "Swiss Misters",
+        "text": "Swiss Misters has earned 50 in passive income",
+        "time": "2025-03-21 14:06:22.729444"
+    },
+    {
+        "id": 33,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' entered 'Solothurn'",
+        "time": "2025-03-21 14:58:47.402871"
+    },
+    {
+        "id": 34,
+        "source": "Swiss Misters",
+        "text": "(Swiss Misters) Isaac: We discarded the go ice skating challenge. There’s nowhere open where we can do it! :(",
+        "time": "2025-03-21 14:59:47.180699"
+    },
+    {
+        "id": 35,
+        "source": "A team",
+        "text": "A team has earned 75 in passive income",
+        "time": "2025-03-21 14:59:48.053256"
+    },
+    {
+        "id": 36,
+        "source": "Swiss Misters",
+        "text": "Swiss Misters has earned 50 in passive income",
+        "time": "2025-03-21 14:59:48.066563"
+    },
+    {
+        "id": 37,
+        "source": "A team",
+        "text": "(A team) Antonio: :(",
+        "time": "2025-03-21 15:01:26.806824"
+    },
+    {
+        "id": 38,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' entered 'Aargau'",
+        "time": "2025-03-21 15:13:01.861087"
+    },
+    {
+        "id": 39,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' completed the challenge 'Low Tech Swiss Clock'",
+        "time": "2025-03-21 15:13:08.372643"
+    },
+    {
+        "id": 40,
+        "source": "A team",
+        "text": "Team 'A team' entered 'Solothurn'",
+        "time": "2025-03-21 15:30:56.171826"
+    },
+    {
+        "id": 41,
+        "source": "A team",
+        "text": "Team 'A team' purchased a curse",
+        "time": "2025-03-21 15:31:09.332900"
+    },
+    {
+        "id": 42,
+        "source": "A team",
+        "text": "Team 'A team' used a curse",
+        "time": "2025-03-21 15:38:32.027887"
+    },
+    {
+        "id": 43,
+        "source": "A team",
+        "text": "A team has earned 50 in passive income",
+        "time": "2025-03-21 16:09:56.449404"
+    },
+    {
+        "id": 44,
+        "source": "Swiss Misters",
+        "text": "Swiss Misters has earned 50 in passive income",
+        "time": "2025-03-21 16:09:56.459719"
+    },
+    {
+        "id": 45,
+        "source": "A team",
+        "text": "Team 'A team' used a curse",
+        "time": "2025-03-21 16:18:13.910199"
+    },
+    {
+        "id": 46,
+        "source": "A team",
+        "text": "Team 'A team' used a curse",
+        "time": "2025-03-21 16:50:03.008855"
+    },
+    {
+        "id": 47,
+        "source": "Swiss Misters",
+        "text": "(Swiss Misters) Isaac: oh boy",
+        "time": "2025-03-21 17:02:17.531859"
+    },
+    {
+        "id": 48,
+        "source": "Swiss Misters",
+        "text": "(Swiss Misters) Isaac: oh boy",
+        "time": "2025-03-21 17:02:17.710904"
+    },
+    {
+        "id": 49,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' purchased a curse",
+        "time": "2025-03-21 17:21:13.691538"
+    },
+    {
+        "id": 50,
+        "source": "A team",
+        "text": "Team 'A team' entered 'Bern'",
+        "time": "2025-03-21 17:42:41.094668"
+    },
+    {
+        "id": 51,
+        "source": "A team",
+        "text": "Team 'A team' completed the challenge 'Get Knighted'",
+        "time": "2025-03-21 17:43:01.824799"
+    },
+    {
+        "id": 52,
+        "source": "A team",
+        "text": "Team 'A team' completed the challenge 'Beer Kilometer'",
+        "time": "2025-03-21 17:43:10.872407"
+    },
+    {
+        "id": 53,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' purchased a curse",
+        "time": "2025-03-21 17:48:57.026664"
+    },
+    {
+        "id": 54,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' entered 'Zurich'",
+        "time": "2025-03-21 18:01:52.406046"
+    },
+    {
+        "id": 55,
+        "source": "A team",
+        "text": "A team has earned 50 in passive income",
+        "time": "2025-03-21 18:33:04.829416"
+    },
+    {
+        "id": 56,
+        "source": "Swiss Misters",
+        "text": "Swiss Misters has earned 25 in passive income",
+        "time": "2025-03-21 18:33:04.836778"
+    },
+    {
+        "id": 57,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' completed the challenge 'LOMAD'",
+        "time": "2025-03-22 07:08:23.281045"
+    },
+    {
+        "id": 58,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' used a curse",
+        "time": "2025-03-22 07:12:42.749178"
+    },
+    {
+        "id": 59,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' completed the challenge 'LOMAD'",
+        "time": "2025-03-22 07:13:18.251185"
+    },
+    {
+        "id": 60,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' entered 'Zug'",
+        "time": "2025-03-22 07:28:53.274217"
+    },
+    {
+        "id": 61,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' completed the challenge 'Duel: Historian'",
+        "time": "2025-03-22 07:45:12.860992"
+    },
+    {
+        "id": 62,
+        "source": "A team",
+        "text": "Team 'A team' completed the challenge 'Swiss Investor'",
+        "time": "2025-03-22 08:02:28.841378"
+    },
+    {
+        "id": 63,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' used a curse",
+        "time": "2025-03-22 08:03:44.121270"
+    },
+    {
+        "id": 64,
+        "source": "A team",
+        "text": "Team 'A team' entered 'Solothurn'",
+        "time": "2025-03-22 08:41:39.449312"
+    },
+    {
+        "id": 65,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' completed the challenge 'Underground Scene'",
+        "time": "2025-03-22 08:42:19.151364"
+    },
+    {
+        "id": 66,
+        "source": "A team",
+        "text": "A team has earned 75 in passive income",
+        "time": "2025-03-22 09:06:10.949774"
+    },
+    {
+        "id": 67,
+        "source": "Swiss Misters",
+        "text": "Swiss Misters has earned 75 in passive income",
+        "time": "2025-03-22 09:06:10.956965"
+    },
+    {
+        "id": 68,
+        "source": "A team",
+        "text": "Team 'A team' completed the challenge 'My Swiss Army Knife'",
+        "time": "2025-03-22 09:28:14.313422"
+    },
+    {
+        "id": 69,
+        "source": "A team",
+        "text": "Team 'A team' entered 'Bern'",
+        "time": "2025-03-22 09:33:19.968200"
+    },
+    {
+        "id": 70,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' entered 'Schwyz'",
+        "time": "2025-03-22 09:40:39.136638"
+    },
+    {
+        "id": 71,
+        "source": "A team",
+        "text": "A team has earned 75 in passive income",
+        "time": "2025-03-22 10:02:30.827687"
+    },
+    {
+        "id": 72,
+        "source": "Swiss Misters",
+        "text": "Swiss Misters has earned 75 in passive income",
+        "time": "2025-03-22 10:02:30.834916"
+    },
+    {
+        "id": 73,
+        "source": "A team",
+        "text": "Team 'A team' entered 'Neuchatel'",
+        "time": "2025-03-22 10:03:01.627828"
+    },
+    {
+        "id": 74,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' entered 'Uri'",
+        "time": "2025-03-22 10:12:42.385570"
+    },
+    {
+        "id": 75,
+        "source": "A team",
+        "text": "Team 'A team' completed the challenge 'Das Boot'",
+        "time": "2025-03-22 10:34:01.733884"
+    },
+    {
+        "id": 76,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' completed the challenge 'Cartographer'",
+        "time": "2025-03-22 10:39:52.723719"
+    },
+    {
+        "id": 77,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' completed the challenge 'Swiss Investor'",
+        "time": "2025-03-22 11:18:35.745230"
+    },
+    {
+        "id": 78,
+        "source": "A team",
+        "text": "A team has earned 75 in passive income",
+        "time": "2025-03-22 11:25:03.687733"
+    },
+    {
+        "id": 79,
+        "source": "Swiss Misters",
+        "text": "Swiss Misters has earned 100 in passive income",
+        "time": "2025-03-22 11:25:03.700353"
+    },
+    {
+        "id": 80,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' purchased a curse",
+        "time": "2025-03-22 11:32:57.362840"
+    },
+    {
+        "id": 81,
+        "source": "A team",
+        "text": "Team 'A team' purchased a curse",
+        "time": "2025-03-22 11:38:26.763864"
+    },
+    {
+        "id": 82,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' used a curse",
+        "time": "2025-03-22 11:47:47.924867"
+    },
+    {
+        "id": 83,
+        "source": "A team",
+        "text": "Team 'A team' used a curse",
+        "time": "2025-03-22 11:49:24.458589"
+    },
+    {
+        "id": 84,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' entered 'Schwyz'",
+        "time": "2025-03-22 11:50:01.829300"
+    },
+    {
+        "id": 85,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' completed the challenge 'Schorle there is Apple'",
+        "time": "2025-03-22 12:00:28.000820"
+    },
+    {
+        "id": 86,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' completed the challenge 'Big Time'",
+        "time": "2025-03-22 12:01:32.040143"
+    },
+    {
+        "id": 87,
+        "source": "A team",
+        "text": "A team has earned 75 in passive income",
+        "time": "2025-03-22 12:09:54.915477"
+    },
+    {
+        "id": 88,
+        "source": "string",
+        "text": "string has earned 100 in passive income",
+        "time": "2025-03-22 12:09:54.923888"
+    },
+    {
+        "id": 89,
+        "source": "A team",
+        "text": "A team has earned 75 in passive income",
+        "time": "2025-03-22 12:58:23.123113"
+    },
+    {
+        "id": 90,
+        "source": "string",
+        "text": "string has earned 100 in passive income",
+        "time": "2025-03-22 12:58:23.132007"
+    },
+    {
+        "id": 91,
+        "source": "A team",
+        "text": "Team 'A team' entered 'Vaud'",
+        "time": "2025-03-22 12:58:37.266742"
+    },
+    {
+        "id": 92,
+        "source": "A team",
+        "text": "Team 'A team' completed the challenge 'Duel: Let's Play 8 Ball'",
+        "time": "2025-03-22 13:30:39.437725"
+    },
+    {
+        "id": 93,
+        "source": "A team",
+        "text": "Team 'A team' completed the challenge 'Duel: Ok Cairn'",
+        "time": "2025-03-22 13:51:27.124603"
+    },
+    {
+        "id": 94,
+        "source": "A team",
+        "text": "A team has earned 75 in passive income",
+        "time": "2025-03-22 14:30:22.190626"
+    },
+    {
+        "id": 95,
+        "source": "Swiss Misters",
+        "text": "Swiss Misters has earned 100 in passive income",
+        "time": "2025-03-22 14:30:22.198114"
+    },
+    {
+        "id": 96,
+        "source": "A team",
+        "text": "A team has earned 75 in passive income",
+        "time": "2025-03-22 14:30:24.401131"
+    },
+    {
+        "id": 97,
+        "source": "Swiss Misters",
+        "text": "Swiss Misters has earned 100 in passive income",
+        "time": "2025-03-22 14:30:24.408209"
+    },
+    {
+        "id": 98,
+        "source": "A team",
+        "text": "Team 'A team' entered 'Fribourg / Freiburg'",
+        "time": "2025-03-22 14:33:10.538765"
+    },
+    {
+        "id": 99,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' completed the challenge 'Where There's a Wil There's a Way'",
+        "time": "2025-03-22 14:58:36.481573"
+    },
+    {
+        "id": 100,
+        "source": "A team",
+        "text": "(A team) Antonio: Buying a hand size increase power up",
+        "time": "2025-03-22 15:16:29.366782"
+    },
+    {
+        "id": 101,
+        "source": "A team",
+        "text": "Team 'A team' entered 'Bern'",
+        "time": "2025-03-22 15:20:58.108892"
+    },
+    {
+        "id": 102,
+        "source": "Swiss Misters",
+        "text": "(Swiss Misters) Tim: Buying a hand size power up",
+        "time": "2025-03-22 15:21:58.883211"
+    },
+    {
+        "id": 103,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' entered 'St. Gallen'",
+        "time": "2025-03-22 15:23:50.985672"
+    },
+    {
+        "id": 104,
+        "source": "A team",
+        "text": "Team 'A team' entered 'Solothurn'",
+        "time": "2025-03-22 16:00:39.629263"
+    },
+    {
+        "id": 105,
+        "source": "A team",
+        "text": "A team has earned 75 in passive income",
+        "time": "2025-03-22 16:07:41.202664"
+    },
+    {
+        "id": 106,
+        "source": "Swiss Misters",
+        "text": "Swiss Misters has earned 100 in passive income",
+        "time": "2025-03-22 16:07:41.210530"
+    },
+    {
+        "id": 107,
+        "source": "A team",
+        "text": "Team 'A team' entered 'Aargau'",
+        "time": "2025-03-22 16:13:18.308649"
+    },
+    {
+        "id": 108,
+        "source": "A team",
+        "text": "(A team) Antonio: Buying another hand size increase",
+        "time": "2025-03-22 16:13:25.535985"
+    },
+    {
+        "id": 109,
+        "source": "A team",
+        "text": "Team 'A team' entered 'Zurich'",
+        "time": "2025-03-22 16:25:06.459158"
+    },
+    {
+        "id": 110,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' purchased a curse",
+        "time": "2025-03-22 16:35:17.883707"
+    },
+    {
+        "id": 111,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' used a curse",
+        "time": "2025-03-22 16:38:24.315432"
+    },
+    {
+        "id": 112,
+        "source": "A team",
+        "text": "(A team) Aaron: balls",
+        "time": "2025-03-22 16:39:45.797487"
+    },
+    {
+        "id": 113,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' completed the challenge 'Just a Cog in the Machine'",
+        "time": "2025-03-22 16:42:16.499446"
+    },
+    {
+        "id": 114,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' entered 'Appenzell Ausserrhoden'",
+        "time": "2025-03-22 16:42:19.591264"
+    },
+    {
+        "id": 115,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' completed the challenge 'Absinthesizer'",
+        "time": "2025-03-22 16:59:37.180180"
+    },
+    {
+        "id": 116,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' entered 'Appenzell Innerrhoden'",
+        "time": "2025-03-22 16:59:57.592187"
+    },
+    {
+        "id": 117,
+        "source": "A team",
+        "text": "A team has earned 75 in passive income",
+        "time": "2025-03-22 17:15:27.917185"
+    },
+    {
+        "id": 118,
+        "source": "Swiss Misters",
+        "text": "Swiss Misters has earned 125 in passive income",
+        "time": "2025-03-22 17:15:27.924987"
+    },
+    {
+        "id": 119,
+        "source": "A team",
+        "text": "Team 'A team' completed the challenge 'Duel: Now that's a big plus!'",
+        "time": "2025-03-22 17:31:47.010590"
+    },
+    {
+        "id": 120,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' entered 'Appenzell Ausserrhoden'",
+        "time": "2025-03-22 17:46:51.433043"
+    },
+    {
+        "id": 121,
+        "source": "A team",
+        "text": "Team 'A team' completed the challenge 'Olympic Commissionee'",
+        "time": "2025-03-22 18:08:47.633199"
+    },
+    {
+        "id": 122,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' used power up 'The other team must provide verbal emotional support over the phone for at least 2 minutes.'",
+        "time": "2025-03-22 21:27:28.455734"
+    },
+    {
+        "id": 123,
+        "source": "A team",
+        "text": "A team has earned 75 in passive income",
+        "time": "2025-03-23 06:53:13.230128"
+    },
+    {
+        "id": 124,
+        "source": "Swiss Misters",
+        "text": "Swiss Misters has earned 100 in passive income",
+        "time": "2025-03-23 06:53:13.239583"
+    },
+    {
+        "id": 125,
+        "source": "A team",
+        "text": "Team 'A team' completed the challenge 'Duel: Swiss Clock'",
+        "time": "2025-03-23 07:38:11.595497"
+    },
+    {
+        "id": 126,
+        "source": "A team",
+        "text": "Team 'A team' completed the challenge 'Hi, Mom!'",
+        "time": "2025-03-23 07:47:26.983080"
+    },
+    {
+        "id": 127,
+        "source": "A team",
+        "text": "A team has earned 100 in passive income",
+        "time": "2025-03-23 08:07:15.950969"
+    },
+    {
+        "id": 128,
+        "source": "Swiss Misters",
+        "text": "Swiss Misters has earned 100 in passive income",
+        "time": "2025-03-23 08:07:15.961042"
+    },
+    {
+        "id": 129,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' used power up 'Increase your hand size by one temporarily. Go back to three as soon as you have used the fourth one.'",
+        "time": "2025-03-23 08:23:31.831700"
+    },
+    {
+        "id": 130,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' purchased a curse",
+        "time": "2025-03-23 08:23:35.038033"
+    },
+    {
+        "id": 131,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' used a curse",
+        "time": "2025-03-23 08:23:49.788580"
+    },
+    {
+        "id": 132,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' entered 'Thurgau'",
+        "time": "2025-03-23 08:26:18.536726"
+    },
+    {
+        "id": 133,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' entered 'Zurich'",
+        "time": "2025-03-23 08:36:47.813788"
+    },
+    {
+        "id": 134,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' completed the challenge 'Outlaw'",
+        "time": "2025-03-23 09:11:53.926019"
+    },
+    {
+        "id": 135,
+        "source": "A team",
+        "text": "Team 'A team' completed the challenge 'Duel: Hangman'",
+        "time": "2025-03-23 09:18:37.763442"
+    },
+    {
+        "id": 136,
+        "source": "A team",
+        "text": "A team has earned 75 in passive income",
+        "time": "2025-03-23 09:19:40.843659"
+    },
+    {
+        "id": 137,
+        "source": "Swiss Misters",
+        "text": "Swiss Misters has earned 100 in passive income",
+        "time": "2025-03-23 09:19:40.855341"
+    },
+    {
+        "id": 138,
+        "source": "A team",
+        "text": "Team 'A team' used power up 'Draw a Card.'",
+        "time": "2025-03-23 09:20:17.535158"
+    },
+    {
+        "id": 139,
+        "source": "A team",
+        "text": "Team 'A team' completed the challenge 'Homesick 2'",
+        "time": "2025-03-23 09:22:51.229394"
+    },
+    {
+        "id": 140,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' completed the challenge 'Large Hadrock Collider'",
+        "time": "2025-03-23 09:30:02.301824"
+    },
+    {
+        "id": 141,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' completed the challenge 'Olympic Commissionee'",
+        "time": "2025-03-23 09:35:57.081175"
+    },
+    {
+        "id": 142,
+        "source": "A team",
+        "text": "Team 'A team' completed the challenge 'Go to Yale'",
+        "time": "2025-03-23 09:38:25.515866"
+    },
+    {
+        "id": 143,
+        "source": "A team",
+        "text": "Team 'A team' completed the challenge 'Geneva Convention'",
+        "time": "2025-03-23 09:58:33.214248"
+    },
+    {
+        "id": 144,
+        "source": "A team",
+        "text": "A team has earned 75 in passive income",
+        "time": "2025-03-23 10:07:53.364172"
+    },
+    {
+        "id": 145,
+        "source": "Swiss Misters",
+        "text": "Swiss Misters has earned 75 in passive income",
+        "time": "2025-03-23 10:07:53.372791"
+    },
+    {
+        "id": 146,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' entered 'Aargau'",
+        "time": "2025-03-23 10:08:51.407904"
+    },
+    {
+        "id": 147,
+        "source": "A team",
+        "text": "Team 'A team' used power up 'Draw a Card.'",
+        "time": "2025-03-23 10:12:07.976196"
+    },
+    {
+        "id": 148,
+        "source": "A team",
+        "text": "Team 'A team' entered 'Schwyz'",
+        "time": "2025-03-23 10:13:51.876807"
+    },
+    {
+        "id": 149,
+        "source": "A team",
+        "text": "Team 'A team' purchased a curse",
+        "time": "2025-03-23 10:15:08.276349"
+    },
+    {
+        "id": 150,
+        "source": "A team",
+        "text": "Team 'A team' used a curse",
+        "time": "2025-03-23 10:18:47.412521"
+    },
+    {
+        "id": 151,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' entered 'Solothurn'",
+        "time": "2025-03-23 10:27:12.298065"
+    },
+    {
+        "id": 152,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' used power up 'Increase your hand size by one temporarily. Go back to three as soon as you have used the fourth one.'",
+        "time": "2025-03-23 10:30:03.580550"
+    },
+    {
+        "id": 153,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' entered 'Basel-Landschaft'",
+        "time": "2025-03-23 10:30:13.972396"
+    },
+    {
+        "id": 154,
+        "source": "A team",
+        "text": "Team 'A team' completed the challenge 'Just Takin' a Look at the Menu'",
+        "time": "2025-03-23 10:33:26.297148"
+    },
+    {
+        "id": 155,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' entered 'Basel-Stadt'",
+        "time": "2025-03-23 10:52:32.778067"
+    },
+    {
+        "id": 156,
+        "source": "A team",
+        "text": "A team has earned 75 in passive income",
+        "time": "2025-03-23 10:58:39.381404"
+    },
+    {
+        "id": 157,
+        "source": "Swiss Misters",
+        "text": "Swiss Misters has earned 75 in passive income",
+        "time": "2025-03-23 10:58:39.389608"
+    },
+    {
+        "id": 158,
+        "source": "A team",
+        "text": "Team 'A team' used power up 'The other team must provide verbal emotional support over the phone for at least 2 minutes.'",
+        "time": "2025-03-23 11:00:06.523933"
+    },
+    {
+        "id": 159,
+        "source": "A team",
+        "text": "Team 'A team' entered 'Lucerne'",
+        "time": "2025-03-23 11:06:10.662576"
+    },
+    {
+        "id": 160,
+        "source": "A team",
+        "text": "Team 'A team' paid a toll to Team 'Swiss Misters'",
+        "time": "2025-03-23 11:06:10.691831"
+    },
+    {
+        "id": 161,
+        "source": "A team",
+        "text": "Team 'A team' completed the challenge 'Milkman's Milkman'",
+        "time": "2025-03-23 11:21:05.464375"
+    },
+    {
+        "id": 162,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' completed the challenge 'I'm On a Boat'",
+        "time": "2025-03-23 11:21:20.324156"
+    },
+    {
+        "id": 163,
+        "source": "A team",
+        "text": "Team 'A team' completed the challenge 'Local Date Night'",
+        "time": "2025-03-23 11:43:08.799146"
+    },
+    {
+        "id": 164,
+        "source": "A team",
+        "text": "A team has earned 50 in passive income",
+        "time": "2025-03-23 12:26:49.467759"
+    },
+    {
+        "id": 165,
+        "source": "Swiss Misters",
+        "text": "Swiss Misters has earned 50 in passive income",
+        "time": "2025-03-23 12:26:49.475510"
+    },
+    {
+        "id": 166,
+        "source": "A team",
+        "text": "Team 'A team' completed the challenge 'Say Your Prayers'",
+        "time": "2025-03-23 12:27:52.796014"
+    },
+    {
+        "id": 167,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' completed the challenge 'Class Trip'",
+        "time": "2025-03-23 12:47:53.868441"
+    },
+    {
+        "id": 168,
+        "source": "A team",
+        "text": "Team 'A team' entered 'Schwyz'",
+        "time": "2025-03-23 12:56:15.610606"
+    },
+    {
+        "id": 169,
+        "source": "A team",
+        "text": "A team has earned 50 in passive income",
+        "time": "2025-03-23 13:02:56.123591"
+    },
+    {
+        "id": 170,
+        "source": "Swiss Misters",
+        "text": "Swiss Misters has earned 50 in passive income",
+        "time": "2025-03-23 13:02:56.130710"
+    },
+    {
+        "id": 171,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' entered 'Basel-Landschaft'",
+        "time": "2025-03-23 13:06:02.360143"
+    },
+    {
+        "id": 172,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' used power up 'Increase your hand size by one temporarily. Go back to three as soon as you have used the fourth one.'",
+        "time": "2025-03-23 13:06:19.012217"
+    },
+    {
+        "id": 173,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' purchased a curse",
+        "time": "2025-03-23 13:06:23.774734"
+    },
+    {
+        "id": 174,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' used a curse",
+        "time": "2025-03-23 13:12:50.459671"
+    },
+    {
+        "id": 175,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' entered 'Solothurn'",
+        "time": "2025-03-23 13:14:45.893163"
+    },
+    {
+        "id": 176,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' completed the challenge 'Just Takin' a Look at the Menu'",
+        "time": "2025-03-23 13:36:30.285722"
+    },
+    {
+        "id": 177,
+        "source": "A team",
+        "text": "Team 'A team' entered 'Lucerne'",
+        "time": "2025-03-23 14:00:49.399542"
+    },
+    {
+        "id": 178,
+        "source": "A team",
+        "text": "A team has earned 50 in passive income",
+        "time": "2025-03-23 14:01:25.599020"
+    },
+    {
+        "id": 179,
+        "source": "Swiss Misters",
+        "text": "Swiss Misters has earned 50 in passive income",
+        "time": "2025-03-23 14:01:25.606227"
+    },
+    {
+        "id": 180,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' completed the challenge 'Swiss Folk Dance'",
+        "time": "2025-03-23 14:02:32.071174"
+    },
+    {
+        "id": 181,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' entered 'Aargau'",
+        "time": "2025-03-23 14:15:32.670925"
+    },
+    {
+        "id": 182,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' completed the challenge 'Disprove Ron Swanson'",
+        "time": "2025-03-23 14:15:39.574348"
+    },
+    {
+        "id": 183,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' entered 'Solothurn'",
+        "time": "2025-03-23 14:17:25.048515"
+    },
+    {
+        "id": 184,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' entered 'Bern'",
+        "time": "2025-03-23 14:49:43.986643"
+    },
+    {
+        "id": 185,
+        "source": "A team",
+        "text": "A team has earned 50 in passive income",
+        "time": "2025-03-23 15:02:16.818784"
+    },
+    {
+        "id": 186,
+        "source": "Swiss Misters",
+        "text": "Swiss Misters has earned 50 in passive income",
+        "time": "2025-03-23 15:02:16.834553"
+    },
+    {
+        "id": 187,
+        "source": "A team",
+        "text": "Team 'A team' entered 'Solothurn'",
+        "time": "2025-03-23 15:10:20.669736"
+    },
+    {
+        "id": 188,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' completed the challenge 'Foreign Tarrifs'",
+        "time": "2025-03-23 15:39:54.763574"
+    },
+    {
+        "id": 189,
+        "source": "A team",
+        "text": "Team 'A team' completed the challenge 'Class Trip'",
+        "time": "2025-03-23 15:46:28.356804"
+    },
+    {
+        "id": 190,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' completed the challenge 'My Swiss Army Knife'",
+        "time": "2025-03-23 15:51:58.035386"
+    },
+    {
+        "id": 191,
+        "source": "A team",
+        "text": "Team 'A team' completed the challenge 'Don't Trust Them Banks'",
+        "time": "2025-03-23 15:52:47.301558"
+    },
+    {
+        "id": 192,
+        "source": "A team",
+        "text": "Team 'A team' used power up 'Draw a Card.'",
+        "time": "2025-03-23 15:55:40.444633"
+    },
+    {
+        "id": 193,
+        "source": "A team",
+        "text": "Team 'A team' used power up 'Discard your hand. Draw a card for every one you had in your hand.'",
+        "time": "2025-03-23 16:00:31.738981"
+    },
+    {
+        "id": 194,
+        "source": "A team",
+        "text": "A team has earned 25 in passive income",
+        "time": "2025-03-23 16:04:07.991392"
+    },
+    {
+        "id": 195,
+        "source": "Swiss Misters",
+        "text": "Swiss Misters has earned 50 in passive income",
+        "time": "2025-03-23 16:04:07.998762"
+    },
+    {
+        "id": 196,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' purchased a curse",
+        "time": "2025-03-23 16:08:05.669359"
+    },
+    {
+        "id": 197,
+        "source": "Swiss Misters",
+        "text": "Team 'Swiss Misters' completed the challenge 'Homesick 2'",
+        "time": "2025-03-23 16:16:12.706720"
+    },
+    {
+        "id": 198,
+        "source": "A team",
+        "text": "Team 'A team' completed the challenge 'Become a Michelin Critic'",
+        "time": "2025-03-23 16:20:45.965562"
+    },
+    {
+        "id": 199,
+        "source": "A team",
+        "text": "Team 'A team' completed the challenge 'How Did We Get Here?'",
+        "time": "2025-03-23 16:24:26.977784"
+    },
+    {
+        "id": 200,
+        "source": "A team",
+        "text": "Team 'A team' entered 'Aargau'",
+        "time": "2025-03-23 16:47:13.427799"
+    },
+    {
+        "id": 201,
+        "source": "A team",
+        "text": "Team 'A team' entered 'Aargau'",
+        "time": "2025-03-23 16:47:16.236903"
+    },
+    {
+        "id": 202,
+        "source": "A team",
+        "text": "Team 'A team' used power up 'Draw a Card.'",
+        "time": "2025-03-23 16:50:52.802564"
+    },
+    {
+        "id": 203,
+        "source": "A team",
+        "text": "Team 'A team' completed the challenge 'Bike'",
+        "time": "2025-03-23 16:51:05.990771"
+    },
+    {
+        "id": 204,
+        "source": "A team",
+        "text": "Team 'A team' completed the challenge 'BIG HANDS'",
+        "time": "2025-03-23 16:51:46.967394"
+    },
+    {
+        "id": 205,
+        "source": "A team",
+        "text": "(A team) Aaron: Completed big hands first ",
+        "time": "2025-03-23 16:51:55.746570"
+    },
+    {
+        "id": 206,
+        "source": "A team",
+        "text": "(A team) Aaron: Then drew a card and got bike and completed it ",
+        "time": "2025-03-23 16:52:04.590579"
+    },
+    {
+        "id": 207,
+        "source": "Swiss Misters",
+        "text": "(Swiss Misters) Tim: well played boys",
+        "time": "2025-03-23 17:12:14.402443"
+    }
+]

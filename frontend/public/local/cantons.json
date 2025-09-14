@@ -2,49 +2,49 @@
     {
         "destroyed": 0,
         "id": 1,
-        "level": 0,
+        "level": 1,
         "name": "Aargau",
-        "team_id": 0,
+        "team_id": 1,
         "value": 1
     },
     {
         "destroyed": 0,
         "id": 2,
-        "level": 0,
+        "level": 2,
         "name": "Appenzell Ausserrhoden",
-        "team_id": 0,
+        "team_id": 2,
         "value": 1
     },
     {
         "destroyed": 0,
         "id": 3,
-        "level": 0,
+        "level": 1,
         "name": "Appenzell Innerrhoden",
-        "team_id": 0,
+        "team_id": 2,
         "value": 1
     },
     {
         "destroyed": 0,
         "id": 4,
-        "level": 0,
+        "level": 2,
         "name": "Basel-Landschaft",
-        "team_id": 0,
+        "team_id": 1,
         "value": 1
     },
     {
         "destroyed": 0,
         "id": 5,
-        "level": 0,
+        "level": 1,
         "name": "Basel-Stadt",
-        "team_id": 0,
+        "team_id": 2,
         "value": 1
     },
     {
         "destroyed": 0,
         "id": 6,
-        "level": 0,
+        "level": 2,
         "name": "Bern",
-        "team_id": 0,
+        "team_id": 2,
         "value": 1
     },
     {
@@ -90,17 +90,17 @@
     {
         "destroyed": 0,
         "id": 12,
-        "level": 0,
+        "level": 1,
         "name": "Lucerne",
-        "team_id": 0,
+        "team_id": 1,
         "value": 1
     },
     {
         "destroyed": 0,
         "id": 13,
-        "level": 0,
+        "level": 1,
         "name": "Neuchatel",
-        "team_id": 0,
+        "team_id": 1,
         "value": 1
     },
     {
@@ -130,25 +130,25 @@
     {
         "destroyed": 0,
         "id": 17,
-        "level": 0,
+        "level": 1,
         "name": "Schwyz",
-        "team_id": 0,
+        "team_id": 1,
         "value": 1
     },
     {
         "destroyed": 0,
         "id": 18,
-        "level": 0,
+        "level": 2,
         "name": "Solothurn",
-        "team_id": 0,
+        "team_id": 1,
         "value": 1
     },
     {
         "destroyed": 0,
         "id": 19,
-        "level": 0,
+        "level": 1,
         "name": "St. Gallen",
-        "team_id": 0,
+        "team_id": 2,
         "value": 1
     },
     {
@@ -170,9 +170,9 @@
     {
         "destroyed": 0,
         "id": 22,
-        "level": 0,
+        "level": 2,
         "name": "Uri",
-        "team_id": 0,
+        "team_id": 2,
         "value": 1
     },
     {
@@ -186,25 +186,25 @@
     {
         "destroyed": 0,
         "id": 24,
-        "level": 0,
+        "level": 1,
         "name": "Vaud",
-        "team_id": 0,
+        "team_id": 1,
         "value": 1
     },
     {
         "destroyed": 0,
         "id": 25,
-        "level": 0,
+        "level": 1,
         "name": "Zug",
-        "team_id": 0,
+        "team_id": 1,
         "value": 1
     },
     {
         "destroyed": 0,
         "id": 26,
-        "level": 0,
+        "level": 1,
         "name": "Zurich",
-        "team_id": 0,
+        "team_id": 2,
         "value": 1
     }
 ]

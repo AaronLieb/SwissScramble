@@ -1,9 +1,29 @@
 [
     {
-        "challenges": 2,
+        "challenges": 0,
         "curses": 0,
         "hand_size": 3,
         "id": 1,
+        "income": 50,
+        "money": 25,
+        "name": "A team",
+        "score": 8
+    },
+    {
+        "challenges": 0,
+        "curses": 1,
+        "hand_size": 3,
+        "id": 2,
+        "income": 75,
+        "money": 100,
+        "name": "Swiss Misters",
+        "score": 7
+    },
+    {
+        "challenges": 2,
+        "curses": 0,
+        "hand_size": 3,
+        "id": 3,
         "income": 0,
         "money": 0,
         "name": "A team",
@@ -13,7 +33,27 @@
         "challenges": 2,
         "curses": 0,
         "hand_size": 3,
-        "id": 2,
+        "id": 4,
+        "income": 0,
+        "money": 0,
+        "name": "Swiss Misters",
+        "score": 0
+    },
+    {
+        "challenges": 2,
+        "curses": 0,
+        "hand_size": 3,
+        "id": 5,
+        "income": 0,
+        "money": 0,
+        "name": "A team",
+        "score": 0
+    },
+    {
+        "challenges": 2,
+        "curses": 0,
+        "hand_size": 3,
+        "id": 6,
         "income": 0,
         "money": 0,
         "name": "Swiss Misters",

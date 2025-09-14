@@ -1,0 +1,44 @@
+[
+    {
+        "cost": 100,
+        "description": "Draw a Card.",
+        "id": 1,
+        "multiplier": 1.0,
+        "name": "powerup"
+    },
+    {
+        "cost": 50,
+        "description": "See Opponents Location for 1 hour.",
+        "id": 2,
+        "multiplier": 1.0,
+        "name": "powerup"
+    },
+    {
+        "cost": 100,
+        "description": "Discard your hand. Draw a card for every one you had in your hand.",
+        "id": 3,
+        "multiplier": 1.0,
+        "name": "powerup"
+    },
+    {
+        "cost": 200,
+        "description": "Trade one card in your hand with one in the opponent's hand. You can see your opponents' hand.",
+        "id": 4,
+        "multiplier": 1.0,
+        "name": "powerup"
+    },
+    {
+        "cost": 100,
+        "description": "Increase your hand size by one temporarily. Go back to three as soon as you have used the fourth one.",
+        "id": 5,
+        "multiplier": 1.0,
+        "name": "powerup"
+    },
+    {
+        "cost": 25,
+        "description": "The other team must provide verbal emotional support over the phone for at least 2 minutes.",
+        "id": 6,
+        "multiplier": 1.0,
+        "name": "powerup"
+    }
+]

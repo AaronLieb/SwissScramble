@@ -1,0 +1,149 @@
+[
+    {
+        "cost": 100,
+        "description": "Take a break. You cannot take transit or progress on challenges for 30 minutes. If on transit, get off when you planned to.",
+        "id": 1,
+        "multiplier": 1,
+        "name": "Take a Break"
+    },
+    {
+        "cost": 100,
+        "description": "Do not progress until you buy something you have seen in an advertisement.",
+        "id": 2,
+        "multiplier": 1,
+        "name": "Gullible Tourist"
+    },
+    {
+        "cost": 100,
+        "description": "one member of the opposing team must find and consume a 12oz alcoholic drink on one knee.",
+        "id": 3,
+        "multiplier": 1,
+        "name": "Get Iceâ€™d"
+    },
+    {
+        "cost": 100,
+        "description": "destroy a canton; its effects are all nullified and no team may control it.",
+        "id": 4,
+        "multiplier": 1,
+        "name": "Bomb"
+    },
+    {
+        "cost": 100,
+        "description": "View the other teamâ€™s hand. Choose 1 card and make them discard it immediately.",
+        "id": 5,
+        "multiplier": 1,
+        "name": "Pick a Card, Any Card!"
+    },
+    {
+        "cost": 100,
+        "description": "The cursed team must roll two D6 any time they want to use a door. They must roll a 6 or higher to enter any door for an hour. You can retry any roll after 15 minutes.",
+        "id": 6,
+        "multiplier": 1,
+        "name": "Curse of the Jammed Door"
+    },
+    {
+        "cost": 100,
+        "description": "Both members of the opposing team must change their phoneâ€™s language to one of Switzerlandâ€™s non-english languages for 4 hours.",
+        "id": 7,
+        "multiplier": 1,
+        "name": "Duolinguist"
+    },
+    {
+        "cost": 100,
+        "description": "You cannot complete any challenges or activate power-ups until you take a picture of four unique Swiss flags.",
+        "id": 8,
+        "multiplier": 1,
+        "name": "2ðŸ‡¨ðŸ‡­2"
+    },
+    {
+        "cost": 100,
+        "description": "Change all clocks to the same random time for both people for the rest of the day.",
+        "id": 9,
+        "multiplier": 1,
+        "name": "Right Twice a Day"
+    },
+    {
+        "cost": 100,
+        "description": "If you are on transit, get off immediately.",
+        "id": 10,
+        "multiplier": 1,
+        "name": "Get Me Off"
+    },
+    {
+        "cost": 100,
+        "description": "You cannot use any form of money until you have pet a dog.",
+        "id": 11,
+        "multiplier": 1,
+        "name": "On a Leash"
+    },
+    {
+        "cost": 100,
+        "description": "You cannot progress towards challenges or use public transit until you acquire a flower.",
+        "id": 12,
+        "multiplier": 1,
+        "name": "Stop and Smell the Roses"
+    },
+    {
+        "cost": 100,
+        "description": "You cannot leave your current location until you have written a limerick about your current location.",
+        "id": 13,
+        "multiplier": 1,
+        "name": "Curse of the Tortured Artist"
+    },
+    {
+        "cost": 100,
+        "description": "You cannot progress towards challenges or use public transit until you buy something from a vending machine.",
+        "id": 14,
+        "multiplier": 1,
+        "name": "So Many Options"
+    },
+    {
+        "cost": 100,
+        "description": "The other team loses half of their money",
+        "id": 15,
+        "multiplier": 1,
+        "name": "Robber Baron"
+    },
+    {
+        "cost": 100,
+        "description": "The other team must listen to the entire Changes in Latitudes, Changes in Attitudes album by Jimmy Buffet",
+        "id": 16,
+        "multiplier": 1,
+        "name": "Changes in Latitudes, Changes in Attitudes"
+    },
+    {
+        "cost": 100,
+        "description": "Before taking any other transit, visit a town that is one stop in any direction",
+        "id": 17,
+        "multiplier": 1,
+        "name": "Just One More Stop"
+    },
+    {
+        "cost": 100,
+        "description": "Create and Hang a Poster",
+        "id": 18,
+        "multiplier": 1,
+        "name": "Curse of the Public Service Annoucement"
+    },
+    {
+        "cost": 100,
+        "description": "Take a shot.",
+        "id": 19,
+        "multiplier": 1,
+        "name": "Shoot Your Shot"
+    },
+    {
+        "cost": 100,
+        "description": "Eat a bag of carrots by the end of the day. Must be played with at least 3 hours left in the day.",
+        "id": 20,
+        "multiplier": 1,
+        "name": "Curse of the Vegetarian"
+    },
+    {
+        "cost": 100,
+        "description": "Go to the nearest Indian Restaurant and order something at the highest spice level.",
+        "id": 21,
+        "multiplier": 1,
+        "name": "Can't Take the Heat"
+    }
+]
